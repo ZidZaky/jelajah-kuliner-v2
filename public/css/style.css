@@ -1,0 +1,655 @@
+html{
+    scrollbar-width: none;
+    overflow-y: hidden;
+    /* overflow-x: none; */
+
+}
+body {
+    font-family:"Monserrat";
+}
+
+/* Custom styles for the popup */
+.custom-popup {
+    background-color: #ffffff;
+    /* border: 2px solid #9c242c; */
+    border-radius: 6px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Style the popup content */
+.custom-popup-content {
+    color: #333333;
+    font-family: Arial, sans-serif;
+}
+
+/* Style the popup close button */
+.leaflet-popup-close-button {
+    color: #1e90ff;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1;
+}
+#accountDetails>p{
+    font-style: 'Montserrat';
+    font-size: px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0;
+    text-align: center;
+}
+#accountDetails{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+/* ----------- POP UP ------------ */
+
+
+#accountDetails{
+    position: absolute;
+    z-index: 100;
+    top: 0;
+    right: 0;
+    width: 40vh;
+    height: auto;
+    padding: 10px;
+    /* border: 1px solid #ccc; */
+    display: none;
+    background-color: #9c242c;
+}
+#accountDetails>*{
+    /* border-style: double; */
+}
+
+#accountDetails>button{
+    float: right;
+    border-radius: 6px;
+}
+
+#namaPKL{
+    color: #F9ED69
+}
+#accountDetails>img{
+    width: 100%;
+    max-width: 100%;
+    height: 230px;
+    display: block;
+    margin: 0 auto;
+    /* border: #F9ED69 3px solid; */
+    border-radius: 10px;
+}
+#tsur{
+    margin-top:
+    5px;
+    text-align: center;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+#tsur>button{
+    opacity: 50%;
+    flex: 1;
+    border-radius: 0;
+    color: #702c74;
+    background-color: rgb(255, 255, 255);
+}
+
+#contentWrapper{
+    border: rgb(255, 255, 255) 3px solid;
+    margin-top: 4px;
+    width: 100%;
+    height: 50%;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
+}
+#contentWrapper>div{
+    overflow-y: scroll;
+    flex-direction: column;
+    height: 370px;
+}
+#contentWrapper>*::-webkit-scrollbar{
+    width: 8px;
+
+}
+#contentWrapper>*::-webkit-scrollbar-thumb{
+    background-color: #ffffff;
+    border-radius: 10px;
+    border: #9c242c solid;
+}
+#contentWrapper>*{
+    padding: 5px 5px;
+    display: flex;
+    align-items: center;
+    width: 95%;
+}
+#contentWrapper>*>h1{
+    color: white;
+
+}
+#contentPesan{
+    color: white;
+}
+#contentWrapper>*>div{
+    margin-top: 7px;
+    border-radius: 5px;
+    background-color: #ffffff;
+    padding: 8px 8px;
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.1);
+    /* display: flex; */
+
+
+
+
+
+    /* border-style: double; */
+}
+
+/* -------------------------------------- CARD ULASAN ----------------------------- */
+#contentUlasan{
+
+    /* align-items: center; */
+    /* justify-content: center; */
+    /* justify-items: center; */
+}
+#contentUlasan>button{
+    display: flex;
+    flex-direction:column;
+    border-radius: 20px;
+    align-items: center;
+    /* justify-content: center; */
+    width: auto;
+    background-color: #9c242c;
+    height: auto;
+    padding: 0 0;
+    margin: 0 0;
+    /* margin-bottom: 20px !important; */
+    /* border: none; */
+    /* margin-left: 7%; */
+}
+#reviewButton{
+    display: flex;
+    flex-direction: row;
+    background-color: #ffffff;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 5px 2px;
+}
+#reviewButton>*{
+    /* border-style: double; */
+}
+#reviewButton>p{
+    font-size: 70%;
+    margin: 0 0;
+    padding: 0 0;
+    margin-left: 2%;
+}
+#reviewButton>img{
+    width: 15px;
+    margin: 0 0;
+    padding: 0 0;
+    margin-left: 3px;
+}
+
+@media screen and (max-width: 900px) {
+    .card{
+        width: 95%;
+    }
+}
+
+
+
+.cardUlasan>*{
+    /* border-style: double; */
+}
+.cardUlasan>*>*{
+    /* border-style: double; */
+
+}
+
+.cardUlasan{
+    max-width: 100%;
+}
+
+.cardUlasan>div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.cardUlasan>div>img{
+    width: 20%;
+    height: 25%;
+}
+.cardUlasan>div>div{
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+}
+.cardUlasan>div>div>p{
+    font-size: 12px;
+    padding: 0 0;
+    margin: 0 0;
+}
+.cardUlasan>div>p{
+    width: 40%;
+    font-size: 10px;
+    margin-bottom: 0;
+}
+.cardUlasan>hr{
+    padding: 0 0;
+    /* margin: 0 0; */
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+#nmAkun{
+    font-weight: 600;
+}
+.cardUlasan>p{
+    font-size: 12px;
+    text-align: justify;
+    margin-bottom: 0;
+    height: auto;
+    /* max-width: 100%; */
+}
+
+.cardUlasan {
+    /* Set maximum height for the card */
+    /* max-height: 200px; Adjust as needed */
+    /* overflow: auto; Enable vertical scroll if content exceeds the height */
+}
+
+.ulasan-content {
+    /* Add padding and margin as needed */
+    padding: 10px;
+    margin: 0;
+}
+
+
+
+/* ----------------------------------------- CARD MENU ------------------------------ */
+
+.cardMenu{
+    display: flex;
+    flex-direction: row;
+    height: 120px;
+}
+.leffft{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.cardMenu>div>img{
+    width: 100px;
+    height: 80px;
+    border-radius: 8px;
+    /* margin-right: 10px; */
+}
+/* .cardMenu>div>p{
+    font-size: 13px;
+} */
+.RightSide{
+    display: flex;
+    flex-direction: column;
+    padding-left: 10px;
+    justify-content: space-between;
+    /* border-style: double; */
+}
+.RightSide>div{
+    display: flex;
+    flex-direction: row;
+    /* border-style: double; */
+}
+.RightSide>hr{
+    padding: 0 0;
+    margin: 0 0;
+}
+#nmProduct{
+    font-size: 12px;
+    font-weight: 600;
+    margin: 0 0;
+    padding: 0 0;
+}
+#deskrip{
+    font-size: 8px;
+    margin-bottom: 0;
+    overflow-y: auto;
+    scrollbar-width: none;
+
+}
+.leffft{
+    padding: 0 0;
+    margin: 0 0;
+    justify-content: space-between;
+}
+
+.leffft>p{
+    font-size: 16px;
+    font-weight: 600;
+    padding: 0 0;
+    margin: 0 0;
+}
+
+
+/* --------------------------------- LIST PESANAN ---------------------------- */
+.listPesanan{
+    position: absolute;
+    z-index: 100;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 100vh;
+    height: 70vh;
+    padding: 10px;
+    border: 1px solid #ccc;
+    /* display: none; */
+    background-color: #9c242c;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+}
+@media screen and (max-width: 900px) {
+    .listPesanan{
+        width: 78vh;
+    }
+}
+.NavbarAtasPesanan{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding:0 0;
+    /* border-style: double; */
+}
+
+.miniNavbar{
+    /* border-style: double; */
+    height: 4vh;
+    /* padding-left: 3px; */
+    width: 100%;
+    /* border-style: double; */
+}
+.miniNavbar>button{
+    width: auto;
+    /* border-style: double; */
+    font-size: 12px;
+    color: white;
+    background-color: rgba(25, 24, 24, 0.703);
+
+    padding: 2px 5px;
+    /* border: 1px solid rgba(25, 24, 24, 0.703); */
+    /* transform:skew(20deg); */
+    /* border-radius: 5px 5px 0 0; */
+    outline: none;
+    border: none;
+    cursor: pointer;
+    opacity: 40%;
+}
+
+
+
+.NavbarAtasPesanan>p{
+    color: white;
+    padding: 0 0;
+    margin: 0 0;
+}
+.ContentPesanan{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+}
+.tablePesanan{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.table{
+    background-color: white;
+    width: 100%;
+    height: 88.01%;
+    margin-top: 2px;
+    padding: 0 0;
+    margin: 0 3px;
+    border-radius: 0 0 10px 10px;
+    font-family:Verdana, Geneva, Tahoma, sans-serif
+    /* display: flex; */
+    /* flex-direction: row; */
+}
+.table>div{
+    height: 100%;
+    padding: 0 0;
+    margin: 0 0;
+    border-radius: 0 10px 0 0;
+
+}
+.subTable{
+    display: flex;
+    flex-direction: row;
+    padding: 0 0;
+    margin: 0 0;
+    height: 20%;
+    /* border-radius: 0 10px 0 0; */
+}
+
+.TableSide{
+    width: 100%;
+    height: 90%;
+    /* border: black;
+    border-style: double; */
+    padding: 0 0;
+    margin: 0 0;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    /* scrollbar-width: 1px; */
+
+}
+.TableSide::-webkit-scrollbar{
+    width: 10px;
+    /* height: 100%; */
+
+}
+.TableSide::-webkit-scrollbar-thumb{
+    background-color: #9c242c;
+    border-radius: 10px;
+    border: white solid;
+}
+.deTable{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    padding: 0 4px 0 4px !important;
+    /* padding-top: 0; */
+}
+.isiDeTable>p,.isiDeTable>div{
+    /* margin: 5px 0; */
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.isiDeTable>p{
+    /* font-size: 10px !important; */
+}
+.deTable>div{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+/* .allPesanan{
+    height: 70%;
+} */
+.allPesanan>div{
+    width: 100%;
+}
+.subTable{
+    /* background-color: #9a464b; */
+    display: flex;
+    flex-direction: row;
+    /* justify-content: space-between; */
+    height: 8%;
+    align-items: center;
+    padding: 8px;
+    padding-bottom: 0 !important;
+    border-radius: 4pxs;
+}
+.subTable>p{
+    /* padding: 0 0; */
+    width: 100%;
+    margin: 0 0;
+    background-color: #a7a7a7;
+    padding: 0 4px;
+    color: black;
+    text-align: center;
+    font-size: 12px;
+    /* border-radius: 0 10px 0 0; */
+}
+.subTable>.tpemesan{
+    border-radius: 4px 0 0 0;
+}
+.subTable>.tstatus{
+    border-radius: 0 4px 0 0;
+}
+.isiDeTable{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-bottom: 1px solid #858585;
+}
+.isiDeTable>p{
+    /* border-style: double; */
+    padding: 0 0;
+    margin: 0 0;
+    font-size: 12px;
+}
+.tstatus>button{
+    padding: 3px 0;
+    margin: 0 0;
+    border-radius: 12px;
+    font-size: 10px;
+    height: 70%;
+    width: 70%;
+    background-color: rgba(0, 0, 255, 0.568);
+    color: white;
+    border: none;
+}
+.isiDeTable>.tstatus{
+    display: flex;
+    align-items: center;
+    justify-self: center;
+    justify-content: center;
+}
+.subTable>p{
+    /* border-style: double; */
+}
+
+.subTable>.tpemesan,.isiDeTable>.tpemesan{
+    width: 15%;
+}
+.subTable>.tproduk,.isiDeTable>.tproduk{
+    width: 22%;
+}
+.subTable>.tstok,.isiDeTable>.tstok{
+    width: 18%;
+}
+.subTable>.ttotal,.isiDeTable>.ttotal{
+    width: 30%;
+}
+.subTable>.tstatus,.isiDeTable>.tstatus{
+    width: 15%;
+}
+.isiDeTable>.ttotal{
+    /* border-radius: 12px; */
+    /* background-color: rgba(62, 232, 207, 0.804); */
+
+    color: white;
+    padding: 0 0;
+    display: flex;
+    flex-direction: column;
+    /* align-items:l; */
+    padding-left: 10px;
+}
+.isiDeTable>.ttotal>p{
+    font-size: 10px;
+    padding: 0 4px;
+    margin: 0 0;
+    width: fit-content;
+    color: rgb(0, 0, 0);
+    /* background-color: rgb(0, 255, 38); */
+}
+
+/* ------------SILANG PESANAN---------- */
+.NavbarAtasPesanan>button{
+    background-color: rgba(255, 255, 255, 0.747);
+    padding: 5px 5px;
+    margin: 0 0;
+    border-radius: 3px;
+    font-size: 10px;
+    height: 4vh;
+    width: 4vh;
+    /* background-color: blue; */
+    color: black;
+    border: none;
+    font-size: 15px;
+}
+
+/* ----------------- button pesan ----------- */
+#contentPesan{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 0;
+    padding: 0 0 !important;
+}
+#contentPesan>*{
+    border: 1px solid white double;
+}
+#contentPesan>button{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    background-color: #ffffff;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 5px;
+}
+
+#contentPesan>p{
+    font-size: 70%;
+    margin: 0 0;
+    padding: 0 0;
+    margin-left: 2%;
+}
+
+.aboutus {
+    --g: 4px;     /* the gap */
+    --b: 5px;    /* border thickness*/
+    --c: #001d9e; /* the color */
+
+    padding: calc(var(--g) + var(--b));
+    --_c: #0000 0 25%, var(--c) 0 50%;
+    --_g1: repeating-linear-gradient(90deg ,var(--_c)) repeat-x;
+    --_g2: repeating-linear-gradient(180deg,var(--_c)) repeat-y;
+    background:
+      var(--_g1) var(--_p, 25%) 0   ,var(--_g2) 0    var(--_p,125%),
+      var(--_g1) var(--_p,125%) 100%,var(--_g2) 100% var(--_p, 25%);
+    background-size: 200% var(--b),var(--b) 200%;
+    cursor: pointer;
+    transition: .3s;
+  }
+  .aboutus:hover {
+    --_p: 75%;
+    filter: grayscale(0%);
+  }

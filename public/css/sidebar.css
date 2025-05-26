@@ -1,0 +1,114 @@
+body {
+    font-family: "Nunito", sans-serif;
+}
+
+.sidebar {
+    color: white;
+    position: fixed;
+    z-index: 100;
+    height: 100vh;
+    padding: 10px;
+    background: #9c242c;
+    /* left: -20%; */
+    left: -230px;
+    /* left: 0; */
+
+
+    transition: left 0.3s ease;
+}
+
+@media screen and (max-width: 900px) {
+}
+
+.sidebar:hover {
+    left: 0;
+}
+.sidebar>a.btn.btn-primary{
+    background-color:#d48338;
+}
+
+
+.menu {
+    position: absolute;
+    top: 40vh;
+    left: 220px;
+    width: 45px;
+    height: 100px;
+    background: #9c242c;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu p {
+    text-align: center;
+    margin: 0 0;
+}
+
+.sidebar a.btn {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    background: #d48338;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+}
+
+h1 {
+    font-family: 'Arial', sans-serif;
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+h1 a {
+    text-decoration: none;
+    color: #ffffff;
+    transition: color 0.3s ease;
+}
+
+h1 a:hover {
+    /* color: #d48338; */
+    text-decoration: underline;
+}
+
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}
+
+.sidebar ul li {
+    margin-bottom: 10px;
+
+}
+
+.sidebar ul li a {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    text-align: center;
+}
+
+.sidebar ul li a:hover {
+    text-decoration: underline;
+}
+
+#map {
+    height: 100vh;
+    width: 100%;
+    z-index: 0;
+}
+
+@media (max-width: 768px) {
+    .sidebar ul {
+        display: flex;
+    }
+}

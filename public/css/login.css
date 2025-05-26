@@ -1,0 +1,301 @@
+body {
+    font-family: "Nunito", sans-serif;
+
+    height: 100vh;
+    background-image: url(/assets/JELAJAHKULINER.jpg);
+    background-size: cover;
+    /* border: #000000; */
+    /* border-style: double; */
+    /* background-color: rgba(0, 255, 255, 0); */
+}
+
+
+/* ------------ LOGIN ------------- */
+
+.main {
+    border: black;
+    height: 100%;
+    /* border-style: double; */
+    /* margin-left: 25%; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #72ff7200;
+    z-index: 2;
+    width: 100%;
+    /* margin-left: 26%; */
+    /* width: 75%;
+    margin-left: 25%; */
+}
+
+/* @media (min-width: 900px) {
+    .main {
+        width: 74%;
+        margin-left: 26%;
+    }
+}
+
+@media (max-width: 500px) {
+    .main {
+        width: 60%;
+        margin-left: 40%;
+    }
+} */
+
+.sidebar {
+    /* display: none; */
+}
+
+.card {
+    width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #000000;
+    border-radius: 20px;
+    /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.841); */
+    background-color: #9c242c;
+}
+
+#titleLogin {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    font-size: 24px;
+    margin-bottom: 0px;
+    color: white;
+}
+
+.form-signin input[type=text],
+.form-signin input[type=password] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 16px;
+    box-sizing: border-box;
+    border: 1px solid #000;
+}
+
+
+/* Gaya untuk input teks */
+
+.form-check {
+    text-align: left;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.line-divider {
+    width: 100%;
+    height: 1px;
+    /* Ketebalan garis */
+    background-color: #ffffff99;
+    margin-top: 10px;
+    /* Warna garis */
+    /* Jarak di atas dan di bawah garis */
+}
+
+form>* {
+    /* border: #000000;
+    border-style: double; */
+    margin-bottom: 0;
+}
+
+
+/* Style untuk form */
+
+form {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    /* border: 1px solid #ddd; */
+    border-radius: 8px;
+    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+    outline: none;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+
+/* Style untuk label form */
+
+.form-label {
+    font-weight: bold;
+    color: #333;
+}
+
+
+/* Style untuk input form */
+
+form>div {
+    /* border: #000000;
+    border-style: double; */
+    margin-bottom: 0px;
+}
+
+.form-label {
+    font-weight: bold;
+    color: #333;
+}
+
+
+/* Style untuk input form */
+
+form>div {
+    /* border: #000000;
+    border-style: double; */
+    margin-bottom: 0px;
+}
+
+.form-floating {
+    display: flex;
+    /* border: #000000;
+    border-style: double; */
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0px !important;
+}
+
+.form-control {
+    border: 1px solid #000;
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    /* border: 1px solid #ddd; */
+    border-radius: 12px;
+    margin-bottom: 10px;
+    margin-top: 0px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    /* box-sizing: border-box; */
+}
+
+
+/* .form-control::placeholder {
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: 100%;
+    color: #aaa;
+} */
+
+
+/* Style untuk tombol submit (jika ada) */
+
+#showPass {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    /* align-items: center; */
+}
+
+#showPass>* {
+    margin-right: 5px;
+}
+
+.form-floating>#ButLogin {
+    width: 40%;
+    color: #fff;
+    font-weight: 700;
+    padding: 10px;
+    border: 1px solid #000;
+    /* border-style: groove; */
+    border-radius: 16px;
+    cursor: pointer;
+    font-size: 16px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.form-control::placeholder {
+    text-align: center;
+    /* Teks di tengah horizontal */
+    position: absolute;
+    /* Mengatur posisi placeholder */
+    top: 50%;
+    /* Posisi di tengah vertikal */
+    left: 0;
+    transform: translateY(-50%);
+    width: 100%;
+    color: #aaa;
+    /* Warna placeholder */
+}
+
+
+/* Hover effect pada tombol submit */
+
+
+/* Media query untuk responsif */
+
+@media (max-width: 768px) {
+    .form-control {
+        width: 100%;
+    }
+}
+
+.regisPkl {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0;
+}
+
+a {
+    text-decoration: none;
+    /* Menghapus garis bawah */
+    color: #007bff;
+}
+
+a:hover {
+    text-decoration: none;
+    /* Tetap tidak ada garis bawah pada hover */
+    color: blue;
+    /* Warna teks saat dihover */
+}
+
+.regisPkl>* {
+    margin-right: 5px;
+}
+
+p {
+    margin-bottom: 0;
+}
+
+.mb-3 {
+    display: flex;
+    /* border: #000000;
+    border-style: double; */
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0px !important;
+}
+.mb-3>label{
+    color: white;
+}
+
+.regisPkl{
+    color: white;
+}
+.regisPkl>*{
+    color: white;
+}
+

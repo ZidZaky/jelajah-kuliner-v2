@@ -1,0 +1,194 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f900;
+}
+
+.container {
+    margin: 20px;
+    padding: 20px;
+    background-color: rgb(205, 195, 174);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    font-size: 1rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #130a32 !important;color: white !important;
+}
+
+.header-row th {
+    text-align: center;
+    font-weight: bold;
+}
+
+.header-row td {
+    text-align: center;
+}
+
+.qa-log, .test-info {
+    background-color: #f9f9f9;
+    padding: 10px;
+    border: 1px dashed #ddd;
+    margin-top: 10px;
+}
+
+.test-info ul {
+    margin-left: 20px;
+}
+
+.test-info ol {
+    margin-left: 20px;
+}
+
+.status {
+    text-align: center;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.status span {
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.status .pass {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.status .fail {
+    background-color: #f44336;
+    color: white;
+}
+
+.status .not-executed {
+    background-color: #ff9800;
+    color: white;
+}
+
+.status .suspended {
+    background-color: #9e9e9e;
+    color: white;
+}
+
+.tablepisah{
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    margin-top: 10px;
+}
+
+@media print {
+    body {
+        width: 21cm;
+        height: 29.7cm;
+        margin: 0;
+    }
+
+    .container {
+        width: 100%;
+        page-break-before: always;
+        padding: 10mm;
+        box-sizing: border-box;
+        border: 1px solid #000;
+        border-radius: 5px;
+        margin-bottom: 10mm;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 10mm;
+    }
+
+    table, th, td {
+        border: 1px solid black;
+        padding: 5px;
+        text-align: left;
+    }
+
+    .header-row th {
+        background-color: #f0f0f0;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .qa-log, .test-info {
+        margin: 10px 0;
+    }
+
+    .tablepisah {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .tablepisah div {
+        width: 48%;
+    }
+
+    .test-info strong {
+        display: inline-block;
+        width: 30%;
+    }
+}
+
+/* Untuk tampilan layar */
+.container {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid black;
+    padding: 5px;
+    text-align: left;
+}
+
+.header-row th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+    text-align: center;
+}
+
+.qa-log, .test-info {
+    margin: 10px 0;
+}
+
+.tablepisah {
+    display: flex;
+    justify-content: space-between;
+}
+
+.tablepisah div {
+    width: 48%;
+}
+
+.test-info strong {
+    display: inline-block;
+    width: 30%;
+}
+
+/* .headerdd{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+} */

@@ -1,0 +1,6 @@
+projectKey=JelajahKuliner
+serverUrl=http://localhost:9099
+serverVersion=25.2.0.102705
+dashboardUrl=http://localhost:9099/dashboard?id=JelajahKuliner
+ceTaskId=9f08d1ce-dd1a-4ea2-a7fe-4f69a983c716
+ceTaskUrl=http://localhost:9099/api/ce/task?id=9f08d1ce-dd1a-4ea2-a7fe-4f69a983c716

@@ -1,0 +1,482 @@
+
+html{
+    scrollbar-width: none;
+}
+body {
+    font-family: "Nunito", sans-serif;
+
+    height: 100vh;
+    /* background-image: url(/assets/JELAJAHKULINER.jpg); */
+    background-color: aliceblue;
+    background-size: cover;
+    /* border: #000000; */
+    /* border-style: double; */
+    /* background-color: rgba(0, 255, 255, 0); */
+}
+.countent{
+    display: flex;
+    flex-direction: column;
+}
+.countent>*{
+    /* border-style: double; */
+}
+.up{
+    display:flex ;
+    flex-direction: row;
+    justify-content: space-between;
+    /* margin-top: 10px; */
+    padding-top: 10px;
+}
+.up>*{
+    /* border-style: double; */
+}
+.upside{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.outer{
+    height: auto;
+    display: flex;
+    flex-direction: row;
+}
+.demain{
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    /* border-style: double; */
+}
+.side{
+    width: 30%;
+    /* border-style: double; */
+}
+.demain>.nmpkl{
+    /* font-family: 'Montserrat'; */
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* border-style: double; */
+}
+.namaakun{
+    font-family: 'Montserrat';
+    font-weight: 750;
+    font-size: 20px;
+    padding-left: 20px;
+    margin-bottom: 0;
+}
+#butEdit{
+    font-size: 20px;
+    width: 100%;
+    /* margin-right: 20px; */
+    /* margin-bottom: 9px; */
+    background-color: #9c242c; /* Blue background color */
+    color: white; /* White text color */
+    border: none; /* No border */
+    padding: 5px 10px; /* Padding inside the button */
+    /* border-radius: 12px; Rounded corners */
+    cursor: pointer; /* Show pointer cursor on hover */
+}
+#butEdit span {
+    /* margin-right: 5px; Add a small space between icon and text */
+}
+
+#hratas{
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.namap{
+    font-family: 'Montserrat';
+    font-weight: 800;
+    font-size: 30px;
+    margin-bottom: 0;
+
+}
+.deskri{
+    font-family:Arial, Helvetica, sans-serif;
+}
+.side>hr{
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.deskri{
+    width: 70%;
+}
+
+
+
+
+/* -------- card------------- */
+img{
+    width: 140px;
+    border-radius: 12px;
+    /* height: 80%; */
+    /* float: left; */
+    /* background-color: blue;
+    border: black; */
+    /* border-style: double; */
+
+}
+.batas{
+    margin-left: 4%;
+    display: flex;
+    flex-direction: column;
+    width: 95%;
+    height: auto;
+    /* justify-content: center; */
+    align-items: center;
+    /* background-color: blue; */
+}
+.card{
+    display: flex;
+    flex-direction: row;
+    width: 600px;
+    height: 150px;
+    margin-bottom: 10px;
+    border-radius: 12px;
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.1);
+    /* justify-content: space-between; */
+}
+@media screen and (max-width: 900px) {
+    .card{
+        width: 95%;
+    }
+}
+
+.card>#theImage{
+    width: 35%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card>#mid>*{
+    /* border: black;
+    border-style: double; */
+}
+.card>#mid{
+    width: 35%;
+    padding-left: 2%;
+}
+.card>#leftt{
+    width: 30%;
+    margin-right: 10px;
+}
+
+#mid>.np{
+    /* border: rgb(81, 8, 241);
+    border-style: double; */
+    font-family: 'Montserrat';
+    font-weight: 800;
+    padding-top: 10px;
+    padding-bottom: 0px;
+    margin-bottom: 0;
+    height: 25%;
+    align-items: center;
+}
+#mid>.Des{
+    /* margin-top: -2px; */
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: 10px;
+    height: 45%;
+    margin-bottom: 0;
+    overflow-y: auto;
+    scrollbar-width: none;
+
+}
+#mid>.hrg{
+    font-family:Arial, Helvetica, sans-serif;
+    height: 30%;
+    font-weight: 500;
+    /* border: rgb(81, 8, 241);
+    border-style: double; */
+    /* font-size: ; */
+}
+
+/* .card>#mid{
+    width: 300px;
+    background-color: aquamarine;
+} */
+.card>*{
+    /* border: black;
+    border-style: double; */
+}
+#lefft{
+
+}
+#leftt>*{
+    display: flex;
+    /* flex-direction: column; */
+    /* border: black;
+    border-style: double; */
+    align-items: center;
+    justify-content: center;
+}
+
+#leftt>.stok{
+    /* border: rgb(81, 8, 241);
+    border-style: double; */
+    font-family: 'Montserrat';
+    font-weight: 800;
+    padding-top: 10px;
+    margin-bottom: 0;
+    height: 25%;
+    align-items: center;
+    justify-content: center;
+    /* height: 35%; */
+}
+#leftt>.numberr{
+    font-size: 30px;
+    height: 40%;
+    margin-bottom: 0;
+}
+
+#leftt>.plmn{
+    height: 25%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.plmn>*{
+    border-radius: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 10px;
+}
+#hrmiring{
+
+    height: auto; /* Tinggi garis */
+    width: 1px; /* Lebar garis */
+    background-color: #000; /* Warna garis */
+    margin: 20px 0;
+     /* Margin atas dan bawah */
+     /* border-style: double; */
+
+
+}
+
+
+/* ------------ CHART ------- */
+.batasRev{
+    width: 100%;
+}
+.chart{
+    width: 100%;
+    /* border-style: double; */
+}
+.rating-chart {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.rating-chart>*{
+    /* border-style: double; */
+}
+.derating{
+    width: 50px;
+    margin-bottom: 0;
+
+}
+.bar {
+    width: var(--rating);
+    height: 30px;
+    background-color: #4caf50;
+    transition: width 0.5s ease;
+    border-radius: 5px;
+}
+
+.percentage {
+    margin-left: 10px;
+    font-weight: bold;
+}
+.chart{
+    padding-top: 10px;
+}
+.chart>.rating-chart{
+    /* border-style: double; */
+}
+.tessni{
+    display: flex;
+    flex-direction: row;
+    width: auto;
+}
+
+/* -----SIDE------ */
+.side>*{
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+
+}
+.side>*{
+    /* border-style: double; */
+}
+.side>.namapp{
+    align-items: center;
+    justify-content: center;
+}
+
+/* --------CARD REVIEEW--- */
+.listRev{
+
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+.listRev>*{
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    border-radius: 12px;
+    padding: 10px 10px;
+
+}
+.listRev>*>*{
+    /* border-style: double; */
+    margin-bottom: 0;
+}
+/* namaRev */
+/* bintangRev */
+/* desRev */
+#desRev{
+    font-weight: 400;
+    font-family: 'Montserrat';
+    font-size:12px;
+}
+.cardRev>hr{
+    margin-top: 0;
+}
+.butButtonFront{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    align-items:center;
+    margin-bottom: 10px;
+    width: 100%;
+    padding: 0 20%;
+    /* border: #000 1px solid; */
+}
+
+@media screen and (max-width: 900px) {
+    .butButtonFront{
+    padding: 0 12px;
+    }
+}
+
+.butButtonFront>a{
+    display: flex;
+    width: 100%;
+    /* border: 1px black solid; */
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+.butStok>a>button{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    /* align-items:center;  */
+    margin-bottom: 5px;
+    width: 100%;
+    padding: 0 20%;
+    font-size: 12px;
+    /* background-color: rgb(104, 185, 104); */
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    border: none;
+    padding: 5px;
+    text-align: center;
+}
+.butStok>a>button>p{
+    margin: 0 0;
+    padding: 0 0;
+    width: 100%;
+}
+
+.butStok>a{
+    /* border: 1px rgb(252, 0, 0) solid; */
+    width: 100%;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.butStok{
+    display: flex;
+    flex-direction: column;
+    /* border: 1px black solid; */
+}
+.butStok>a>.StokAwal{
+    background-color: green;
+}
+.butStok>a>.StokAkhir{
+    background-color: rgb(103, 36, 36);
+}
+.deskhusus{
+    /* margin-top: -2px; */
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: 10px;
+    margin-bottom: 0;
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+
+.card .profilePict {
+    border: black 1px solid;
+    width: 120px;
+    margin: auto;
+    margin-left: 15px;
+    border-radius: 70px;
+    box-shadow: 0px 0px 20px rgb(255, 0, 0);
+}
+
+.card .profilePict2 {
+    border: black 1px solid;
+    width: 120px;
+    margin: auto;
+    margin-left: 15px;
+    border-radius: 70px;
+    box-shadow: 0px 0px 20px rgb(0, 255, 0);
+}
+
+.card .desc .info {
+    width: 350px;
+    height: 150px;
+    border-radius: 10px;
+}
+
+.card .desc .reportButton {
+    width: 350px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-bottom: 5px;
+}

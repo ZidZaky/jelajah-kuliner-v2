@@ -1,0 +1,103 @@
+.up{
+    display:flex ;
+    flex-direction: row;
+    justify-content: space-between;
+    /* margin-top: 10px; */
+}
+.up>*{
+    /* border-style: double; */
+}
+.upside{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.namaakun{
+    font-family: 'Montserrat';
+    font-weight: 750;
+    font-size: 20px;
+    padding-left: 20px;
+    margin-bottom: 0;
+}
+
+/* title */
+.threeD {
+    margin-top: 1vh;
+    color: darkgrey;
+    white-space: nowrap;
+    position: absolute;
+    top: 5%;
+    transform: translate(-50%, -50%);
+    font-size: 3em;
+    font-family: cursive;
+    letter-spacing: 0.1em;
+    transition: 0.3s;
+    text-shadow: 1px 1px 0 grey, 1px 2px 0 grey, 1px 3px 0 grey, 1px 4px 0 grey,
+        1px 5px 0 grey, 1px 6px 0 grey, 1px 7px 0 grey, 5px 13px 15px black;
+}
+
+.threeD:hover {
+    top: 9%;
+    margin-left: 25px;
+    transition: 0.3s;
+    color: rgb(180, 180, 180);
+    transform: scale(1.15)translate(-50%, -50%);
+    text-shadow: 1px -1px 0 rgb(150, 150, 150), 1px -2px 0 rgb(150, 150, 150), 1px -3px 0 rgb(150, 150, 150),
+        1px -4px 0 rgb(150, 150, 150), 1px -5px 0 rgb(150, 150, 150), 1px -6px 0 rgb(150, 150, 150), 5px -13px 15px black, 5px -5px 25px #808080;
+}
+
+/* img */
+.border {
+    --g: 4px;     /* the gap */
+    --b: 12px;    /* border thickness*/
+    --c: #000000; /* the color */
+    
+    
+    padding: calc(var(--g) + var(--b));
+    --_c: #0000 0 25%, var(--c) 0 50%;
+    --_g1: repeating-linear-gradient(90deg ,var(--_c)) repeat-x;
+    --_g2: repeating-linear-gradient(180deg,var(--_c)) repeat-y;
+    background:
+      var(--_g1) var(--_p, 25%) 0   ,var(--_g2) 0    var(--_p,125%),
+      var(--_g1) var(--_p,125%) 100%,var(--_g2) 100% var(--_p, 25%);
+    background-size: 200% var(--b),var(--b) 200%;
+    cursor: pointer;
+    transition: .3s;
+  }
+  .border:hover {
+    --_p: 75%;
+  }
+
+/* card */
+.card {
+    transition: all 0.3s;
+    height: 150px;
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card .desc {
+    opacity: 0;
+    transition: all 0.3s;
+    padding: 10px;
+    background-color: darkorange;
+    transform: scale(0.1);
+    margin-top: -110px;
+    text-align: center;
+    border-radius: 0 0 15px 15px;
+}
+
+.card:hover .border + .desc {
+    opacity: 1;
+    margin-top: 5px;
+    transform: scale(1);
+}
+
+.card:hover {
+    height: 300px;
+    margin-bottom: 50px;
+    margin-top: -10px;
+}
