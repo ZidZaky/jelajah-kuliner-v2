@@ -25,7 +25,7 @@
                 <i class="bi bi-star-fill text-warning"></i>
             </div>
         </div>
-        <button type="button" onclick="closePopup()" class="bg-transparent border-0 noOutline">
+        <button type="button" onclick="closePopup()" class="closebutton bg-transparent border-0 noOutline">
             <!-- <i class="bi bi-x-circle first-cl"></i> -->
             <p class="text-decoration-underline p-clear" style="color:rgba(255, 255, 255, 0.56);">close</p>
         </button>
