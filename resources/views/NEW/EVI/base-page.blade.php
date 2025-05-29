@@ -65,7 +65,7 @@
         </div>
     </nav>
 
-    <div class="position-relative z-3" style="max-height: calc(100vh - 90px - 30px); min-height:0px; max-width:100%; min-width: 0px;">
+    <div class="position-relative z-3 d-flex flex-column flex-wrap" style="max-height: calc(100vh - 90px - 30px); min-height:0px; max-width:100%; min-width: 0px;">
         @yield('AddOn')
     </div>
 
