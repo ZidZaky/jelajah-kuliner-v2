@@ -5,6 +5,7 @@ button.active{
 }
 
 button.nonactive{
+    /* color: #a73636; */
     color: #6D2323;
     border: 0.5px solid #6D2323 ;
 }
@@ -54,3 +55,4 @@ button.nonactive{
     background-color: rgba(87, 87, 87, 0.582);
     transition: background-color 0.2s ease;
 }
+

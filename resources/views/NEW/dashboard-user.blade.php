@@ -1,8 +1,7 @@
 @extends('NEW.EVI.base-page')
 
 @section('css')
-<link rel="stylesheet" href="{{ app()->environment('local')? asset('css/dashboard-user.css') :
-    secure_asset('css/dashboard-user.css') }}">
+<link rel="stylesheet" href="{{ auto_asset('css/dashboard-user.css') }}">
 <style>
     #map {
         height: calc(100vh - 90px - 20px + 3px);
@@ -48,7 +47,7 @@
                 <p class="p-clear">Produk</p>
                 <hr class="m-0 " style=" height: 2px; border: 1px  solid  #6D2323; background-color: #6D2323;">
             </div>
-            <div class="container area products produks d-flex flex-column gap-2" style="height: calc(100% - 30px);">
+            <div class="container mt-2 area products produks d-flex flex-column gap-2" style="height: calc(100% - 30px);">
 
                 <!-- Kalau belum ada produk -->
                 <!-- <div class="w-100 h-100 d-flex justify-content-center align-items-center ">
@@ -57,7 +56,7 @@
                 <!-- Kalau udh ada produk -->
                 @for($i=0;$i<=20;$i++)
                     <div class="produk align-items-center position-relative d-flex flex-row justify-content-end align-items-end" style="height:110px; min-height: 110px;">
-                    <img class="circle-preview position-absolute z-1 shadow" src="/assets/contoh.jpg" alt="" style="height: 75%; width: fit-content; left: 0;">
+                    <img class="circle-preview position-absolute z-1 shadow" src="{{auto_asset('assets/contoh.jpg')}}" alt="" style="height: 75%; width: fit-content; left: 0;">
                     <div class="position-absolute z-0 py-2 pe-2 d-flex flex-column gap-1 justify-content-between align-items-end bg-prim-dark border-left-top border-right-bottom" style="right: 0; width:87%; height:95%; max-height: 95%; min-height: 95%;  ">
                         <div class="contisi d-flex flex-column first-cl justify-content-end align-items-end w-50">
                             <p class="fw-bolder" style="font-size: 10px;">PENTOL GILA</p>
@@ -74,7 +73,7 @@
                 </div>
                 @endfor
             </div>
-            <div class="container area ulasans d-none d-flex flex-column gap-2" style="height: calc(100% - 30px);">
+            <div class="container mt-2  area ulasans d-none d-flex flex-column gap-2" style="height: calc(100% - 30px);">
                 <!-- kalau belum ada ulasan -->
                 <!-- <div class="w-100 h-100 d-flex justify-content-center align-items-center ">
                     <p class="p-clear" style="font-size: 12px;">Belum ada Ulasan</p>

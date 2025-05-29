@@ -51,6 +51,9 @@ html *::-webkit-scrollbar-thumb{
     border-bottom-right-radius: 7px;
 }
 
+.hover-red-dark:hover{
+    background-color: #3e1414 !important;
+}
 
 .first-cl {
     color: #F7F8FC !important;
@@ -58,6 +61,9 @@ html *::-webkit-scrollbar-thumb{
 
 .grey-bg {
     background-color: #454147 !important;
+}
+.cl-white{
+    color: #FFFFFF !important;
 }
 
 .btn-prm {
