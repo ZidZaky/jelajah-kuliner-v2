@@ -125,7 +125,7 @@
     function setViewPopupPKL(wht) {
         button1 = document.querySelector('.button1').querySelectorAll('button')
         button2 = document.querySelector('.button2').querySelectorAll('button')
-        loginbbutton = document.querySelector('.button2.login')
+        loginbbutton = document.querySelector('.button2 .login')
         console.log(loginbbutton)
         // console.log(button2)
         container = document.querySelectorAll('.container.area')
