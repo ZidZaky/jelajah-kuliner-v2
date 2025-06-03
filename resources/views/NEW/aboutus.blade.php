@@ -2,38 +2,94 @@
 
 @section('css')
 {{-- Tambahkan CSS khusus untuk halaman ini jika diperlukan --}}
-<style>
-    .user-guide-banner {
-        background-color: #8C1C1C; /* Warna merah tua seperti di gambar, sesuaikan jika perlu */
-        color: white;
-    }
+<!-- <head>
+    <title>Tentang Kami - Jelajah Kuliner</title> -->
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f3f3f3;
+            color: #333;
+        }
+        header {
+            background-color: #8B0000;
+            padding: 20px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-weight: bold;
+            font-size: 24px;
+        }
+        .nickname {
+            font-size: 16px;
+        }
+        section {
+            padding: 40px 60px;
+        }
+        .about-section {
+            background-color: #c0392b;
+            color: white;
+            padding: 60px;
+            text-align: left;
+            position: relative;
+        }
+        .about-section h2 {
+            font-size: 24px;
+        }
+        .review-section, .merchant-section {
+            background-color: white;
+            margin-top: 20px;
+            padding: 40px;
+            border-radius: 8px;
+        }
+        .merchant-cards {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        .card {
+            background-color: #f4f4f4;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            width: 30%;
+        }
+        .card img {
+            width: 80px;
+            border-radius: 50%;
+        }
+        footer {
+            background-color: #8B0000;
+            color: white;
+            padding: 40px 60px;
+            display: flex;
+            justify-content: space-between;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        .btn-kembali-home {
+            background-color: #8B0000;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .btn-kembali-home:hover {
+            background-color: #a52a2a;
+        }
 
-    .user-guide-section-title {
-        color: #333; /* Warna teks judul bagian, sesuaikan jika perlu */
-        font-weight: bold;
-        margin-top: 2rem;
-        margin-bottom: 1rem;
-    }
+    </style>
+<!-- </head>
+<body> -->
 
-    .placeholder-box {
-        background-color: #E9ECEF; /* Warna abu-abu muda untuk placeholder */
-        border: 1px solid #DEE2E6;
-        height: 400px; /* Sesuaikan tinggi placeholder */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        color: #6C757D;
-        font-size: 1.2rem;
-        border-radius: 0.25rem;
-    }
-
-    /* Pastikan logo dan menu navigasi utama terlihat jelas */
-    /* Jika .first-bg dari body Anda gelap, banner mungkin perlu kontras */
-    body.first-bg {
-        /* background-color: #f8f9fa; /* Contoh jika ingin background body lebih terang */
-    }
-</style>
 @endsection
 
 @section('AddOn')
@@ -41,52 +97,85 @@
 @endsection
 
 @section('isi')
-<div class="container-fluid user-guide-banner py-4">
-    <div class="container">
-        <h1 class="text-center display-4">USER GUIDE</h1>
-    </div>
-</div>
+<header>
+    <div class="logo">🍜 Jelajah Kuliner</div>
+    <div class="nickname">Hello, Ganteng</div>
+</header>
 
-<div class="container mt-4 mb-5">
-    {{-- User Guide PKL --}}
-    <div class="row justify-content-center">
-        <div class="col-12">
-            <h2 class="text-center user-guide-section-title">USERGUIDE PKL</h2>
-        </div>
-        <div class="col-md-10 col-lg-8">
-            <div class="placeholder-box">
-                <p>Konten Userguide untuk PKL akan ditampilkan di sini.<br>(Misalnya: Video tutorial, langkah-langkah, atau carousel gambar)</p>
-            </div>
-        </div>
-    </div>
+<section class="about-section">
+    <h2>APA SIH JELAJAH KULINER ITU??</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...</p>
+</section>
 
-    {{-- User Guide Pembeli --}}
-    <div class="row justify-content-center mt-5">
-        <div class="col-12">
-            <h2 class="text-center user-guide-section-title">USERGUIDE PEMBELI</h2>
+<section>
+    <h2>KENAPA HARUS JELAJAH KULINER DARI PLATFORM LAIN?</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...</p>
+</section>
+
+<section class="review-section">
+    <h2>REVIEW PEMBELI</h2>
+    <ol>
+        <li><strong>Memuaskan</strong> - Lorem ipsum dolor sit amet, consectetur adipiscing elit...</li>
+        <li><strong>Mas Yudis</strong> - Lorem ipsum dolor sit amet, consectetur adipiscing elit...</li>
+        <li><strong>Yunita top</strong> - Lorem ipsum dolor sit amet, consectetur adipiscing elit...</li>
+    </ol>
+</section>
+
+<section class="merchant-section">
+    <h2>OUR MERCHANT</h2>
+    <div class="merchant-cards">
+        <div class="card">
+            <img src="https://via.placeholder.com/80" alt="merchant 1">
+            <h3>Jajang arjuna</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
         </div>
-        <div class="col-md-10 col-lg-8">
-            <div class="placeholder-box">
-                <p>Konten Userguide untuk Pembeli akan ditampilkan di sini.<br>(Misalnya: Video tutorial, langkah-langkah, atau carousel gambar)</p>
-            </div>
+        <div class="card">
+            <img src="https://via.placeholder.com/80" alt="merchant 2">
+            <h3>Ubay haroro</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+        </div>
+        <div class="card">
+            <img src="" alt="merchant 3">
+            <h3>Mas yoga teh celup</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
         </div>
     </div>
-</div>
+</section>
+
+<footer>
+    <div>
+        <h3>Our Service</h3>
+        <ul>
+            <li>Review</li>
+            <li>Mapview</li>
+            <li>Rekomendasi</li>
+            <li>Merchant</li>
+            <li>Menu List</li>
+        </ul>
+    </div>
+    <div>
+        <h3>Information</h3>
+        <ul>
+            <li>Apa sih Jelajah Kuliner?</li>
+            <li>Kenapa harus Jelajah?</li>
+            <li>Review Pembeli</li>
+            <li>Info Merchant Terbaik</li>
+        </ul>
+    </div>
+    <div>
+        <h3>Our Company</h3>
+        <ul>
+            <li>About</li>
+            <li>Contact</li>
+            <li>News/Artikel</li>
+            <li>FAQ</li>
+        </ul>
+    </div>
+</footer>
+
+</body>
 @endsection
 
 @section('js')
-<script>
-    // Contoh: jika ada interaksi khusus pada halaman user guide
-    // console.log("Halaman User Guide dimuat.");
 
-    // Karena halaman ini tidak memiliki popup seperti contoh Anda,
-    // fungsi closePopup() dan setViewPopupPKL() dari contoh sebelumnya
-    // tidak secara langsung digunakan di sini kecuali Anda menambahkannya
-    // kembali untuk fungsionalitas lain.
-    function closePopup(){
-        // Implementasi jika ada popup di halaman ini
-        // Contoh: document.getElementById('myUserGuidePopup').style.display = 'none';
-        console.log('closePopup dipanggil, tapi tidak ada popup default di halaman ini.');
-    }
-</script>
 @endsection
