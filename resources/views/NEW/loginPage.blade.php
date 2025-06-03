@@ -23,16 +23,17 @@
 
             <div class="d-flex flex-column gap-3 px-4 w-100">
                 <div class="position-relative">
-                    <input type="email" class="form-control rounded-5" style="background-color: #E5E5E5; border: 2px solid #991b1b; height: 35px;" placeholder="Email">
+                    <input autocomplete="off" type="email" class="form-control rounded-5" style="background-color: #E5E5E5; border: 2px solid #991b1b; height: 35px;" placeholder="Email">
                 </div>
                 
                 <div class="position-relative">
-                    <input type="password" class="form-control rounded-5" style="background-color: #E5E5E5; border: 2px solid #991b1b; height: 35px;" placeholder="Password" id="passwordField">
+                    <input autocomplete="off" type="password" class="form-control rounded-5" style="background-color: #E5E5E5; border: 2px solid #991b1b; height: 35px;" placeholder="Password" id="passwordField">
                     <button class="btn position-absolute end-0 top-50 translate-middle-y me-2" type="button" onclick="togglePassword()">
                         <i class="bi bi-eye" id="toggleIcon"></i>
                     </button>
                 </div>
-            <button class="btn w-100 rounded-5 mt-3 hover-red-dark" style="background-color: #991b1b; height: 35px; color: white;"><strong>Sign In</strong></button>
+
+                <button class="btn w-100 rounded-5 mt-3 hover-red-dark" style="background-color: #991b1b; height: 35px; color: white;"><strong>Sign In</strong></button>
             
             <div class="d-flex justify-content-center gap-1">
             <strong><p class="mb-0" style="color: #666666;">Belum punya akun?</p></strong>

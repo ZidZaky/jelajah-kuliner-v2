@@ -51,7 +51,6 @@
             <div class=" d-none d-md-flex gap-3">
                 <a href="/baseLogin" class="btn border border-danger hover-red-dark" style="border: 2px solid #991b1b !important; color: #991b1b;" onmouseover="this.style.color='white'" onmouseout="this.style.color='#991b1b'">
                     Login</a>
-<<<<<<< HEAD
                 <a href="/baseRegist"><button class="btn btn-prm hover-red-dark rounded-3">Register</button></a>
 
                 <!-- udh login -->
@@ -62,9 +61,6 @@
                         <i class="bi bi-caret-down-fill primary-color px-2 m-0"></i>
                     </button>
                 </div> -->
-=======
-                <button class="btn btn-prm hover-red-dark rounded-3">Register</button>
->>>>>>> 89a22838925d7d5252f99a00082f4c70f0818367
             </div>
         </div>
     </nav>
