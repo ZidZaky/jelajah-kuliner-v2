@@ -257,3 +257,6 @@ Route::get('/access-denied', function () {
 Route::get('/baseRegist', function () {
     return view('NEW.registPage');
 });
+Route::get('/pesanan', function () {
+    return view('NEW.pesanan');
+});
