@@ -28,7 +28,6 @@
 @endsection
 
 @section('AddOn')
-{{-- Kosongkan karena halaman error biasanya tidak punya AddOn --}}
 @endsection
 
 @section('isi')
@@ -38,12 +37,11 @@
         <p class="error-message">
             Maaf, Anda tidak memiliki izin untuk mengakses halaman ini. Silakan hubungi administrator atau gunakan akun dengan peran yang sesuai untuk mendapatkan akses.
         </p>
-        {{-- Opsional: Tambahkan tombol kembali ke beranda --}}
-        {{-- <a href="{{ url('/') }}" class="btn btn-danger mt-4" style="background-color: #8C1C1C; border-color: #731717;">Kembali ke Beranda</a> --}}
+        
+        <!-- <a href="{{ url('/') }}" class="btn btn-danger mt-4" style="background-color: #8C1C1C; border-color: #731717;">Kembali ke Beranda</a> -->
     </div>
 </div>
 @endsection
 
 @section('js')
-{{-- Tidak ada JavaScript khusus untuk halaman ini --}}
 @endsection

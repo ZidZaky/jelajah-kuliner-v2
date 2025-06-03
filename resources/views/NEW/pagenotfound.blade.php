@@ -27,7 +27,7 @@
 @endsection
 
 @section('AddOn')
-{{-- Kosongkan --}}
+<!-- {{-- Kosongkan --}} -->
 @endsection
 
 @section('isi')
@@ -37,12 +37,12 @@
         <p class="error-message">
             Maaf, halaman yang Anda cari tidak ditemukan. Mungkin halaman tersebut telah dihapus, dipindahkan, atau URL yang Anda masukkan tidak tepat.
         </p>
-        {{-- Opsional: Tambahkan tombol kembali ke beranda --}}
-        {{-- <a href="{{ url('/') }}" class="btn btn-danger mt-4" style="background-color: #8C1C1C; border-color: #731717;">Kembali ke Beranda</a> --}}
+        <!-- {{-- Opsional: Tambahkan tombol kembali ke beranda --}}
+        {{-- <a href="{{ url('/') }}" class="btn btn-danger mt-4" style="background-color: #8C1C1C; border-color: #731717;">Kembali ke Beranda</a> --}} -->
     </div>
 </div>
 @endsection
 
 @section('js')
-{{-- Tidak ada JavaScript khusus untuk halaman ini --}}
+<!-- {{-- Tidak ada JavaScript khusus untuk halaman ini --}} -->
 @endsection

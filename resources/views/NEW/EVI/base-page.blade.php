@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>@yield('title')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
@@ -51,11 +51,21 @@
             <div class=" d-none d-md-flex gap-3">
                 <a href="/baseLogin" class="btn border border-danger hover-red-dark" style="border: 2px solid #991b1b !important; color: #991b1b;" onmouseover="this.style.color='white'" onmouseout="this.style.color='#991b1b'">
                     Login</a>
-                <button class="btn btn-prm hover-red-dark rounded-3">Register</button>
+                <a href="/baseRegist"><button class="btn btn-prm hover-red-dark rounded-3">Register</button></a>
+
+                <!-- udh login -->
+                <!-- <div class="w-auto h-100 d-flex flex-row gap-2 align-items-center justify-content-center">
+                    <p class="fs-6 p-0 m-0">Hello, Maryam</p>
+                    <button class="btn h-100 rounded-5 p-1 m-0 w-auto border-line-red d-flex flex-row  gap-3 justify-content-center align-items-center">
+                        <img src="{{ auto_asset('assets/farhan.jpg') }}" alt="" class="circle-preview">
+                        <i class="bi bi-caret-down-fill primary-color px-2 m-0"></i>
+                    </button>
+                </div> -->
             </div>
         </div>
     </nav>
 
+<<<<<<< HEAD
     <main role="main" class="flex-grow-1">
         <div class="position-relative z-3 d-flex flex-column flex-wrap" style="min-height:0px; max-width:100%; min-width: 0px;">
             @yield('AddOn')
@@ -66,6 +76,29 @@
         </div>
     </main>
     <footer class="mt-auto d-flex justify-content-end position-relative z-3 justify-content-md-between align-items-center grey-bg w-100 px-4" style="height: 30px;">
+=======
+    
+
+
+    <div class="position-relative z-3 d-flex flex-column flex-wrap" style="max-height: calc(100vh - 90px - 30px); min-height:0px; max-width:100%; min-width: 0px;">
+        <!-- <div class="position-absolute offcanvas offcanvas-start h-100" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel"
+        style="max-height: calc(100vh - 90px - 30px); height: calc(100vh - 90px - 30px);">
+
+        </div> -->
+
+
+
+
+        @yield('AddOn')
+    </div>
+
+    <div class="isi position-relative z-2" style="/* height: calc(100vh - 90px - 20px); */ width:100%;">
+        @yield('isi')
+    </div>
+
+    <footer class="mt-auto d-flex justify-content-end position-relative z-3 justify-content-md-between align-items-center grey-bg w-100 px-4" style="bottom:0; height: 30px;">
+    
+>>>>>>> 2ec857f5afb189f4585840bf3ab4b70d7cdc249a
         <div class="d-none d-md-flex justify-content-center align-items-center">
             <p class="show-font">Jelajah Kuliner - Aplikasi Pelacakan Pedagang Kaki Lima Berbasis Web</p>
         </div>

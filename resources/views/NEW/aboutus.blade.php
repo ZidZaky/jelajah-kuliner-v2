@@ -37,7 +37,7 @@
 @endsection
 
 @section('AddOn')
-{{-- Bagian AddOn bisa dikosongkan jika tidak ada popup atau sidebar khusus untuk halaman ini --}}
+
 @endsection
 
 @section('isi')
@@ -75,7 +75,6 @@
 @endsection
 
 @section('js')
-{{-- Tambahkan JavaScript khusus untuk halaman ini jika diperlukan --}}
 <script>
     // Contoh: jika ada interaksi khusus pada halaman user guide
     // console.log("Halaman User Guide dimuat.");
