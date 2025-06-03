@@ -2,7 +2,7 @@ body {
     background-image: url(/assets/ADDPRODUCT.jpg);
     background-size: cover;
 }
-
+/*
 .rating-slider {
     position: relative;
     text-align: center;
@@ -17,8 +17,8 @@ body {
     background: #d3d3d3;
     outline: none;
     border-radius: 5px;
-}
-
+} */
+/*
 .slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
@@ -30,11 +30,11 @@ body {
     position: relative;
     z-index: 1;
     margin-top: -10px;
-}
-
+} */
+/*
 .slider-value {
     position: absolute;
-    top: calc(100%); /* Places the slider value below the slider */
+    top: calc(100%);
     left: 50%;
     transform: translateX(-50%);
     color: #fff;
@@ -43,31 +43,70 @@ body {
     border-radius: 5px;
     font-size: 14px;
     z-index: 2;
-}
+} */
 
 .kotak {
     position: absolute;
     padding: 50px;
     width: 600px;
-    height: 500px;
+    /* height: 500px; */
     position: absolute;
-    margin-top: 45vh;
+    margin-top: 50vh;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: #9c242c;
+    background: white;
     opacity: 0.95;
     text-align: center;
+    border-radius: 30px;
 }
 
 .form-floating{
-    margin-top: 15%;
-    margin-bottom: 10px;
+    width: 350px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.form-floating .form-control {
+    border-radius: 30px;
 }
 
-
 .btn {
-    width: 100px;
+    width: 300px;
     margin-top: 20px;
     margin-bottom: 50px;
+    background: #A31D1D;
+    border-radius: 30px;
+    
+}
+
+.stars {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 5;
+    font-size: 3rem;
+}
+
+.stars input[type="radio"] {
+    display: none;
+}
+
+.stars label {
+    font-size: 3rem;
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.stars input[type="radio"]:checked ~ label,
+.stars label:hover,
+.stars label:hover ~ label {
+    color: #f5c518; /* gold */
+}
+
+.rating-stars {
+    font-size: 1rem;
+    font-weight: bold;
 }

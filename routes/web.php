@@ -232,3 +232,9 @@ use app\Models\PKL;
 
     Route::get('/getIDPkl/{id}', [PKLController::class, 'getIdPKL']);
 
+
+
+    Route::get('/base', function(){
+        return view('NEW.dashboard-user');
+    });
+
