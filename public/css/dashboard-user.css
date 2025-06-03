@@ -25,9 +25,6 @@ button.nonactive{
         margin: 0;
         padding: 0;
     }
-    p{
-        /* font-size: 10px !important; */
-    }
 }
 .textDexcription{
     overflow-y: auto;

@@ -238,3 +238,6 @@ use app\Models\PKL;
         return view('NEW.dashboard-user');
     });
 
+    Route::get('/baseLogin', function(){
+        return view('NEW.loginPage');
+    });

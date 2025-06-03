@@ -26,7 +26,7 @@
     <nav class="navbar w-full d-flex justify-content-center align-items-center  " style="height: 80px; max-height:fit-content;">
         <div class="second-bg d-flex justify-content-between flex-row px-2 px-md-5 rounded-3 h-auto" style="padding: 10px 2px; width: 98%;">
             <div class="containerLeftNavbar d-flex flex-row justify-content-sm-between">
-                <a href="#" class="logo h-auto" style="width: 150px;">
+                <a href="/base" class="logo h-auto" style="width: 150px;">
                     <img src="{{ auto_asset('assets/logoJelajahKuliner.svg') }}" alt="Logo"
                         class="w-100">
                 </a>
@@ -67,7 +67,8 @@
 
             <div class=" d-none d-md-flex gap-3">
                 <!-- belum login -->
-                <button class="btn btn-outline-danger ">Login</button>
+                <a href="/baseLogin" class="btn border border-danger hover-red-dark" style="border: 2px solid #991b1b !important; color: #991b1b;" onmouseover="this.style.color='white'" onmouseout="this.style.color='#991b1b'">
+                    Login</a>
                 <button class="btn btn-prm hover-red-dark rounded-3">Register</button>
 
                 <!-- udh login -->
@@ -99,7 +100,7 @@
     <div class="position-relative z-2" style="height: calc(100vh - 90px - 20px); width:100%;">
         @yield('isi')
     </div>
-    <footer class="d-flex justify-content-end position-relative z-3 justify-content-md-between align-items-center grey-bg w-100 px-4" style="height: 30px;">
+    <footer class="d-flex justify-content-end position-relative z-3 justify-content-md-between align-items-center grey-bg w-100 px-4" style="height: 30px; margin-top: 5px;">
         <div class="d-none d-md-flex justify-content-center align-items-center">
             <p class="show-font">Jelajah Kuliner - Aplikasi Pelacakan Pedagang Kaki Lima Berbasis Web</p>
         </div>
@@ -126,5 +127,6 @@
 
 
 @yield('js')
+
 
 </html>
