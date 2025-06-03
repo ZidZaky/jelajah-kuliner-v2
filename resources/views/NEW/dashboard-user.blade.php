@@ -11,7 +11,7 @@
 @endsection
 
 @section('AddOn')
-<div class="containerPopup bg-success d-flex flex-column justify-content-between width-full-xs position-fixed z-3" style="width: 350px; height: 84.8vh; right:0;">
+<div class="containerPopup bg-success d-flex flex-column justify-content-between width-full-xs position-fixed z-3" style="width: 350px; height: 80vh; right:0;">
     <div class="container d-flex justify-content-between align-items-center" style="height: 30px; font-size: 12px; background-color: #2B1010 !important; color: white;">
         <div class="d-flex flex-row gap-2 justify-content-start align-items-center">
             <p class="p-clear fw-bolder">PENTOL MAMANG ALI</p>
@@ -31,7 +31,7 @@
     </div>
 
     <div class="container d-flex flex-row gap-2 align-items-center justify-content-between" style="height: 100px; max-height: 100px; background-color: #6D2323;">
-        <img class=" circle-preview" src="/assets/contoh.jpg" alt="" style="height: 80%; width: fit-content;">
+        <img class="circle-preview" src="/assets/contoh.jpg" alt="" style="height: 80%; width: fit-content;">
         <div class="h-75" style="width: 1px; background-color:rgba(255, 255, 255, 0.36);"></div>
         <p class="p-clear h-auto" style="color:rgba(253, 253, 253, 0.87);font-size: 10px;">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam, repellat quis odio sapiente quia quam vel, dolor nihil nam maiores rerum esse ex tempora porro magnam tenetur distinctio, adipisci dolore!</p>
     </div>
