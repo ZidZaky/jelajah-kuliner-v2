@@ -118,10 +118,10 @@ use app\Models\PKL;
 
 
 //     // Define a route to fetch coordinates from the database
-//     Route::get('/getCoordinates', [PKLController::class, 'getCoordinates']);
+Route::get('/getCoordinates', [PKLController::class, 'getCoordinates']);
 //     // Route::get('/getUlasan', [UlasanController::class, 'getUlasan']);
-//     Route::get('/getUlasan/{id}', [UlasanController::class, 'getUlasan']);
-//     Route::get('/getProduk/{id}', [ProdukController::class, 'getProduk']);
+Route::get('/getUlasan/{id}', [UlasanController::class, 'getUlasan']);
+Route::get('/getProduk/{id}', [ProdukController::class, 'getProduk']);
 //     Route::get('/getPictureByID/{id}', [PKLController::class, 'getPictureByID']);
 //     Route::get('/userguide', function () {
 //         return view('userguide');

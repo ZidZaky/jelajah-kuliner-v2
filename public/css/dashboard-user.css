@@ -1,47 +1,52 @@
-button.active{
+button.active {
     background-color: #6D2323;
     color: white;
-    border: 0.5px solid #6D2323 ;
+    border: 0.5px solid #6D2323;
 }
 
-button.nonactive{
+button.nonactive {
     /* color: #a73636; */
     color: #6D2323;
-    border: 0.5px solid #6D2323 ;
+    border: 0.5px solid #6D2323;
 }
-.container.produks, .container.ulasans{
+
+.container.produks,
+.container.ulasans {
     max-width: 100%;
     max-height: 100%;
     overflow-y: scroll;
-    .produk{
+
+    .produk {
         width: 100%;
         height: 100px;
         /* background-color: aqua; */
     }
 }
-.contisi{
-    >*{
+
+.contisi {
+    >* {
         /* background-color: aqua; */
         margin: 0;
         padding: 0;
     }
 }
-.textDexcription{
+
+.textDexcription {
     overflow-y: auto;
 }
 
 
-.container.produks{
+.container.produks {
     overflow-y: scroll !important;
 }
 
-.button2{
-    button:hover{
-       transform: scale(1.05);
+.button2 {
+    button:hover {
+        transform: scale(1.05);
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     }
 
-    button{
+    button {
         transition: all 0.3s ease;
         transform: scale(1);
         box-shadow: none;
@@ -53,3 +58,86 @@ button.nonactive{
     transition: background-color 0.2s ease;
 }
 
+#map {
+    height: calc(100vh - 90px - 20px + 3px);
+}
+
+/* CSS untuk Custom Marker Icon KOTAK BARU */
+.custom-square-marker-icon {
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.custom-square-marker-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Akhir CSS Custom Marker Icon KOTAK BARU */
+
+/* CSS Helper Tambahan */
+.p-clear {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.first-cl {
+    /* Warna teks terang untuk background gelap */
+    color: rgba(253, 253, 253, 0.87);
+}
+
+.bg-prim-dark {
+    /* Warna background utama gelap untuk item produk */
+    background-color: #6D2323;
+}
+
+.cl-prim-dark {
+    /* Warna teks utama gelap (misalnya untuk bintang ulasan) */
+    color: #6D2323;
+}
+
+.cl-grey-fade {
+    /* Warna untuk bintang rating kosong atau teks pudar */
+    color: #aeaeae;
+}
+
+.border-left-top {
+    /* Radius untuk sudut kiri atas */
+    border-top-left-radius: 20px;
+    /* Sesuaikan radius jika perlu */
+}
+
+.border-right-bottom {
+    /* Radius untuk sudut kanan bawah */
+    border-bottom-right-radius: 20px;
+    /* Sesuaikan radius jika perlu */
+}
+
+/* Styling untuk scrollbar di deskripsi produk/ulasan */
+.scroll-bg-dark::-webkit-scrollbar {
+    width: 8px;
+}
+
+.scroll-bg-dark::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    /* Track sedikit transparan */
+    border-radius: 10px;
+}
+
+.scroll-bg-dark::-webkit-scrollbar-thumb {
+    background: #4a1c1c;
+    /* Warna thumb scrollbar yang lebih gelap */
+    border-radius: 10px;
+}
+
+.scroll-bg-dark::-webkit-scrollbar-thumb:hover {
+    background: #3a1010;
+    /* Warna saat hover */
+}

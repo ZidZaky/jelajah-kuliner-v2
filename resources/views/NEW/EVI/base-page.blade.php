@@ -20,8 +20,8 @@
 
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
-<!-- {/* MODIFIED HERE */} -->
-<body class="first-bg d-flex flex-column min-vh-100"> 
+
+<body class="first-bg d-flex flex-column min-vh-100">
     <nav class="navbar w-full d-flex justify-content-center align-items-center" style="height: 80px; max-height:fit-content;">
         <div class="second-bg d-flex justify-content-between flex-row px-2 px-md-5 rounded-3 h-auto" style="padding: 10px 2px; width: 98%;">
             <div class="containerLeftNavbar d-flex flex-row justify-content-sm-between">
@@ -56,27 +56,16 @@
         </div>
     </nav>
 
-    {{-- Wrap AddOn and Isi in a main container that can grow if needed, or rely on footer's mt-auto --}}
-    {{-- Consider removing or adjusting height/max-height with calc(100vh - ...) on these wrappers --}}
-    {{-- As they might conflict with the d-flex flex-column min-vh-100 on body and mt-auto on footer --}}
+    <main role="main" class="flex-grow-1">
+        <div class="position-relative z-3 d-flex flex-column flex-wrap" style="min-height:0px; max-width:100%; min-width: 0px;">
+            @yield('AddOn')
+        </div>
 
-    <div class="position-relative z-3 d-flex flex-column flex-wrap" style="/* max-height: calc(100vh - 90px - 30px); */ min-height:0px; max-width:100%; min-width: 0px;">
-    {{-- MODIFIED: Commented out max-height or remove it --}}
-        @yield('AddOn')
-    </div>
-
-    <div class="position-relative z-2" style="/* height: calc(100vh - 90px - 20px); */ width:100%;">
-    {{-- MODIFIED: Commented out height or remove it --}}
-        @yield('isi')
-    </div>
-
-    <footer class="mt-auto d-flex justify-content-end position-relative z-3 justify-content-md-between align-items-center grey-bg w-100 px-4" style="height: 30px; margin-top: 5px !important;">
-    {{-- MODIFIED HERE: Added mt-auto. Note: your inline style has margin-top: 5px, mt-auto will override this for the top margin specifically. --}}
-    {{-- If margin-top: 5px is crucial for spacing above footer, you might need to add a wrapper or adjust padding on main content's bottom. --}}
-    {{-- For clarity, Bootstrap's mt-auto sets margin-top. The inline style "margin-top: 5px" will be overridden by "mt-auto" unless you remove mt-auto and use a different flex grow strategy for the main content. --}}
-    {{-- A simple solution for the 5px top margin is to add it to the style along with Bootstrap class OR add padding-top to footer content. --}}
-    {{-- Example: <footer class="mt-auto ..." style="padding-top: 5px; height: 35px;"> or adjust content wrapper above. --}}
-    {{-- For this solution, let's assume mt-auto handles the main spacing, and the 5px is internal or managed differently if strictly needed above the footer external boundary. --}}
+        <div class="position-relative z-2" style="width:100%;">
+            @yield('isi')
+        </div>
+    </main>
+    <footer class="mt-auto d-flex justify-content-end position-relative z-3 justify-content-md-between align-items-center grey-bg w-100 px-4" style="height: 30px;">
         <div class="d-none d-md-flex justify-content-center align-items-center">
             <p class="show-font">Jelajah Kuliner - Aplikasi Pelacakan Pedagang Kaki Lima Berbasis Web</p>
         </div>
