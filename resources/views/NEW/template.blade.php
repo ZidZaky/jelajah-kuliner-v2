@@ -1,8 +1,8 @@
 @extends('NEW.EVI.base-page')
 
 @section('css')
-<link rel="stylesheet" href="{{ app()->environment('local')? asset('css/base.css') :
-    secure_asset('css/base.css') }}">
+<link rel="stylesheet" href="{{ auto_asset('css/?.css') }}">
+
 <style>
 
 

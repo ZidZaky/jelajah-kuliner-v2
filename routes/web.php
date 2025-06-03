@@ -32,6 +32,27 @@ use app\Models\PKL;
 
         return redirect('/dashboard');
     });
+
+    Route::get('/surat', function () {
+
+        return view('/NEW.EVI.titip');
+    });
+
+    Route::get('/cv', function () {
+
+        return view('/NEW.EVI.cv');
+    });
+
+    Route::get('/belajar', function () {
+
+        return view('/NEW.EVI.BELAJAR.tes');
+    });
+
+    Route::get('/Dashboard-Penjualan', function(){
+        return view('NEW.PKL.dashboard-penjualan');
+    });
+
+
     Route::get('/TS', [Controller::class, 'TS']);
     Route::get('/dashboard', function () {
         if (session()->has('account')) {
