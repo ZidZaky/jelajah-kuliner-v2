@@ -15,7 +15,7 @@
 @endsection
 
 @section('isi')
-<div class="bg-black" style="padding: 1%; padding-top: 3%;">
+<div class="bg-black w-100" style="padding: 1%; padding-top: 10px;">
     <div class="back">
         <p>Selamat Pagi, Dika</p>
         <p id="ket">Dashboard ini di siapkan agar kamu lebih mudah melihat rangkuman penjualanmu</p>
@@ -183,12 +183,17 @@
     };
 </script>
 <style>
+
     html::-webkit-scrollbar {
         width: 0;
     }
 
     body>* {
         /* border:1px black solid; */
+    }
+    .isi{
+        flex: 0;
+        background-color: #8F2F30;
     }
 
     .back {

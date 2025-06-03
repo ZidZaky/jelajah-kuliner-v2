@@ -27,39 +27,10 @@ use app\Models\PKL;
 
 
 
+
 // //NON TESTING
 //     Route::get('/', function () {
 
-<<<<<<< HEAD
-        return redirect('/dashboard');
-    });
-
-    Route::get('/surat', function () {
-
-        return view('/NEW.EVI.titip');
-    });
-
-    Route::get('/cv', function () {
-
-        return view('/NEW.EVI.cv');
-    });
-
-    Route::get('/belajar', function () {
-
-        return view('/NEW.EVI.BELAJAR.tes');
-    });
-
-    Route::get('/Dashboard-Penjualan', function(){
-        return view('NEW.PKL.dashboard-penjualan');
-    });
-
-
-    Route::get('/TS', [Controller::class, 'TS']);
-    Route::get('/dashboard', function () {
-        if (session()->has('account')) {
-            $pkl = new PKLController();
-            $ulasan = Ulasan::all();
-=======
 //         return redirect('/dashboard');
 //     });
 //     Route::get('/TS', [Controller::class, 'TS']);
@@ -67,7 +38,6 @@ use app\Models\PKL;
 //         if (session()->has('account')) {
 //             $pkl = new PKLController();
 //             $ulasan = Ulasan::all();
->>>>>>> 7ab67713fe5bdbc4c210d8df68b54e8acd2537b0
 
 //             $pesanan = Pesanan::all();
 //             return view('dashboard', ['ulasan' => $ulasan, 'pesanan' => $pesanan]);
@@ -284,3 +254,7 @@ Route::get('/404', function () {
 Route::get('/access-denied', function () {
     return view('new.accessdenied');
 });
+
+Route::get('/Dashboard-Penjualan', function(){
+        return view('NEW.PKL.dashboard-penjualan');
+    });

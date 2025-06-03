@@ -62,11 +62,11 @@
         @yield('AddOn')
     </div>
 
-    <div class="position-relative z-2" style="/* height: calc(100vh - 90px - 20px); */ width:100%;">
+    <div class="isi position-relative z-2" style="/* height: calc(100vh - 90px - 20px); */ width:100%;">
         @yield('isi')
     </div>
 
-    <footer class="mt-auto d-flex justify-content-end position-relative z-3 justify-content-md-between align-items-center grey-bg w-100 px-4" style="height: 30px; margin-top: 5px !important;">
+    <footer class="mt-auto d-flex justify-content-end position-relative z-3 justify-content-md-between align-items-center grey-bg w-100 px-4" style="bottom:0; height: 30px;">
     
         <div class="d-none d-md-flex justify-content-center align-items-center">
             <p class="show-font">Jelajah Kuliner - Aplikasi Pelacakan Pedagang Kaki Lima Berbasis Web</p>
