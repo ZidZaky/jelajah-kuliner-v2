@@ -241,3 +241,7 @@ use app\Models\PKL;
     Route::get('/baseLogin', function(){
         return view('NEW.loginPage');
     });
+
+    Route::get('/baseRegist', function(){
+        return view('NEW.registPage');
+    });

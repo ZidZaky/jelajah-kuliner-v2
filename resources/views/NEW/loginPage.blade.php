@@ -17,9 +17,9 @@
             <img src="{{ auto_asset('assets/logoJelajahKuliner.svg') }}" alt="newLogoApp" 
             class="mt-4" style="width: 40%;">
             
-            <strong><p class="mt-1 mb-4" style="text-align: center; width: 100%;">
+            <strong><h5 class="mt-1 mb-4" style="text-align: center; width: 100%;">
                 SELAMAT DATANG!
-            </p></strong>
+            </h5></strong>
 
             <div class="d-flex flex-column gap-3 px-4 w-100">
                 <div class="position-relative">
@@ -36,7 +36,7 @@
             
             <div class="d-flex justify-content-center gap-1">
             <strong><p class="mb-0" style="color: #666666;">Belum punya akun?</p></strong>
-            <strong><a href="#" class="text-decoration-none" style="color: #FF0000;" onmouseover="this.style.color='#991b1b'" onmouseout="this.style.color='#FF0000'">Daftar Disini!</a></strong>
+            <strong><a href="/baseRegist" class="text-decoration-none" style="color: #FF0000;" onmouseover="this.style.color='#991b1b'" onmouseout="this.style.color='#FF0000'">Daftar Disini!</a></strong>
             </div>
             </div>
 

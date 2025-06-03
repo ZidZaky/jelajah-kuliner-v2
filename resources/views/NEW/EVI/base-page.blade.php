@@ -69,7 +69,7 @@
                 <!-- belum login -->
                 <a href="/baseLogin" class="btn border border-danger hover-red-dark" style="border: 2px solid #991b1b !important; color: #991b1b;" onmouseover="this.style.color='white'" onmouseout="this.style.color='#991b1b'">
                     Login</a>
-                <button class="btn btn-prm hover-red-dark rounded-3">Register</button>
+                <a href="/baseRegist"><button class="btn btn-prm hover-red-dark rounded-3">Register</button></a>
 
                 <!-- udh login -->
                 <!-- <div class="w-auto h-100 d-flex flex-row gap-2 align-items-center justify-content-center">
