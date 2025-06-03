@@ -241,3 +241,11 @@ use app\Models\PKL;
     Route::get('/baseLogin', function(){
         return view('NEW.loginPage');
     });
+
+
+    Route::get('/ulasantes', function(){
+        return view('NEW.ulasan');
+    });
+    Route::get('/tambahproduktes', function(){
+        return view('NEW.tambahProduk');
+    });
