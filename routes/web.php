@@ -239,14 +239,12 @@ Route::get('/base', function () {
     return view('NEW.dashboard-user');
 });
 
-Route::get('/baseLogin', function () {
-    return view('NEW.loginPage');
-});
+    Route::get('/baseLogin', function(){
+        return view('NEW.loginPage');
+    });
 
-Route::get('/aboutus', function () {
-    return view('NEW.aboutus');
-});
 
+<<<<<<< HEAD
 Route::get('/404', function () {
     return view('new.pagenotfound');
 });
@@ -266,3 +264,11 @@ Route::get('/Profile', function () {
 Route::get('/cv', function () {
     return view('NEW.EVI.cv');
 });
+=======
+    Route::get('/ulasantes', function(){
+        return view('NEW.ulasan');
+    });
+    Route::get('/tambahproduktes', function(){
+        return view('NEW.tambahProduk');
+    });
+>>>>>>> bc70f7eab42c64a0db82ec647214b50ade1f12e8
