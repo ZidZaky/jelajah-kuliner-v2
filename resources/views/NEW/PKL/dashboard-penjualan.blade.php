@@ -15,18 +15,18 @@
 @endsection
 
 @section('isi')
-<div class="bg-black w-100" style="padding: 1%; padding-top: 10px;">
+<div class="w-100" style="padding: 1%; padding-top: 10px;">
     <div class="back">
         <p>Selamat Pagi, Dika</p>
         <p id="ket">Dashboard ini di siapkan agar kamu lebih mudah melihat rangkuman penjualanmu</p>
     </div>
     <div class="content">
         <div class="filter">
-            <button onclick="filter('Today')">Today</button>
+            <button class="w-auto" onclick="filter('Today')">Today</button>
             <p>|</p>
-            <button onclick="filter('Bulan Ini')">Bulan Ini</button>
+            <button class="w-auto" onclick="filter('Bulan Ini')">Bulan Ini</button>
             <p>|</p>
-            <button onclick="filter('Tahun Ini')">Tahun Ini</button>
+            <button class="w-auto" onclick="filter('Tahun Ini')">Tahun Ini</button>
         </div>
         <hr>
         <div class="isi">
@@ -193,7 +193,6 @@
     }
     .isi{
         flex: 0;
-        background-color: #8F2F30;
     }
 
     .back {
@@ -232,7 +231,7 @@
         display: flex;
         flex-direction: row;
         gap: 20px;
-        width: 300px;
+        width: fit-content;
         align-items: center;
         justify-content: center;
         color: white;

@@ -255,6 +255,14 @@ Route::get('/access-denied', function () {
     return view('new.accessdenied');
 });
 
-Route::get('/Dashboard-Penjualan', function(){
-        return view('NEW.PKL.dashboard-penjualan');
-    });
+Route::get('/Dashboard-Penjualan', function () {
+    return view('NEW.PKL.dashboard-penjualan');
+});
+
+Route::get('/Profile', function () {
+    return view('NEW.profile');
+});
+
+Route::get('/cv', function () {
+    return view('NEW.EVI.cv');
+});
