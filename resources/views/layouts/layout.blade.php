@@ -23,6 +23,7 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 
+
 <body class="first-bg d-flex flex-column min-vh-100">
     <nav class="navbar w-full d-flex justify-content-center align-items-center" style="height: 80px; max-height:fit-content;">
         <div class="second-bg d-flex justify-content-between flex-row px-2 px-md-5 rounded-3 h-auto" style="padding: 10px 2px; width: 98%;">
@@ -44,23 +45,31 @@
                         <i class="bi bi-list"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
+                        @if (!Auth::check())
                         <li><a class="dropdown-item cl-white hover-red-dark" href="#" style="background-color: #a73636;">Login</a></li>
                         <li><a class="dropdown-item btn-prm hover-red-dark" href="#">Register</a></li>
-                        <li><a class="dropdown-item" href="#">User Guide</a></li>
+                        @endif
+                        @if (Auth::check())
+                        <li><a class="dropdown-item cl-white hover-red-dark" href="#" style="background-color: #a73636;">My Profile</a></li>
+                        <li><a class="dropdown-item btn-prm hover-red-dark" href="#">List Pesanan</a></li>
+                        <li><a class="dropdown-item btn-prm hover-red-dark" href="#">Logout</a></li>
+                        @endif
+                        <!-- <li><  a class="dropdown-item" href="#">User Guide</a></li> -->
                     </ul>
                 </div>
             </div>
             <div class=" d-none d-md-flex gap-3">
+
+                @if (session()==null)
                 <a href="/login" class="btn border border-danger hover-red-dark" style="border: 2px solid #991b1b !important; color: #991b1b;" onmouseover="this.style.color='white'" onmouseout="this.style.color='#991b1b'">
                     Login</a>
                 <a href="/account/create"><button class="btn btn-prm hover-red-dark rounded-3">Register</button></a>
-
+                @endif
                 <!-- udh login -->
                 @if (Auth::check())
-                <div class="w-auto position-relative h-100 d-flex flex-row gap-2 align-items-center justify-content-center">
-                    <p class="fs-6 p-0 m-0">Hello, Session</p>
-                    <button class="btn h-100 rounded-5 p-1 m-0 w-auto border-line-red d-flex flex-row  gap-3 justify-content-center align-items-center"
-                        data-bs-toggle="dropdown" aria-expanded="false">
+                <div class="w-auto h-100 d-flex flex-row gap-2 align-items-center justify-content-center">
+                    <p class="fs-6 p-0 m-0">Hello, {{session('account')['nama']}}</p>
+                    <button class="btn h-100 rounded-5 p-1 m-0 w-auto border-line-red d-flex flex-row  gap-3 justify-content-center align-items-center">
                         <img src="{{ auto_asset('assets/farhan.jpg') }}" alt="" class="circle-preview">
                         <i class="bi bi-caret-down-fill primary-color px-2 m-0"></i>
                     </button>

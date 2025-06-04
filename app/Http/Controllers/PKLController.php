@@ -169,7 +169,7 @@ class PKLController extends Controller
                 // 'picture_url' akan menjadi asset('storage/' . 'pkl/zzz.jpg')
                 // yang menghasilkan http://localhost:8000/storage/pkl/zzz.jpg
                 'picture_url' => asset('storage/' . $pathGambarDiDalamStoragePublic),
-                'rating' => $pkl->rating ?? 3, // Asumsi ada kolom rating
+                'rating' => $pkl->rating ?? 0, // Asumsi ada kolom rating
                 'description' => $pkl->desc, // Menggunakan kolom 'desc' dari database
             ];
         });

@@ -69,14 +69,14 @@ Route::middleware(['status:Pelanggan,PKL,Admin'])->group(function () {
     Route::post('/account/{id}', [AccountController::class, 'editProfile']);
     Route::resource('/PKL', PKLController::class);
     Route::resource('/produk', ProdukController::class);
-    Route::resource('/ulasan', UlasanController::class);
     Route::resource('/pesanan', PesananController::class);
     Route::resource('/report', ReportController::class);
     Route::get('/pesanan/create/{id}', [PesananController::class, 'createWithId'])->name('pesanan.createWithId');
-    Route::get('/ulasan/create/{id}', [UlasanController::class, 'createWithId']);
     Route::get('logout', [AccountController::class, 'logoutAccount']);
     Route::get('batalPesanan/{id}', [PesananController::class, 'batalPesanan']);
 });
+Route::resource('/ulasan', UlasanController::class);
+Route::get('/ulasan/create/{id}', [UlasanController::class, 'createWithId']);
 
 Route::middleware(['status:PKL'])->group(function () {
     Route::post('/update-location', [PKLController::class, 'updateLocation']);
