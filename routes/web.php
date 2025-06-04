@@ -239,14 +239,37 @@ Route::get('/base', function () {
     return view('NEW.dashboard-user');
 });
 
-    Route::get('/baseLogin', function(){
-        return view('NEW.loginPage');
-    });
+Route::get('/baseLogin', function () {
+    return view('NEW.loginPage');
+});
 
 
-    Route::get('/ulasantes', function(){
-        return view('NEW.ulasan');
-    });
-    Route::get('/tambahproduktes', function(){
-        return view('NEW.tambahProduk');
-    });
+Route::get('/404', function () {
+    return view('new.pagenotfound');
+});
+
+Route::get('/access-denied', function () {
+    return view('new.accessdenied');
+});
+
+Route::get('/Dashboard-Penjualan', function () {
+    return view('NEW.PKL.dashboard-penjualan');
+});
+
+Route::get('/Profile', function () {
+    return view('NEW.profile');
+});
+
+Route::get('/cv', function () {
+    return view('NEW.EVI.cv');
+});
+Route::get('/ulasantes', function () {
+    return view('NEW.ulasan');
+});
+Route::get('/halamanulasan', function () {
+    return view('NEW.halamanUlasan');
+});
+Route::get('/tambahproduktes', function () {
+    return view('NEW.tambahProduk');
+});
+
