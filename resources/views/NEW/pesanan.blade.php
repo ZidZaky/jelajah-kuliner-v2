@@ -47,7 +47,7 @@
 
 @section('isi')
 <div class="d-flex flex-column position-relative w-100 h-auto">
-    <button class="position-absolute bg-prim-dark d-flex border-left-top border-right-bottom justify-content-center align-items-center top-0" style="right: 0; height: 100px; width: 100px;" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
+    <button class="position-fixed shadow z-3 bg-prim-dark d-flex border-left-top border-right-bottom justify-content-center align-items-center" style="height: 100px; width: 100px; right: 0; top: 50%; transform: translateY(-50%);" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
         <div class=" border border-1 d-flex cl-white justify-content-center align-items-center border-left-top border-right-bottom" style="width: 90%; height: 90%;">
             <i class="bi bi-cart3 " style="font-size: 30px;"></i>
         </div>
@@ -72,15 +72,15 @@
             style="width: fit-content; max-width: 90%;">
             @for($i=0;$i<=20;$i++)
                 <div class="produk{{{$i}}} align-items-center position-relative d-flex gap-2 flex-row justify-content-end align-items-end" style="height:170px; min-height: 110px; width: 470px;">
-                <div class="position-absolute z-3 gap-0 border border-danger shadow d-flex flex-wrap justify-content-between align-items-center right-0 p-1 bg-white border-left-top border-right-bottom" style="width:110px; height: 40px; bottom: -10px;">
-                    <div class="d-flex awal w-50" onclick="showButton(this,'{{{$i}}}')">
+                <div class="position-absolute z-2 gap-0 border border-danger shadow d-flex flex-wrap justify-content-between align-items-center right-0 p-1 bg-white border-left-top border-right-bottom" style="width:110px; height: 40px; bottom: -10px;">
+                    <div class="tambahproduk{{{$i}}} d-flex awal w-50" onclick="showButton(this,'{{{$i}}}')">
                         <p class="p-clear lh-1 poppins fw-bolder cl-prim-dark" style="font-size: 12px;">TAMBAH PRODUK</p>
                     </div>
                     <button onclick="minus('{{{$i}}}')" class="minusButton{{{$i}}} border d-none justify-content-center align-items-center p-clear border-danger border-left-top border-right-bottom h-auto" style="width: 30px; height: 30px; max-height: 30px;">
                         <i class="p-clear fs-5 bi bi-dash-lg"></i>
                     </button>
                     <input type="number" class="inputNumber{{{$i}}} d-none text-center clean-number border-0 p-0" data-qty="2" value="0" style="width: 30px; height: 100%;" name="" id="qty{{{$i}}}">
-                    <button onclick="plus('{{{$i}}}')" class="plusButton border d-flex justify-content-center align-items-center p-clear border-danger border-left-top border-right-bottom h-auto" style="width: 30px; height: 30px; max-height: 30px;">
+                    <button onclick="plus('{{{$i}}}','1',this)" class="plusButton{{{$i}}} border d-flex justify-content-center align-items-center p-clear border-danger border-left-top border-right-bottom h-auto" style="width: 30px; height: 30px; max-height: 30px;">
                         <i class="p-clear fs-5 bi bi-plus-lg"></i>
                     </button>
                 </div>
@@ -109,16 +109,27 @@
 
 @section('js')
 <script>
-    function plus(idProduk) {
-        let inp = document.querySelector('#qty' + idProduk)
-        let qty_awal = parseInt(inp.value)
-        let stok = parseInt(inp.getAttribute('data-qty'));
-        if (qty_awal <= (stok - 1)) {
-            inp.value = qty_awal + 1;
+    function plus(idProduk, wht, elemen) {
+        if (wht == '1') {
+            let inp = document.querySelectorAll('.minusButton' + idProduk + ' , .inputNumber' + idProduk)
+            inp.forEach(e => {
+                e.classList.replace('d-none', 'd-flex')
+            })
+            elemen.setAttribute("onclick", "plus('"+idProduk+"','0',this)")
+            document.querySelector('.tambahproduk'+idProduk).classList.replace('d-flex','d-none')
+
         } else {
-            erorAlert('Stok Terbatas', 'Stok produk hanya ' + stok)
+            let inp = document.querySelector('#qty' + idProduk)
+            let qty_awal = parseInt(inp.value)
+            let stok = parseInt(inp.getAttribute('data-qty'));
+            if (qty_awal <= (stok - 1)) {
+                inp.value = qty_awal + 1;
+            } else {
+                erorAlert('Stok Terbatas', 'Stok produk hanya ' + stok)
+            }
         }
     }
+
     function minus(idProduk) {
         let inp = document.querySelector('#qty' + idProduk)
         let qty_awal = parseInt(inp.value)
@@ -130,12 +141,11 @@
         }
     }
 
-    function showButton(elemen,idProduk){
-        elemen.classList.replace('d-flex','d-none')
-        document.querySelector('.plusButton').disabled = false;
-        let inp = document.querySelectorAll('.minusButton'+idProduk+' , .inputNumber'+idProduk)
-        inp.forEach(e=>{
-            e.classList.replace('d-none','d-flex')
+    function showButton(elemen, idProduk) {
+        elemen.classList.replace('d-flex', 'd-none')
+        let inp = document.querySelectorAll('.minusButton' + idProduk + ' , .inputNumber' + idProduk)
+        inp.forEach(e => {
+            e.classList.replace('d-none', 'd-flex')
         })
     }
 </script>
