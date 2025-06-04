@@ -252,3 +252,13 @@ Route::get('/baseRegist', function () {
 Route::get('/pesanan', function () {
     return view('NEW.pesanan');
 });
+Route::get('/ulasantes', function () {
+    return view('NEW.ulasan');
+});
+Route::get('/halamanulasan', function () {
+    return view('NEW.halamanUlasan');
+});
+Route::get('/tambahproduktes', function () {
+    return view('NEW.tambahProduk');
+});
+
