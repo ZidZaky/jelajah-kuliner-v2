@@ -28,7 +28,7 @@ class AccountController extends Controller
         $credentials = $request->only('email', 'password');
         // dd(Auth::attempt($credentials));
         if (Auth::attempt($credentials)) {
-            dd('Login successful!'); // Debugging line, remove in production
+            // dd('Login successful!'); // Debugging line, remove in production
             // Authentication was successful
             $account = Auth::user();
             if ($account->status != 'alert') {

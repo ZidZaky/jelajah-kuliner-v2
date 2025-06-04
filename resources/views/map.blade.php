@@ -66,7 +66,7 @@
         </div>
 
         {{-- Tombol Aksi Bawah --}}
-        <div class="button2 d-flex flex-row gap-3 justify-content-center align-items-center" style="height: 50px; min-height:50px;">
+        <div class="button2 d-flex flex-row gap-3 justify-content-center align-items-center" style="height: 50px; min-height:50px;" id="areaTombolAksi">
             <button class="nonactive rounded-5 px-3" onclick="hrefTo('/')" style="font-size: 12px; width: 40%; height: 30px;">Beri ulasan</button>
             <button class="active rounded-5 px-3 " onclick="hrefTo('/')" style="font-size: 12px; width: 40%; height: 30px;">Pesan Sekarang</button>
         </div>
@@ -200,6 +200,22 @@
         const vendorDescEl = document.getElementById('popupVendorDescription');
         if (vendorDescEl) vendorDescEl.textContent = vendor.description;
 
+        const areaTombolAksi = document.getElementById('areaTombolAksi');
+        if (areaTombolAksi) {
+            const pklId = vendor.id; // Ambil ID PKL dari objek vendor
+
+            // Perbarui innerHTML dari div 'areaTombolAksi' dengan tombol-tombol baru
+            // yang memiliki onclick dinamis
+            areaTombolAksi.innerHTML = `
+            <button class="nonactive rounded-5 px-3" onclick="hrefTo('/ulasan/create/${pklId}')" style="font-size: 12px; width: 40%; height: 30px;">Beri ulasan</button>
+            <button class="active rounded-5 px-3 " onclick="hrefTo('/pesan/${pklId}')" style="font-size: 12px; width: 40%; height: 30px;">Pesan Sekarang</button>
+            {{-- Catatan: Sesuaikan URL '/pesan/${pklId}' jika targetnya berbeda atau statis. 
+                 Jika tombol "Pesan Sekarang" selalu ke '/', gunakan: onclick="hrefTo('/')" --}}
+        `;
+        } else {
+            console.warn("Elemen dengan ID 'areaTombolAksi' tidak ditemukan. Tombol aksi tidak dapat diupdate.");
+        }
+
         getProduk(vendor.id); // Panggil fungsi untuk mendapatkan produk vendor
 
         getUlasan(vendor.id); // Panggil fungsi untuk mendapatkan ulasan vendor
@@ -318,6 +334,8 @@
                     iconAnchor: [30, 30],
                     popupAnchor: [0, -30]
                 });
+
+
 
                 const marker = L.marker([vendorForPopup.lat, vendorForPopup.lng], {
                         icon: customSquareIcon
