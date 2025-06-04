@@ -16,6 +16,7 @@
 
     <link rel="stylesheet" href="{{ auto_asset('css/base.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     @yield('css')
 
@@ -112,8 +113,15 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.min.js" integrity="sha384-RuyvpeZCxMJCqVUGFI0Do1mQrods/hhxYlcVfGPOfQtPJh0JCw12tUAZ/Mv10S7D" crossorigin="anonymous"></script>
 
-@yield('js')
 <script>
+    function erorAlert(title, msg) {
+        Swal.fire({
+            icon: "error",
+            title: title,
+            text: msg,
+        });
+    }
+
     function cari5() {
         let pin = document.querySelectorAll(`.leaflet-marker-icon`);
         pin.forEach(o => {
@@ -156,5 +164,7 @@
 
     }
 </script>
+@yield('js')
+
 
 </html>
