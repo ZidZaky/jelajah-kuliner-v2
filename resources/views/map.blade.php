@@ -297,18 +297,15 @@
             databaseData.forEach(dbVendor => {
                 // Membuat objek 'vendor' yang sesuai dengan yang diharapkan populatePopup
 
-               
+
                 const vendorForPopup = {
                     id: dbVendor.id,
-                    name: dbVendor.namaPKL, // <-- Mapping dari namaPKL
-                    lat: parseFloat(dbVendor.latitude), // <-- Mapping dari latitude, pastikan float
-                    lng: parseFloat(dbVendor.longitude), // <-- Mapping dari longitude, pastikan float
-                    imageUrl: dbVendor.picture, // <-- Mapping dari picture, dengan fallback dan penyesuaian path
-
-                    // Data ini BELUM ADA dari server Anda saat ini:
-                    rating: dbVendor.rating !== undefined ? dbVendor.rating : 3, // Beri nilai default jika tidak ada
-                    description: dbVendor.description !== undefined ? dbVendor.description : "Deskripsi untuk " + dbVendor.namaPKL + " belum tersedia.", // Default
-
+                    name: dbVendor.namaPKL,
+                    lat: parseFloat(dbVendor.latitude),
+                    lng: parseFloat(dbVendor.longitude),
+                    imageUrl: dbVendor.picture_url, // <-- Gunakan ini!
+                    rating: dbVendor.rating, // Jika Anda menambahkannya di PHP
+                    description: dbVendor.description // Jika Anda menambahkannya di PHP
                 };
 
                 // Periksa apakah imageUrl valid (untuk debugging)
@@ -316,8 +313,7 @@
 
                 const customSquareIcon = L.divIcon({
                     className: 'custom-square-marker-icon',
-                    // Pastikan vendorForPopup.imageUrl adalah path yang benar ke gambar
-                    html: `<img src="/storage/${vendorForPopup.imageUrl}" alt="${vendorForPopup.name}'s Icon">`,
+                    html: `<img src="${vendorForPopup.imageUrl}" alt="${vendorForPopup.name}'s Icon" class="pointImg">`,
                     iconSize: [60, 60],
                     iconAnchor: [30, 30],
                     popupAnchor: [0, -30]
