@@ -1,5 +1,6 @@
 @extends('layouts.layout')
 
+
 @section('title')
     Feel Free to "JELAJAH" Kuliner dsekitarmu!
 @endsection

@@ -1,69 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>404 Not Found</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-image: url('/assets/PROFILE.jpg');
-            background-size: cover;
-            font-family: 'Arial', sans-serif;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+@extends('layouts.layout')
 
-        .card {
-            width: 450px;
-            height: 450px;
-            padding: 20px;
-            border: 2px solid #B83B5E;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            background-color: #9c242c;
-            text-align: center;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
 
-        .card h1 {
-            font-size: 5rem;
-            margin: 0;
-        }
+@section('css')
+<style>
+    .error-page-wrapper {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 20px;
+    }
+    .error-title {
+        color: #8C1C1C; /* Warna merah tua */
+        font-weight: bold;
+        margin-bottom: 1rem;
+        font-size: 2.8rem; /* Ukuran font judul */
+    }
+    .error-message {
+        color: #333; /* Warna teks pesan */
+        font-size: 1.1rem;
+        max-width: 600px;
+        line-height: 1.6;
+    }
+</style>
+@endsection
 
-        .card p {
-            font-size: 1.2rem;
-            margin-top: 10px;
-            margin-bottom: 20px;
-        }
+@section('AddOn')
+<!-- {{-- Kosongkan --}} -->
+@endsection
 
-        .card a {
-            text-decoration: none;
-            color: #fff;
-            background-color: #B83B5E;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: background-color 0.3s ease;
-        }
-
-        .card a:hover {
-            background-color: #c94f70;
-        }
-    </style>
-</head>
-<body>
-    <div class="card">
-        <h1>404</h1>
-        <p>Halaman yang kamu cari tidak ditemukan.</p>
-        <a href="/">Kembali ke Beranda</a>
+@section('isi')
+<div class="error-page-wrapper">
+    <div>
+        <h1 class="error-title">Halaman Tidak Ditemukan!</h1>
+        <p class="error-message">
+            Maaf, halaman yang Anda cari tidak ditemukan. Mungkin halaman tersebut telah dihapus, dipindahkan, atau URL yang Anda masukkan tidak tepat.
+        </p>
+        <!-- {{-- Opsional: Tambahkan tombol kembali ke beranda --}}
+        {{-- <a href="{{ url('/') }}" class="btn btn-danger mt-4" style="background-color: #8C1C1C; border-color: #731717;">Kembali ke Beranda</a> --}} -->
     </div>
-</body>
-</html>
+</div>
+@endsection
+
+@section('js')
+<!-- {{-- Tidak ada JavaScript khusus untuk halaman ini --}} -->
+@endsection

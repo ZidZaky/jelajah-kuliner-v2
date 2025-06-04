@@ -1,4 +1,5 @@
-@extends('NEW.EVI.base-page')
+@extends('layouts.layout')
+
 
 @section('css')
 <style>

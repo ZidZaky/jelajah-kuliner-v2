@@ -1,4 +1,5 @@
-@extends('layouts.layout2')
+@extends('layouts.layout')
+
 
 @section('title')
 List Account
@@ -9,10 +10,10 @@ List Account
 @endsection
 
 @section('isiAlert')
-    @if((session('alert'))!=null)
-        
-            @php echo session('alert'); @endphp
-    @endif
+@if((session('alert'))!=null)
+
+@php echo session('alert'); @endphp
+@endif
 @endsection
 
 @section('main')
@@ -36,8 +37,8 @@ List Account
         @foreach ($account as $a)
         <div class="card" style="width: 500px">
             <img src="https://i.pinimg.com/236x/0d/c1/ba/0dc1babea2221d912247ca059e1231dd.jpg"
-            alt="this should be the User's Profile Picture tho" class="profilePict2"
-            style="
+                alt="this should be the User's Profile Picture tho" class="profilePict2"
+                style="
             @if($a->status == 'Pelanggan') box-shadow: 0px 0px 20px rgb(0, 255, 0);
             @elseif($a->status == 'PKL') box-shadow: 0px 0px 20px rgb(0, 0, 255);
             @else box-shadow: 0px 0px 20px rgb(0, 0, 0);
@@ -54,7 +55,7 @@ List Account
         </div>
         @endforeach
         @else
-            <p class="namap" style="text-align: center;">Semua Baik2 Saja!</p>
+        <p class="namap" style="text-align: center;">Semua Baik2 Saja!</p>
         @endif
         {{-- @if ($account->count() > 0)
             @foreach ($account as $a)
@@ -68,17 +69,17 @@ List Account
                         <div class="col-md-8">
                             <div class="card-body">
                                 <h5 class="card-title">{{ $a->nama }}</h5>
-                                <p class="card-text">{{ $a->email }}</p>
-                                <p class="card-text">{{ $a->status }}</p>
-                                <p class="card-text">{{ $a->nohp }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        @else
-            <p class="namap" style="text-align: center;">Kosong? astagfirullah</p>
-        @endif --}}
-
+        <p class="card-text">{{ $a->email }}</p>
+        <p class="card-text">{{ $a->status }}</p>
+        <p class="card-text">{{ $a->nohp }}</p>
     </div>
-    @endsection
+</div>
+</div>
+</div>
+@endforeach
+@else
+<p class="namap" style="text-align: center;">Kosong? astagfirullah</p>
+@endif --}}
+
+</div>
+@endsection

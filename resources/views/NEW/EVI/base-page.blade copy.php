@@ -25,14 +25,14 @@
     <nav class="navbar w-full d-flex justify-content-center align-items-center" style="height: 80px; max-height:fit-content;">
         <div class="second-bg d-flex justify-content-between flex-row px-2 px-md-5 rounded-3 h-auto" style="padding: 10px 2px; width: 98%;">
             <div class="containerLeftNavbar d-flex flex-row justify-content-sm-between">
-                <a href="/" class="logo h-auto" style="width: 150px;">
+                <a href="/base" class="logo h-auto" style="width: 150px;">
                     <img src="{{ auto_asset('assets/logoJelajahKuliner.svg') }}" alt="Logo"
                         class="w-100">
                 </a>
                 <div class="container-fluid w-75 h-25">
                     <div class="input-group">
-                        <input type="text" id="inpSearch" class="form-control noOutline" aria-label="Text input with segmented dropdown button" placeholder="Cari PKL atau menu...">
-                        <button type="button" class="btn btn-sm primary-bg-cl noOutline" onclick="cari5()">
+                        <input type="text" class="form-control noOutline" aria-label="Text input with segmented dropdown button">
+                        <button type="button" class="btn btn-sm primary-bg-cl noOutline">
                             <i class="bi bi-search text-light"></i>
                         </button>
                     </div>
@@ -49,21 +49,18 @@
                 </div>
             </div>
             <div class=" d-none d-md-flex gap-3">
-                <a href="/login" class="btn border border-danger hover-red-dark" style="border: 2px solid #991b1b !important; color: #991b1b;" onmouseover="this.style.color='white'" onmouseout="this.style.color='#991b1b'">
+                <a href="/baseLogin" class="btn border border-danger hover-red-dark" style="border: 2px solid #991b1b !important; color: #991b1b;" onmouseover="this.style.color='white'" onmouseout="this.style.color='#991b1b'">
                     Login</a>
-                <a href="/account/create"><button class="btn btn-prm hover-red-dark rounded-3">Register</button></a>
+                <a href="/baseRegist"><button class="btn btn-prm hover-red-dark rounded-3">Register</button></a>
 
                 <!-- udh login -->
-                @if (Auth::check())
-                <div class="w-auto h-100 d-flex flex-row gap-2 align-items-center justify-content-center">
-                    <p class="fs-6 p-0 m-0">Hello, Session</p>
+                <!-- <div class="w-auto h-100 d-flex flex-row gap-2 align-items-center justify-content-center">
+                    <p class="fs-6 p-0 m-0">Hello, Maryam</p>
                     <button class="btn h-100 rounded-5 p-1 m-0 w-auto border-line-red d-flex flex-row  gap-3 justify-content-center align-items-center">
                         <img src="{{ auto_asset('assets/farhan.jpg') }}" alt="" class="circle-preview">
                         <i class="bi bi-caret-down-fill primary-color px-2 m-0"></i>
                     </button>
-                </div>
-                @endif
-
+                </div> -->
             </div>
         </div>
     </nav>
@@ -73,24 +70,45 @@
             @yield('AddOn')
         </div>
 
-        <div class="position-relative z-2" style="width:100%;">
+        <div class="isi position-relative z-2" style="width:100%;">
             @yield('isi')
         </div>
     </main>
     <footer class="mt-auto d-flex justify-content-end position-relative z-3 justify-content-md-between align-items-center grey-bg w-100 px-4" style="height: 30px;">
+    
+
+<!-- 
+    <div class="position-relative z-3 d-flex flex-column flex-wrap" style="max-height: calc(100vh - 90px - 30px); min-height:0px; max-width:100%; min-width: 0px;">
+        <div class="position-absolute offcanvas offcanvas-start h-100" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel"
+        style="max-height: calc(100vh - 90px - 30px); height: calc(100vh - 90px - 30px);">
+
+        </div>
+
+
+
+
+        @yield('AddOn')
+    </div>
+
+    <div class="isi position-relative z-2" style="/* height: calc(100vh - 90px - 20px); */ width:100%;">
+        @yield('isi')
+    </div>
+
+    <footer class="mt-auto d-flex justify-content-end position-relative z-3 justify-content-md-between align-items-center grey-bg w-100 px-4" style="bottom:0; height: 30px;"> -->
+    
         <div class="d-none d-md-flex justify-content-center align-items-center">
             <p class="show-font">Jelajah Kuliner - Aplikasi Pelacakan Pedagang Kaki Lima Berbasis Web</p>
         </div>
         <div class="d-flex justify-content-center align-items-center flex-row gap-3">
-            <a href="/userguide" class="d-flex justify-content-center align-items-center flex-row gap-3">
+            <a href="" class="d-flex justify-content-center align-items-center flex-row gap-3">
                 <p class="show-font">User Guide</p>
                 <p class="tiny-font">User Guide</p>
             </a>
-            <!-- <a href="" class="d-flex justify-content-center align-items-center flex-row gap-3">
+            <a href="" class="d-flex justify-content-center align-items-center flex-row gap-3">
                 <p class="show-font">Help</p>
                 <p class="tiny-font">Help</p>
-            </a> -->
-            <a href="https://api.whatsapp.com/send/?phone=088989694349&text&type=phone_number&app_absent=0" class="d-flex justify-content-center align-items-center flex-row gap-3">
+            </a>
+            <a href="" class="d-flex justify-content-center align-items-center flex-row gap-3">
                 <p class="show-font">Contact Us</p>
                 <p class="tiny-font">Contact Us</p>
             </a>
@@ -102,48 +120,5 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.min.js" integrity="sha384-RuyvpeZCxMJCqVUGFI0Do1mQrods/hhxYlcVfGPOfQtPJh0JCw12tUAZ/Mv10S7D" crossorigin="anonymous"></script>
 
 @yield('js')
-<script>
-    function cari5() {
-        let pin = document.querySelectorAll(`.leaflet-marker-icon`);
-        pin.forEach(o => {
-            o.style.display = 'none';
-        })
-        // console.log(pin.length);
-        let hasil = [];
-        fetch(`/getData`)
-            .then(response => response.json())
-            .then(data => {
-                data.forEach(e => {
-                    // console.log(e);
-                    let inp = document.getElementById('inpSearch');
-                    let ary = [];
-                    ary.push(e.nama)
-                    ary.push(e.menu)
-
-                    ary.forEach(i => {
-                        // console.log(i+"tipe : "+typeof(i)+" lower : "+i.toLowerCase());
-                        if (i.toLowerCase().includes(inp.value.toLowerCase())) {
-                            // console.log(hasil.includes(e.id))
-                            if (hasil.includes(e.id) == false) {
-                                hasil.push(e.id);
-                            }
-                            console.log('hasil dalam : ' + hasil);
-                        }
-                    })
-
-                })
-                console.log('hasil luar : ' + hasil);
-                hasil.forEach(c => {
-                    // console.log(('marker'+c));
-                    let depin = document.getElementById(('marker' + c));
-                    depin.style.display = '';
-                })
-            })
-            .catch(error => {
-                console.error('Error fetching coordinates:', error);
-            });
-
-    }
-</script>
 
 </html>
