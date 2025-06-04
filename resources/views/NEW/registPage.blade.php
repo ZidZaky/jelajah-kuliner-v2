@@ -15,10 +15,10 @@
     <div class="position-fixed"
         style="width: 50%; height: 100%; right: 0; background-color: white; margin-top: -15px; padding: 1% 0;">
         <div class="position-fixed d-flex flex-column align-items-center"
-            style="border: 1px solid black; width: 40%; height: 80%; right: 5%">
+            style="width: 40%; height: 70%; right: 5%">
             <img src="{{ auto_asset('assets/logoJelajahKuliner.svg') }}" alt="newLogoApp" class="mt-2" style="width: 40%;">
 
-            <h5 class="mt-1 mb-3" style="text-align: center; width: 100%;"><strong>
+            <h5 class="mt-1 mb-1" style="text-align: center; width: 100%;"><strong>
                     Buat Akun, dan Mulailah Menjelajah!
                 </strong></h5>
 
@@ -46,29 +46,29 @@
                 <div class="d-flex gap-4">
                     <!-- Form Akun -->
                     <div class="w-50">
-                        <h6 class="mb-3"><strong>Data Akun</strong></h6>
-                        <div class="mb-3">
+                        <h6 class="mb-1"><strong>Data Akun</strong></h6>
+                        <div class="mb-2">
                             <input type="text" class="form-control rounded-5"
                                 style="background-color: #E5E5E5; border: 2px solid #991b1b; height: 35px;"
                                 placeholder="Nama Lengkap" required>
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-2">
                             <input type="email" class="form-control rounded-5"
                                 style="background-color: #E5E5E5; border: 2px solid #991b1b; height: 35px;"
                                 placeholder="Email" required>
                         </div>
-                        <div class="mb-2">
+                        <div class="mb-0">
                             <input type="tel" class="form-control rounded-5"
                                 style="background-color: #E5E5E5; border: 2px solid #991b1b; height: 35px;"
                                 placeholder="Nomor Telepon" required>
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-2">
                             <small class="text-muted">Upload foto profil Anda</small>
                             <input type="file" class="form-control rounded-5"
                                 style="background-color: #E5E5E5; border: 2px solid #991b1b; height: 35px;" accept="image/*"
                                 required>
                         </div>
-                        <div class="mb-3 position-relative">
+                        <div class="mb-2 position-relative">
                             <input type="password" class="form-control rounded-5"
                                 style="background-color: #E5E5E5; border: 2px solid #991b1b; height: 35px;" id="passwordPKL"
                                 placeholder="Password" required>
@@ -81,25 +81,25 @@
 
                     <!-- Form PKL -->
                     <div class="w-50">
-                        <h6 class="mb-3 text-end"><strong>Data PKL</strong></h6>
-                        <div class="mb-3">
+                        <h6 class="mb-1 text-end"><strong>Data PKL</strong></h6>
+                        <div class="mb-2">
                             <input type="text" class="form-control rounded-5"
                                 style="background-color: #E5E5E5; border: 2px solid #991b1b; height: 35px;"
                                 placeholder="Nama Toko" required>
                         </div>
-                        <div class="mb-2">
-                            <textarea class="form-control rounded-5"
+                        <div class="mb-3">
+                            <textarea class="form-control rounded-4"
                                 style="background-color: #E5E5E5; border: 2px solid #991b1b;" placeholder="Deskripsi Toko"
-                                rows="3" required></textarea>
+                                rows="2" required></textarea>
                         </div>
 
-                        <div class="mb-3 d-flex flex-column">
+                        <div class="mb-2 d-flex flex-column">
                             <small class="text-muted">Upload foto toko Anda</small>
                             <input type="file" class="form-control rounded-5"
                                 style="background-color: #E5E5E5; border: 2px solid #991b1b; height: 35px;" accept="image/*"
                                 required>
                         </div>
-                        <div class="mb-3 position-relative">
+                        <div class="mb-2 position-relative">
                             <input type="password" class="form-control rounded-5"
                                 style="background-color: #E5E5E5; border: 2px solid #991b1b; height: 35px;"
                                 id="confirmPasswordPKL" placeholder="Konfirmasi Password" required>
@@ -111,14 +111,10 @@
                     </div>
                 </div>
 
-                <button class="btn w-100 rounded-5 hover-red-dark"
-                    style="background-color: #991b1b; height: 35px; color: white;">
-                    <strong>Buat Akun!</strong>
-                </button>
             </div>
 
             <!-- Form Pelanggan -->
-            <div id="formPelanggan" class="w-100 px-4">
+            <div id="formPelanggan" class="w-100 px-4 mt-0" style="display: none;">
                 <div class="d-flex gap-4">
                     <div class="w-50 pt-4">
                         <div class="mb-3">
@@ -166,10 +162,6 @@
                     </div>
                 </div>
 
-                <button class="btn w-100 rounded-5 hover-red-dark"
-                    style="background-color: #991b1b; height: 35px; color: white; margin-top: 129px">
-                    <strong>Buat Akun!</strong>
-                </button>
             </div>
 
             <style>
@@ -178,6 +170,12 @@
                     color: black !important;
                 }
             </style>
+        </div>
+        <div class="d-flex flex-column align-items-center" style="position: absolute; bottom: 17%; width: 100%;">
+            <button class="btn rounded-5 hover-red-dark"
+                style="background-color: #991b1b; height: 35px; color: white; width: 35%;">
+                <strong>Buat Akun!</strong>
+            </button>
 
             <div class="d-flex justify-content-center gap-1 mt-2">
                 <strong>
@@ -185,8 +183,10 @@
                 </strong>
                 <strong><a href="/baseLogin" class="text-decoration-none" style="color: #FF0000;"
                         onmouseover="this.style.color='#991b1b'" onmouseout="this.style.color='#FF0000'">Login
-                        Disini!</a></strong>
+                        Disini!
+                    </a></strong>
             </div>
+        </div>
         </div>
     </div>
 @endsection
