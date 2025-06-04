@@ -88,7 +88,7 @@
                                 placeholder="Nama Toko" required>
                         </div>
                         <div class="mb-3">
-                            <textarea class="form-control rounded-5"
+                            <textarea class="form-control rounded-4"
                                 style="background-color: #E5E5E5; border: 2px solid #991b1b;" placeholder="Deskripsi Toko"
                                 rows="2" required></textarea>
                         </div>
