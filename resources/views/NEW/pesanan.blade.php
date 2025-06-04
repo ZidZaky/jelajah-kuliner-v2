@@ -39,7 +39,8 @@
     <h1 class="p-clear cl-prim-dark fw-bolder">PKL JAWA'S PRODUK</h1>
 </div>
 <div class="w-100 d-flex mb-5 justify-content-center align-items-center h-auto">
-    <div class=" w-100 p-3 area justify-content-evenly justify-content-md-start align-items-center products produks d-flex flex-row flex-wrap gap-4">
+    <div class="p-3 area justify-content-evenly justify-content-md-between align-items-center products produks d-flex flex-row flex-wrap gap-4"
+    style="width: fit-content; max-width: 90%;">
         @for($i=0;$i<=20;$i++)
         <div class="produk align-items-center position-relative d-flex gap-2 flex-row justify-content-end align-items-end" style="height:170px; min-height: 110px; width: 470px;">
             <div class="position-absolute z-3 gap-0 border border-danger shadow d-flex flex-wrap justify-content-between align-items-center right-0 p-1 bg-white border-left-top border-right-bottom" style="width:110px; height: 40px; bottom: -10px;">
