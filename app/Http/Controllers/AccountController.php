@@ -23,7 +23,7 @@ class AccountController extends Controller
     {
         $validated = $request->validate([
             'email' => 'required|email',
-            'password' => 'required|string|min:8',
+            'password' => 'required',
         ]);
         $credentials = $request->only('email', 'password');
         // dd(Auth::attempt($credentials));
