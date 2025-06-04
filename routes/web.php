@@ -231,9 +231,9 @@ Route::get('/getIDPkl/{id}', [PKLController::class, 'getIdPKL']);
 //     return view('NEW.dashboard-user');
 // });
 
-Route::get('/baseLogin', function () {
-    return view('NEW.loginPage');
-});
+// Route::get('/baseLogin', function () {
+//     return view('NEW.loginPage');
+// });
 
 Route::get('/aboutus', function () {
     return view('NEW.aboutus');
@@ -246,9 +246,9 @@ Route::get('/404', function () {
 Route::get('/access-denied', function () {
     return view('new.accessdenied');
 });
-Route::get('/baseRegist', function () {
-    return view('NEW.registPage');
-});
+// Route::get('/baseRegist', function () {
+//     return view('NEW.registPage');
+// });
 Route::get('/pesanan', function () {
     return view('NEW.pesanan');
 });

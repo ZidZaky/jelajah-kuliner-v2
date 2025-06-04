@@ -296,12 +296,14 @@
             }
             databaseData.forEach(dbVendor => {
                 // Membuat objek 'vendor' yang sesuai dengan yang diharapkan populatePopup
+
+               
                 const vendorForPopup = {
                     id: dbVendor.id,
                     name: dbVendor.namaPKL, // <-- Mapping dari namaPKL
                     lat: parseFloat(dbVendor.latitude), // <-- Mapping dari latitude, pastikan float
                     lng: parseFloat(dbVendor.longitude), // <-- Mapping dari longitude, pastikan float
-                    imageUrl: dbVendor.picture ? "{{ auto_asset('') }}" + "/" + dbVendor.picture.replace(/^public\//, '') : "{{ auto_asset('assets/default_vendor.png') }}", // <-- Mapping dari picture, dengan fallback dan penyesuaian path
+                    imageUrl: dbVendor.picture, // <-- Mapping dari picture, dengan fallback dan penyesuaian path
 
                     // Data ini BELUM ADA dari server Anda saat ini:
                     rating: dbVendor.rating !== undefined ? dbVendor.rating : 3, // Beri nilai default jika tidak ada
@@ -315,7 +317,7 @@
                 const customSquareIcon = L.divIcon({
                     className: 'custom-square-marker-icon',
                     // Pastikan vendorForPopup.imageUrl adalah path yang benar ke gambar
-                    html: `<img src="${vendorForPopup.imageUrl}" alt="${vendorForPopup.name}'s Icon">`,
+                    html: `<img src="/storage/${vendorForPopup.imageUrl}" alt="${vendorForPopup.name}'s Icon">`,
                     iconSize: [60, 60],
                     iconAnchor: [30, 30],
                     popupAnchor: [0, -30]

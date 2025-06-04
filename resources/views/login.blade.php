@@ -13,40 +13,58 @@
 @endsection
 
 @section('AddOn')
+<form action="/loginAccount" method="POST" id="loginForm">
+    @csrf
     <div class="position-fixed" style="width: 50%; height: 100%; right: 0; background-color: white; margin-top: -15px; padding: 7% 0;">
         <div class="position-fixed d-flex flex-column align-items-center" style="width: 25%; height: 60%; right: 12.5%">
-            <img src="{{ auto_asset('assets/logoJelajahKuliner.svg') }}" alt="newLogoApp" 
-            class="mt-4" style="width: 40%;">
-            
-            <strong><h5 class="mt-1 mb-4" style="text-align: center; width: 100%;">
-                SELAMAT DATANG!
-            </h5></strong>
+            <img src="{{ auto_asset('assets/logoJelajahKuliner.svg') }}" alt="newLogoApp"
+                class="mt-4" style="width: 40%;">
+
+            <strong>
+                <h5 class="mt-1 mb-4" style="text-align: center; width: 100%;">
+                    SELAMAT DATANG!
+                </h5>
+            </strong>
 
             <div class="d-flex flex-column gap-3 px-4 w-100">
+
                 <div class="position-relative">
-                    <input autocomplete="off" type="email" class="form-control rounded-5" style="background-color: #E5E5E5; border: 2px solid #991b1b; height: 35px;" placeholder="Email">
+                    <input autocomplete="off" type="email" name="email" class="form-control rounded-5 @error('email') is-invalid @enderror" style="background-color: #E5E5E5; border: 2px solid #991b1b; height: 35px;" placeholder="Email" value="{{ old('email') }}" required>
+                    @error('email')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
                 </div>
-                
+
                 <div class="position-relative">
-                    <input autocomplete="off" type="password" class="form-control rounded-5" style="background-color: #E5E5E5; border: 2px solid #991b1b; height: 35px;" placeholder="Password" id="passwordField">
+                    <input autocomplete="off" type="password" name="password" class="form-control rounded-5 @error('password') is-invalid @enderror" style="background-color: #E5E5E5; border: 2px solid #991b1b; height: 35px;" placeholder="Password" id="passwordField" required>
                     <button class="btn position-absolute end-0 top-50 translate-middle-y me-2" type="button" onclick="togglePassword()">
                         <i class="bi bi-eye" id="toggleIcon"></i>
                     </button>
+                    @error('password')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
                 </div>
 
-                <button class="btn w-100 rounded-5 mt-3 hover-red-dark" style="background-color: #991b1b; height: 35px; color: white;"><strong>Sign In</strong></button>
-            
-            <div class="d-flex justify-content-center gap-1">
-            <strong><p class="mb-0" style="color: #666666;">Belum punya akun?</p></strong>
-            <strong><a href="/baseRegist" class="text-decoration-none" style="color: #FF0000;" onmouseover="this.style.color='#991b1b'" onmouseout="this.style.color='#FF0000'">Daftar Disini!</a></strong>
-            </div>
+                <button type="submit" class="btn w-100 rounded-5 mt-3 hover-red-dark" style="background-color: #991b1b; height: 35px; color: white;"><strong>Sign In</strong></button>
+
+                <div class="d-flex justify-content-center gap-1">
+                    <strong>
+                        <p class="mb-0" style="color: #666666;">Belum punya akun?</p>
+                    </strong>
+                    <strong><a href="/account/create" class="text-decoration-none" style="color: #FF0000;" onmouseover="this.style.color='#991b1b'" onmouseout="this.style.color='#FF0000'">Daftar Disini!</a></strong>
+                </div>
+
             </div>
 
             <script>
                 function togglePassword() {
                     const passwordField = document.getElementById('passwordField');
                     const toggleIcon = document.getElementById('toggleIcon');
-                    
+
                     if (passwordField.type === 'password') {
                         passwordField.type = 'text';
                         toggleIcon.classList.replace('bi-eye', 'bi-eye-slash');
@@ -58,6 +76,7 @@
             </script>
         </div>
     </div>
+</form>
 @endsection
 
 @section('isi')
@@ -111,9 +130,9 @@
         window.location.href = link;
     }
 
-    function closePopup(){
+    function closePopup() {
         popup = document.querySelectorAll('.containerPopup')
-        popup.forEach(e=>{
+        popup.forEach(e => {
             e.classList.replace('d-flex', 'd-none')
         })
     }
