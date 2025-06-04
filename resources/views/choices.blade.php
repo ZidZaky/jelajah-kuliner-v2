@@ -1,5 +1,6 @@
 @extends('layouts.layout')
 
+
 @section('title')
     REGISTRASI || JELAJAHKULINER
 @endsection

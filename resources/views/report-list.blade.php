@@ -1,4 +1,5 @@
-@extends('layouts.layout2')
+@extends('layouts.layout')
+
 
 @section('title')
 Report Account
@@ -127,7 +128,7 @@ Report Account
                                         alt="">
                                 </div>
                                 <div class="inCard" id="mid">
-                                    <div class="button-only" style=" display: flex; flex; flex-direction:row;">
+                                   
 
 
                                         @if ($account->status == 'Banned')

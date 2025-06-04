@@ -1,103 +1,181 @@
-<?php $__env->startSection('title'); ?>
-    ABOUT US?
-<?php $__env->stopSection(); ?>
+@extends('layouts.layout')
 
-<?php $__env->startSection('css'); ?>
-    <link rel="stylesheet" href="/css/aboutus.css">
-<?php $__env->stopSection(); ?>
+@section('css')
+{{-- Tambahkan CSS khusus untuk halaman ini jika diperlukan --}}
+<!-- <head>
+    <title>Tentang Kami - Jelajah Kuliner</title> -->
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f3f3f3;
+            color: #333;
+        }
+        header {
+            background-color: #8B0000;
+            padding: 20px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-weight: bold;
+            font-size: 24px;
+        }
+        .nickname {
+            font-size: 16px;
+        }
+        section {
+            padding: 40px 60px;
+        }
+        .about-section {
+            background-color: #c0392b;
+            color: white;
+            padding: 60px;
+            text-align: left;
+            position: relative;
+        }
+        .about-section h2 {
+            font-size: 24px;
+        }
+        .review-section, .merchant-section {
+            background-color: white;
+            margin-top: 20px;
+            padding: 40px;
+            border-radius: 8px;
+        }
+        .merchant-cards {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        .card {
+            background-color: #f4f4f4;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            width: 30%;
+        }
+        .card img {
+            width: 80px;
+            border-radius: 50%;
+        }
+        footer {
+            background-color: #8B0000;
+            color: white;
+            padding: 40px 60px;
+            display: flex;
+            justify-content: space-between;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        .btn-kembali-home {
+            background-color: #8B0000;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .btn-kembali-home:hover {
+            background-color: #a52a2a;
+        }
 
-<?php $__env->startSection('main'); ?>
-    <div class="content">
-        <div class="up" style=" display: flex; justify-content: space-between; padding-top: 20px">
-            <div class="back" style="text-align: center; margin-left: 20px;">
-                <button class="btn btn-danger" onclick="window.location.href='/dashboard'; return false;">Back</button>
+    </style>
+<!-- </head>
+<body> -->
 
-            </div>
-            <div class="nmpkl" style="margin-left: 200px;">
-                <p class="threeD"><strong>ABOUT US</strong></p>
-            </div>
-            <div class="upside" style="margin-right: 20px;">
-                <p class="namaakun" style="text-align: right;">Want to Know us More? 😉</p>
-            </div>
+@endsection
+
+@section('AddOn')
+
+@endsection
+
+@section('isi')
+<header>
+    <div class="logo">🍜 Jelajah Kuliner</div>
+    <div class="nickname">Hello, Ganteng</div>
+</header>
+
+<section class="about-section">
+    <h2>APA SIH JELAJAH KULINER ITU??</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...</p>
+</section>
+
+<section>
+    <h2>KENAPA HARUS JELAJAH KULINER DARI PLATFORM LAIN?</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...</p>
+</section>
+
+<section class="review-section">
+    <h2>REVIEW PEMBELI</h2>
+    <ol>
+        <li><strong>Memuaskan</strong> - Lorem ipsum dolor sit amet, consectetur adipiscing elit...</li>
+        <li><strong>Mas Yudis</strong> - Lorem ipsum dolor sit amet, consectetur adipiscing elit...</li>
+        <li><strong>Yunita top</strong> - Lorem ipsum dolor sit amet, consectetur adipiscing elit...</li>
+    </ol>
+</section>
+
+<section class="merchant-section">
+    <h2>OUR MERCHANT</h2>
+    <div class="merchant-cards">
+        <div class="card">
+            <img src="https://via.placeholder.com/80" alt="merchant 1">
+            <h3>Jajang arjuna</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
         </div>
-        <hr id="hratas">
+        <div class="card">
+            <img src="https://via.placeholder.com/80" alt="merchant 2">
+            <h3>Ubay haroro</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+        </div>
+        <div class="card">
+            <img src="" alt="merchant 3">
+            <h3>Mas yoga teh celup</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+        </div>
     </div>
+</section>
 
-    <div class="content" style="display: flex; flex-direction: column;">
-        <div class="blue-cards" style="display: flex; justify-content: center; margin-bottom: 50px">
-            <div class="card" style="">
-                <img src="/assets/zidan.png" alt="" style="width: 150px; height: 150px;" class="border">
-                <div class="desc">
-                  <p>Zidan Irfan Zaky</p>
-                  <p>1201220003</p>
-                  <p>zidzaky@student.telkomuniversity.ac.id</p>
-                  <button class="btn btn-success" id="whatsapp1">
-                    <img src="/assets/whatsapp.png" alt="wa" style="width: 20px; margin-top: -3px">
-                    Whatsapp Me!</button>
-                </div>
-              </div>
-            </div>
-        </div>
+<footer>
+    <div>
+        <h3>Our Service</h3>
+        <ul>
+            <li>Review</li>
+            <li>Mapview</li>
+            <li>Rekomendasi</li>
+            <li>Merchant</li>
+            <li>Menu List</li>
+        </ul>
+    </div>
+    <div>
+        <h3>Information</h3>
+        <ul>
+            <li>Apa sih Jelajah Kuliner?</li>
+            <li>Kenapa harus Jelajah?</li>
+            <li>Review Pembeli</li>
+            <li>Info Merchant Terbaik</li>
+        </ul>
+    </div>
+    <div>
+        <h3>Our Company</h3>
+        <ul>
+            <li>About</li>
+            <li>Contact</li>
+            <li>News/Artikel</li>
+            <li>FAQ</li>
+        </ul>
+    </div>
+</footer>
 
-        <div class="green-cards" style="display: flex; justify-content: center; gap: 250px">
-            <div class="card" style="">
-                <img src="/assets/farhan.jpg" alt="" style="width: 150px; height: 150px;" class="border">
-                <div class="desc">
-                  <p>Farhan Nugraha Sasongko Putra</p>
-                  <p>1201220449</p>
-                  <p>farhantoosleepy@student.telkomuniversity.ac.id</p>
-                  <button class="btn btn-success" id="whatsapp2">
-                    <img src="/assets/whatsapp.png" alt="wa" style="width: 20px; margin-top: -3px">
-                    Whatsapp Me!</button>
-                </div>
-            </div>
-            <div class="card" style="">
-                <img src="/assets/evi.jpg" alt="" style="width: 150px; height: 150px;" class="border">
-                <div class="desc">
-                  <p>Evi Fitriya</p>
-                  <p>1201220005</p>
-                  <p>evifitriya@student.telkomuniversity.ac.id</p>
-                  <button class="btn btn-success" id="whatsapp3">
-                    <img src="/assets/whatsapp.png" alt="wa" style="width: 20px; margin-top: -3px">
-                    Whatsapp Me!</button>
-                </div>
-            </div>
-            <div class="card" style="">
-                <img src="/assets/dika.jpg" alt="" style="width: 150px; height: 150px;" class="border">
-                <div class="desc">
-                  <p>Radinka Putra Rahadian</p>
-                  <p>1201220020</p>
-                  <p>radinka@student.telkomuniversity.ac.id</p>
-                  <button class="btn btn-success" id="whatsapp4">
-                    <img src="/assets/whatsapp.png" alt="wa" style="width: 20px; margin-top: -3px">
-                    Whatsapp Me!</button>
-                </div>
-            </div>
-        </div>
-      </div>
-      
-      
-      <script>
-        // Define an array to store the links for each button
-        const whatsappLinks = [
-          'https://wa.me/62088989694349', // Link for whatsapp1
-          'https://wa.me/62081238474150', // Link for whatsapp2
-          'https://wa.me/6208972529100', // Link for whatsapp3
-          'https://wa.me/62081553399607' // Link for whatsapp4
-        ];
-      
-        // Add event listeners to each button using querySelectorAll
-        const whatsappButtons = document.querySelectorAll('.btn-success');
-        whatsappButtons.forEach((button, index) => {
-          button.addEventListener('click', () => {
-            const newTabLink = document.createElement('a');
-            newTabLink.href = whatsappLinks[index]; // Use the link at the corresponding index
-            newTabLink.target = '_blank';
-            newTabLink.click();
-          });
-        });
-      </script>
+</body>
+@endsection
 
-<?php $__env->stopSection(); ?>
+@section('js')
 
-<?php echo $__env->make('layouts.layout2', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\KULIAH\PIPL\jelajah-kuliner\resources\views/aboutus.blade.php ENDPATH**/ ?>
+@endsection
