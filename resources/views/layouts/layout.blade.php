@@ -57,12 +57,22 @@
 
                 <!-- udh login -->
                 @if (Auth::check())
-                <div class="w-auto h-100 d-flex flex-row gap-2 align-items-center justify-content-center">
+                <div class="w-auto position-relative h-100 d-flex flex-row gap-2 align-items-center justify-content-center">
                     <p class="fs-6 p-0 m-0">Hello, Session</p>
-                    <button class="btn h-100 rounded-5 p-1 m-0 w-auto border-line-red d-flex flex-row  gap-3 justify-content-center align-items-center">
+                    <button class="btn h-100 rounded-5 p-1 m-0 w-auto border-line-red d-flex flex-row  gap-3 justify-content-center align-items-center"
+                        data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="{{ auto_asset('assets/farhan.jpg') }}" alt="" class="circle-preview">
                         <i class="bi bi-caret-down-fill primary-color px-2 m-0"></i>
                     </button>
+                    <ul class="dropdown-menu mt-3 position-absolute right-0">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item bg-prim-dark cl-white" href="#">Separated link</a></li>
+                    </ul>
                 </div>
                 @endif
 
