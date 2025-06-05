@@ -11,6 +11,10 @@ class AccountFactory extends Factory
 {
     public function definition(): array
     {
+        $foto=[
+            'jawa.jpg',
+            'sunda.png',
+        ];
         $status = ['PKL','Pelanggan'];
         return [
             'nama' => $this->faker->name(),
@@ -18,6 +22,7 @@ class AccountFactory extends Factory
             'nohp' => $this->faker->phoneNumber(),
             'password' => Hash::make('pwCuy'), // default password
             'status' => $this->faker->randomElement($status),
+            'foto' => $this->faker->randomElement($foto),
         ];
     }
 }

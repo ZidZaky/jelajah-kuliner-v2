@@ -69,14 +69,14 @@ Route::middleware(['status:Pelanggan,PKL,Admin'])->group(function () {
     Route::post('/account/{id}', [AccountController::class, 'editProfile']);
     Route::resource('/PKL', PKLController::class);
     Route::resource('/produk', ProdukController::class);
-    Route::resource('/ulasan', UlasanController::class);
     Route::resource('/pesanan', PesananController::class);
     Route::resource('/report', ReportController::class);
     Route::get('/pesanan/create/{id}', [PesananController::class, 'createWithId'])->name('pesanan.createWithId');
-    Route::get('/ulasan/create/{id}', [UlasanController::class, 'createWithId']);
     Route::get('logout', [AccountController::class, 'logoutAccount']);
     Route::get('batalPesanan/{id}', [PesananController::class, 'batalPesanan']);
 });
+Route::resource('/ulasan', UlasanController::class);
+Route::get('/ulasan/create/{id}', [UlasanController::class, 'createWithId']);
 
 Route::middleware(['status:PKL'])->group(function () {
     Route::post('/update-location', [PKLController::class, 'updateLocation']);
@@ -231,9 +231,9 @@ Route::get('/getIDPkl/{id}', [PKLController::class, 'getIdPKL']);
 //     return view('NEW.dashboard-user');
 // });
 
-Route::get('/baseLogin', function () {
-    return view('NEW.loginPage');
-});
+// Route::get('/baseLogin', function () {
+//     return view('NEW.loginPage');
+// });
 
 Route::get('/aboutus', function () {
     return view('NEW.aboutus');
@@ -246,9 +246,9 @@ Route::get('/404', function () {
 Route::get('/access-denied', function () {
     return view('new.accessdenied');
 });
-Route::get('/baseRegist', function () {
-    return view('NEW.registPage');
-});
+// Route::get('/baseRegist', function () {
+//     return view('NEW.registPage');
+// });
 Route::get('/pesanan', function () {
     return view('NEW.pesanan');
 });

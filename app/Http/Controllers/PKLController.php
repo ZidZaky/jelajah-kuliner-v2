@@ -152,15 +152,25 @@ class PKLController extends Controller
 
     public function getCoordinates()
     {
-        $pkls = PKL::all();
+        $pkls = PKL::all(); // Mengambil semua data PKL
 
         $coordinates = $pkls->map(function ($pkl) {
+            // $pkl->picture dari database SUDAH 'pkl/namafile.jpg' (contoh: 'pkl/zzz.jpg')
+            $pathGambarDiDalamStoragePublic = $pkl->picture;
+
             return [
                 'id' => $pkl->id,
-                'namaPKL' => $pkl->namaPKL,
+                // Jika Anda punya kolom namaPKL, gunakan itu. Jika tidak, sesuaikan.
+                // Dari phpMyAdmin terlihat ada kolom 'desc', mungkin itu namaPKL?
+                'namaPKL' => $pkl->namaPKL ?? $pkl->desc, // Sesuaikan dengan nama kolom yang benar
                 'latitude' => $pkl->latitude,
                 'longitude' => $pkl->longitude,
-                'picture' => $pkl->picture
+                'picture_from_db' => asset('storage/' . $pathGambarDiDalamStoragePublic), // Ini akan menampilkan 'pkl/zzz.jpg'
+                // 'picture_url' akan menjadi asset('storage/' . 'pkl/zzz.jpg')
+                // yang menghasilkan http://localhost:8000/storage/pkl/zzz.jpg
+                'picture_url' => asset('storage/' . $pathGambarDiDalamStoragePublic),
+                'rating' => $pkl->rating ?? 0, // Asumsi ada kolom rating
+                'description' => $pkl->desc, // Menggunakan kolom 'desc' dari database
             ];
         });
 
@@ -177,10 +187,11 @@ class PKLController extends Controller
             return response()->json(['error' => 'PKL not found'], 404);
         }
     }
-    public function getIdPKL($id){
+    public function getIdPKL($id)
+    {
         $rs = DB::select("select id from p_k_l_s
-                            where idAccount=".$id);
-        if($rs==[]){
+                            where idAccount=" . $id);
+        if ($rs == []) {
             return 0;
         }
         return ($rs[0]->id);

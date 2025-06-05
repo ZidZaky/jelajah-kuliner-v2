@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title')</title>
+    <link rel="icon" href="{{ auto_asset('assets/logoGerobak.svg') }}" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
@@ -15,11 +16,13 @@
 
     <link rel="stylesheet" href="{{ auto_asset('css/base.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     @yield('css')
 
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
+
 
 <body class="first-bg d-flex flex-column min-vh-100">
     <nav class="navbar w-full d-flex justify-content-center align-items-center" style="height: 80px; max-height:fit-content;">
@@ -42,25 +45,44 @@
                         <i class="bi bi-list"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
+                        @if (!Auth::check())
                         <li><a class="dropdown-item cl-white hover-red-dark" href="#" style="background-color: #a73636;">Login</a></li>
                         <li><a class="dropdown-item btn-prm hover-red-dark" href="#">Register</a></li>
-                        <li><a class="dropdown-item" href="#">User Guide</a></li>
+                        @endif
+                        @if (Auth::check())
+                        <li><a class="dropdown-item cl-white hover-red-dark" href="#" style="background-color: #a73636;">My Profile</a></li>
+                        <li><a class="dropdown-item btn-prm hover-red-dark" href="#">List Pesanan</a></li>
+                        <li><a class="dropdown-item btn-prm hover-red-dark" href="#">Logout</a></li>
+                        @endif
+                        <!-- <li><  a class="dropdown-item" href="#">User Guide</a></li> -->
                     </ul>
                 </div>
             </div>
             <div class=" d-none d-md-flex gap-3">
+
+                @if (session()==null)
                 <a href="/login" class="btn border border-danger hover-red-dark" style="border: 2px solid #991b1b !important; color: #991b1b;" onmouseover="this.style.color='white'" onmouseout="this.style.color='#991b1b'">
                     Login</a>
                 <a href="/account/create"><button class="btn btn-prm hover-red-dark rounded-3">Register</button></a>
-
+                @endif
                 <!-- udh login -->
                 @if (Auth::check())
-                <div class="w-auto h-100 d-flex flex-row gap-2 align-items-center justify-content-center">
-                    <p class="fs-6 p-0 m-0">Hello, Session</p>
-                    <button class="btn h-100 rounded-5 p-1 m-0 w-auto border-line-red d-flex flex-row  gap-3 justify-content-center align-items-center">
+                <div class="w-auto h-100 d-flex flex-row position-relative gap-2 align-items-center justify-content-center">
+                    <p class="fs-6 p-0 m-0">Hello, {{session('account')['nama']}}</p>
+                    <button class="btn h-100 rounded-5 p-1 m-0 w-auto border-line-red d-flex flex-row  gap-3 justify-content-center align-items-center"
+                    data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="{{ auto_asset('assets/farhan.jpg') }}" alt="" class="circle-preview">
                         <i class="bi bi-caret-down-fill primary-color px-2 m-0"></i>
                     </button>
+                    <ul class="dropdown-menu mt-3 position-absolute" style="right: -20px;">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item bg-prim-dark cl-white" href="#">Separated link</a></li>
+                    </ul>
                 </div>
                 @endif
 
@@ -101,8 +123,15 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.min.js" integrity="sha384-RuyvpeZCxMJCqVUGFI0Do1mQrods/hhxYlcVfGPOfQtPJh0JCw12tUAZ/Mv10S7D" crossorigin="anonymous"></script>
 
-@yield('js')
 <script>
+    function erorAlert(title, msg) {
+        Swal.fire({
+            icon: "error",
+            title: title,
+            text: msg,
+        });
+    }
+
     function cari5() {
         let pin = document.querySelectorAll(`.leaflet-marker-icon`);
         pin.forEach(o => {
@@ -145,5 +174,7 @@
 
     }
 </script>
+@yield('js')
+
 
 </html>
