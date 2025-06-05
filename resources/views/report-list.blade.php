@@ -2,183 +2,212 @@
 
 
 @section('title')
-Report Account
+    Report Account
 @endsection
 
 @section('css')
-<link rel="stylesheet" href="css/dataPKL.css">
+    <link rel="stylesheet" href="css/dataPKL.css">
 @endsection
 
 @section('isiAlert')
-@if((session('alert'))!=null)
+    @if((session('alert')) != null)
 
-@php echo session('alert'); @endphp
-@endif
+        @php echo session('alert'); @endphp
+    @endif
 @endsection
 
-@section('main')
-<div class="content">
-    <div class="up" style=" display: flex; justify-content: space-between;">
-        <div class="back" style="text-align: center; margin-left: 10px; margin-top: -3px;">
-            <button class="btn btn-danger" style="margin: 0 auto;" onclick="window.location.href='/dashboard'; return false;">Back</button>
-        </div>
-        <div class="nmpkl" style="margin-top: 4px;">
-            <p style="text-align: center;"><strong>❌ ACCOUNT REPORTS! ❌</strong></p>
-        </div>
-        <div class="upside" style="margin-right: 10px; margin-top: -4px">
-            <!-- <p class="namaakun" style="text-align: right;">Hi, {{ session('account')['nama'] }} 👋</p> -->
-            <!-- <p class="namaakun" style="text-align: right;">Hi, {{ session('account')['nama'] ?? 'Guest' }} 👋</p> -->
-
-        </div>
-    </div>
-
-</div>
-</div>
-<hr id="hratas">
-<div class="outer" style=" margin-top: 15px;">
-    <div class="batas">
-        @if ($reports->count() > 0)
-        @foreach ($reports as $rep)
-        @php
-        $account = \App\Models\Account::where('id', $rep->idPengguna)->first();
-        // echo var_dump($account)
-        @endphp
-
-        <div class="card" style="width: 500px">
-            <img src="https://i.pinimg.com/236x/0d/c1/ba/0dc1babea2221d912247ca059e1231dd.jpg"
-                alt="this should be the User's Profile Picture tho" class="profilePict">
-
-            <div class="desc" style="display: flex; flex-direction: column;">
-                <div class="info">
-                    <h5 class="np" style="text-align: center; margin-top: 5px"><strong>{{ $account->nama }}</strong></h5>
-                    <p class="deskhusus" style="text-align: center; margin-top: -10px;">Kode Pesanan: {{ $rep->idPesanan }} || Jumlah Pelapor: {{ $rep->idPelapor }}</p>
-                    <p class="hrg" style="text-align: center; margin-top: 15px">" {{ $rep->alasan }} "</p>
+@section('isi')
+    <div
+        style="border: 1px solid green; height: 600px; background-color: white; margin: auto 15px; border-radius: 5px; padding: 10px;">
+        <div class="d-flex">
+            <!-- BIRU -->
+            <div style="border: 1px solid blue; width: 70%; padding: 10px; margin-right: 10px; height: 580px;">
+                <div style="border: 1px solid green; height: 15%; margin-bottom: 10px;">
+                    <h2><strong>List Account Reported!</strong></h2>
+                    <h5>Dashboard ini Disiapkan Agar Kamu Lebih Mudah Melihat Siapa Saja yang Dilaporkan.</h5>
                 </div>
-                <div class="reportButton">
-                    @if ($account->status != "alert")
-                    <button class="btn btn-danger" style="width: auto;" onclick="confirmBan('{{ $rep->id }}')">Ban</button><br>
+                <div style="border: 1px solid orange; height: 85%;">
+                    <div class="d-flex flex-column align-items-start gap-2 mb-3">
+                        <div class="btn-group gap-1" role="group">
+                            <input type="radio" class="btn-check" name="reportStatus" id="needAction" value="needAction"
+                                autocomplete="off" checked onchange="toggleForm('needAction')">
+                            <label class="btn d-flex justify-content-center align-items-center"
+                                style="height: 30px; width: 170px; border: 2px solid #6D2323; border-radius: 5px 5px 0 0; background-color: #6D2323; color: white;"
+                                for="needAction"><strong>Need Action</strong></label>
 
-                    @else
-                    <button class="btn btn-success" style="width: auto;" onclick="confirmUnBan('{{ $rep->id }}')">unBan</button><br>
-                    @endif
+                            <input type="radio" class="btn-check" name="reportStatus" id="accepted" value="accepted"
+                                autocomplete="off" onchange="toggleForm('accepted')">
+                            <label class="btn d-flex justify-content-center align-items-center"
+                                style="height: 30px; width: 170px; border: 2px solid #6D2323; border-radius: 5px 5px 0 0; background-color: white; color: #6D2323;"
+                                for="accepted"><strong>Accepted Report</strong></label>
 
-                    <form action="{{ route('report.destroy', $rep->id) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <button class="btn btn-warning" style="width: auto;" onclick="deletereport('{{ $rep->id }}')">Clear Report</button>
-                    </form>
+                            <input type="radio" class="btn-check" name="reportStatus" id="rejected" value="rejected"
+                                autocomplete="off" onchange="toggleForm('rejected')">
+                            <label class="btn d-flex justify-content-center align-items-center"
+                                style="height: 30px; width: 170px; border: 2px solid #6D2323; border-radius: 5px 5px 0 0; background-color: white; color: #6D2323;"
+                                for="rejected"><strong>Rejected Report</strong></label>
+                        </div>
+
+                        <style>
+                            .btn:hover {
+                                background-color: #6D2323 !important;
+                                color: white !important;
+                            }
+
+                            .btn-check:checked+.btn {
+                                background-color: #6D2323 !important;
+                                color: white !important;
+                            }
+
+                            .btn-check:checked+.btn:hover {
+                                background-color: #6D2323 !important;
+                                color: white !important;
+                            }
+                        </style>
+                        <div class="table-responsive w-100">
+                            <table class="table table-hover w-100">
+                                <thead class="text-center">
+                                    <tr>
+                                        <th>Nama User</th>
+                                        <th>Alasan</th>
+                                        <th>Status Report</th>
+                                        <th>Bukti</th>
+                                        <th>User Pelapor</th>
+                                        <th>Action</th>
+                                        <th>Detail</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-center">
+                                    <tr>
+                                        <td>John Doe</td>
+                                        <td>Pelanggaran Ketentuan</td>
+                                        <td><label class="badge" style="border: 1px solid #6D2323; color: #6D2323; background-color: white; transition: all 0.3s ease;" onmouseover="this.style.backgroundColor='#6D2323'; this.style.color='white'" onmouseout="this.style.backgroundColor='white'; this.style.color='#6D2323'">Open</label></td>
+                                        <td>
+                                            <a href="#" class="text-primary text-decoration-none">Lihat Bukti</a>
+                                        </td>
+                                        <td>Jane Smith</td>
+                                        <td>
+                                            <div class="btn-group gap-1">
+                                                <label class="badge" style="border: 1px solid #198754; color: white; background-color: #0f5232; transition: all 0.3s ease; cursor: pointer;" onmouseover="this.style.backgroundColor='#18ab67'" onmouseout="this.style.backgroundColor='#0f5232'">Accept Report</label>
+                                                <label class="badge" style="border: 1px solid #6D2323; color: #6D2323; background-color: white; transition: all 0.3s ease; cursor: pointer;" onmouseover="this.style.backgroundColor='#6D2323'; this.style.color='white'" onmouseout="this.style.backgroundColor='white'; this.style.color='#6D2323'">Reject Report</label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <a href="#" class="text-primary text-decoration-none">Lihat Detail</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sarah Johnson</td>
+                                        <td>Konten Tidak Pantas</td>
+                                        <td><label class="badge" style="border: 1px solid #6D2323; color: #6D2323; background-color: white; transition: all 0.3s ease;" onmouseover="this.style.backgroundColor='#6D2323'; this.style.color='white'" onmouseout="this.style.backgroundColor='white'; this.style.color='#6D2323'">Open</label></td>
+                                        <td>
+                                            <a href="#" class="text-primary text-decoration-none">Lihat Bukti</a>
+                                        </td>
+                                        <td>Mike Brown</td>
+                                        <td>
+                                            <div class="btn-group gap-1">
+                                                <label class="badge" style="border: 1px solid #198754; color: white; background-color: #0f5232; transition: all 0.3s ease; cursor: pointer;" onmouseover="this.style.backgroundColor='#18ab67'" onmouseout="this.style.backgroundColor='#0f5232'">Accept Report</label>
+                                                <label class="badge" style="border: 1px solid #6D2323; color: #6D2323; background-color: white; transition: all 0.3s ease; cursor: pointer;" onmouseover="this.style.backgroundColor='#6D2323'; this.style.color='white'" onmouseout="this.style.backgroundColor='white'; this.style.color='#6D2323'">Reject Report</label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <a href="#" class="text-primary text-decoration-none">Lihat Detail</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>David Wilson</td>
+                                        <td>Spam</td>
+                                        <td><label class="badge" style="border: 1px solid #6D2323; color: #6D2323; background-color: white; transition: all 0.3s ease;" onmouseover="this.style.backgroundColor='#6D2323'; this.style.color='white'" onmouseout="this.style.backgroundColor='white'; this.style.color='#6D2323'">Open</label></td>
+                                        <td>
+                                            <a href="#" class="text-primary text-decoration-none">Lihat Bukti</a>
+                                        </td>
+                                        <td>Lisa Anderson</td>
+                                        <td>
+                                            <div class="btn-group gap-1">
+                                                <label class="badge" style="border: 1px solid #198754; color: white; background-color: #0f5232; transition: all 0.3s ease; cursor: pointer;" onmouseover="this.style.backgroundColor='#18ab67'" onmouseout="this.style.backgroundColor='#0f5232'">Accept Report</label>
+                                                <label class="badge" style="border: 1px solid #6D2323; color: #6D2323; background-color: white; transition: all 0.3s ease; cursor: pointer;" onmouseover="this.style.backgroundColor='#6D2323'; this.style.color='white'" onmouseout="this.style.backgroundColor='white'; this.style.color='#6D2323'">Reject Report</label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <a href="#" class="text-primary text-decoration-none">Lihat Detail</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Emily Davis</td>
+                                        <td>Pelanggaran Hak Cipta</td>
+                                        <td><label class="badge" style="border: 1px solid #6D2323; color: #6D2323; background-color: white; transition: all 0.3s ease;" onmouseover="this.style.backgroundColor='#6D2323'; this.style.color='white'" onmouseout="this.style.backgroundColor='white'; this.style.color='#6D2323'">Open</label></td>
+                                        <td>
+                                            <a href="#" class="text-primary text-decoration-none">Lihat Bukti</a>
+                                        </td>
+                                        <td>Robert Taylor</td>
+                                        <td>
+                                            <div class="btn-group gap-1">
+                                                <label class="badge" style="border: 1px solid #198754; color: white; background-color: #0f5232; transition: all 0.3s ease; cursor: pointer;" onmouseover="this.style.backgroundColor='#18ab67'" onmouseout="this.style.backgroundColor='#0f5232'">Accept Report</label>
+                                                <label class="badge" style="border: 1px solid #6D2323; color: #6D2323; background-color: white; transition: all 0.3s ease; cursor: pointer;" onmouseover="this.style.backgroundColor='#6D2323'; this.style.color='white'" onmouseout="this.style.backgroundColor='white'; this.style.color='#6D2323'">Reject Report</label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <a href="#" class="text-primary text-decoration-none">Lihat Detail</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div id="needActionContent" class="mt-3 w-100">
+                            <h1>Need Action Content</h1>
+                        </div>
+
+                        <div id="acceptedContent" class="mt-3 d-none w-100">
+                            <h1>Accepted Report Content</h1>
+                        </div>
+
+                        <div id="rejectedContent" class="mt-3 d-none w-100">
+                            <h1>Rejected Report Content</h1>
+                        </div>
+
+                        <script>
+                            function toggleForm(jenis) {
+                                if (jenis === 'needAction') {
+                                    document.getElementById('needActionContent').classList.remove('d-none');
+                                    document.getElementById('acceptedContent').classList.add('d-none');
+                                    document.getElementById('rejectedContent').classList.add('d-none');
+                                } else if (jenis === 'accepted') {
+                                    document.getElementById('needActionContent').classList.add('d-none');
+                                    document.getElementById('acceptedContent').classList.remove('d-none');
+                                    document.getElementById('rejectedContent').classList.add('d-none');
+                                } else {
+                                    document.getElementById('needActionContent').classList.add('d-none');
+                                    document.getElementById('acceptedContent').classList.add('d-none');
+                                    document.getElementById('rejectedContent').classList.remove('d-none');
+                                }
+                            }
+                        </script>
+                    </div>
+                    <style>
+                        .btn-check:checked+.btn-outline-danger {
+                            background-color: #6D2323 !important;
+                            color: white !important;
+                        }
+                    </style>
+                    <script>
+                        function changeLabel(label) {
+                            // Reset semua button ke inactive
+                            document.getElementById('needAction').checked = false;
+                            document.getElementById('accepted').checked = false;
+                            document.getElementById('rejected').checked = false;
+
+                            // Set button yang dipilih ke active
+                            document.getElementById(label).checked = true;
+                        }
+                    </script>
                 </div>
             </div>
+            <!-- MERAH -->
+            <div style="border: 1px solid red; width: 30%; padding: 10px;">
+
+            </div>
         </div>
-        @endforeach
-        @else
-        <p class="namap" style="text-align: center;">Semua Baik2 Saja!</p>
-        @endif
-        {{-- this is the 2nd update for the card, you mothersucker! --}}
-        {{-- @if ($reports->count() > 0)
-                @foreach ($reports as $rep)
-                    @php
-                        $account = \App\Models\Account::where('id', $rep->idPengguna)->first();
-                        // echo var_dump($account)
-                    @endphp
-                    <div class="x">
-                        <div>
-                            <img src="https://i.pinimg.com/236x/0d/c1/ba/0dc1babea2221d912247ca059e1231dd.jpg"
-                                alt="this should be the User's Profile Picture tho" class="xImg">
-                        </div>
-                        <div class="xDesc">
-                            <p class="np" style="text-align: center; margin-top: 5px"><strong>{{ $account->nama }}</strong></p>
-        <p class="deskhusus" style="text-align: center; margin-top: -10px;">Kode Pesanan: {{ $rep->idPesanan }}</p>
-        <p class="deskhusus" style="text-align: center; margin-top: 0px;">Pelapor: {{ $rep->idPelapor }}</p>
-        <p class="hrg" style="text-align: center; margin-top: 15px">{{ $rep->alasan }}</p>
     </div>
-    <div class="xButt">
-        @if ($account->status != "Banned")
 
-        <button class="btn btn-danger"
-            style="width: auto; margin-top: 5px; margin-left: 5px" onclick="confirmBan('{{ $rep->id }}')">Ban</button><br>
-        @else
-        <button class="btn btn-success"
-            style="width: auto; margin-top: 3px; margin-left: 5px" onclick="confirmUnBan('{{ $rep->id }}')">unBan</button><br>
-        @endif
-        <form action="{{ route('report.destroy', $rep->id) }}" method="POST" style="width: 100%;">
-            @csrf
-            @method('DELETE')
-            <button class="btn btn-warning" style="width: auto; margin-top: 3px; margin-left: 5px"
-                onclick="deletereport('{{ $rep->id }}')">Clear
-                Report</button>
-        </form>
-    </div>
-</div>
-@endforeach
-@else
-<p class="namap" style="text-align: center;">Semua Baik2 Saja!</p>
-@endif --}}
-
-{{-- below is original --}}
-{{-- @if ($reports->count() > 0)
-                        @foreach ($reports as $rep)
-                            @php
-                                $account = \App\Models\Account::where('id', $rep->idPengguna)->first();
-                                // echo var_dump($account)
-                            @endphp
-                            <div class="card">
-                                <div class="inCard" id="theImage">
-                                    <img src="https://i.pinimg.com/236x/0d/c1/ba/0dc1babea2221d912247ca059e1231dd.jpg"
-                                        alt="">
-                                </div>
-                                <div class="inCard" id="mid">
-                                   
-
-
-                                        @if ($account->status == 'Banned')
-                                            <button class="btn btn-success" style="width: 100%;"
-                                                onclick="confirmUnBan('{{ $rep->id }}')">unban User</button>
-@else
-<button class="btn btn-danger" style="width: 100%;"
-    onclick="confirmBan('{{ $rep->id }}')">Ban
-    User!</button>
-@endif
-<form action="{{ route('report.destroy', $rep->id) }}" method="POST" style="width: 100%;">
-    @csrf
-    @method('DELETE')
-    <button type="submit" class="btn btn-success" style="width: 100%;" onclick="return confirm('Apakah kamu yakin untuk Melakukan Hapus Report ini?')">Delete Report</button>
-</form>
-
-</div>
-<p class="np">{{ $account->nama }}</p>
-<p class="deskhusus">Kode Pesanan : {{ $rep->idPesanan }}, Pelapor :
-    {{ $rep->idPelapor }}
-
-</p>
-<p class="hrg">{{ $rep->alasan }}</p>
-
-</div>
-</div>
-@endforeach
-@else
-<p class="namap" style="text-align: center;">Semua Baik2 Saja!</p>
-@endif --}}
-</div>
-</div>
-</div>
-<script>
-    function confirmBan(id) {
-        if (confirm("Apakah kamu yakin untuk Melakukan Ban Kepada Pengguna ini?")) {
-            window.location.href = "/banUser/" + id;
-        }
-    }
-
-    function confirmUnBan(id) {
-        if (confirm("Apakah kamu yakin untuk Melakukan UnBan Kepada Pengguna ini?")) {
-            window.location.href = "/unbanUser/" + id;
-        }
-    }
-
-    function deletereport(id) {
-        if (confirm("Apakah kamu yakin untuk Melakukan Hapus Report ini?")) {
-            window.location.href = "report/" + id + "/delete/";
-        }
-    }
-</script>
 @endsection
