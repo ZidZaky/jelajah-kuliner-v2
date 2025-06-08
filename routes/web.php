@@ -262,3 +262,6 @@ Route::get('/tambahproduktes', function () {
     return view('NEW.tambahProduk');
 });
 
+Route::get('/reportList', function () {
+    return view('report-list');
+});
