@@ -105,6 +105,8 @@ Route::get('/gk', function () {
     return view('dp');
 });
 
+
+
 Route::get('//PageNotFound', function () {
     return view('page-not-found');
 });
@@ -264,4 +266,10 @@ Route::get('/tambahproduktes', function () {
 
 Route::get('/reportList', function () {
     return view('report-list');
+});
+Route::get('/ListReport',function(){
+    return view('NEW.List_Report');
+});
+Route::get('/ListAccount',function(){
+    return view('NEW.List_Account');
 });

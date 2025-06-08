@@ -1,5 +1,5 @@
 html *::-webkit-scrollbar {
-    width: 2px ;
+    width: 1px ;
     margin-left: 2px;
 }
 html *::-webkit-scrollbar-track {
@@ -13,12 +13,28 @@ html *::-webkit-scrollbar-thumb{
     border-radius: 10px;
 }
 
+.SecondScroll::-webkit-scrollbar-track{
+    background-color: #ffffff !important;
+
+}
+.SecondScroll::-webkit-scrollbar-thumb{
+    background-color:  #6D2323 !important;
+    /* background-color: #6D2323; */
+    border-radius: 10px;
+}
+
 .primary-color {
     color: #A31D1D !important;
 }
 
 .bg-prim {
     background-color: #A31D1D !important;
+}
+.border-prim-dark{
+    border: #6D2323 solid !important;
+}
+.border-prim{
+    /* border: #A31D1D solid !important; */
 }
 
 .bg-prim-dark {

@@ -1,0 +1,95 @@
+h1 {
+    font-size: 30px;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 300;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.tbl-header {
+    background-color: #6D2323;
+}
+
+.tbl-content {
+    height: 300px;
+    overflow-x: auto;
+    margin-top: 0px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+th {
+    padding: 20px 15px;
+    text-align: left;
+    font-weight: 500;
+    font-size: 12px;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+td {
+    padding: 15px;
+    text-align: left;
+    vertical-align: middle;
+    font-weight: 300;
+    font-size: 12px;
+    color: #6D2323;
+    font-weight: 600;
+    border-bottom: solid 1px rgba(255, 255, 255, 0.1);
+}
+
+.nav-link.active {
+    background-color: #6D2323 !important;
+    color: #fff !important;
+}
+
+
+/* demo styles */
+
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
+
+
+.statusReport.open {
+    color: rgb(48, 200, 61) !important;
+    border: rgb(48, 200, 61) solid 1px !important;
+}
+
+.statusReport.report {
+    color: #C85B30 !important;
+    border: #C85B30 solid 1px !important;
+}
+
+.actionButton {
+    button p {
+        font-size: 10px !important;
+    }
+}
+
+section {
+    margin: 10px;
+    margin-left: 0px;
+    padding: 20px;
+}
+
+table {
+    /* color: black !important; */
+}
+
+/* for custom scrollbar for webkit browser*/
+
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}

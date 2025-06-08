@@ -122,7 +122,7 @@ button.nonactive {
 
 /* Styling untuk scrollbar di deskripsi produk/ulasan */
 .scroll-bg-dark::-webkit-scrollbar {
-    width: 8px;
+    width: 4px;
 }
 
 .scroll-bg-dark::-webkit-scrollbar-track {
