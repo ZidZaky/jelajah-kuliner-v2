@@ -208,7 +208,7 @@
             // yang memiliki onclick dinamis
             areaTombolAksi.innerHTML = `
             <button class="nonactive rounded-5 px-3" onclick="hrefTo('/ulasan/create/${pklId}')" style="font-size: 12px; width: 40%; height: 30px;">Beri ulasan</button>
-            <button class="active rounded-5 px-3 " onclick="hrefTo('/pesan/${pklId}')" style="font-size: 12px; width: 40%; height: 30px;">Pesan Sekarang</button>
+            <button class="active rounded-5 px-3 " onclick="hrefTo('/pesanan/create/${pklId}')" style="font-size: 12px; width: 40%; height: 30px;">Pesan Sekarang</button>
             {{-- Catatan: Sesuaikan URL '/pesan/${pklId}' jika targetnya berbeda atau statis. 
                  Jika tombol "Pesan Sekarang" selalu ke '/', gunakan: onclick="hrefTo('/')" --}}
         `;
@@ -334,6 +334,8 @@
                     iconAnchor: [30, 30],
                     popupAnchor: [0, -30]
                 });
+
+                
 
 
 
