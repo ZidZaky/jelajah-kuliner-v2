@@ -23,11 +23,14 @@
         <h5 class="mt-1 mb-3" style="text-align: center; width: 100%;"><strong>
                 Buat Akun, dan Mulailah Menjelajah!
             </strong></h5>
+        @if ($errors->any())
+            <p class="text-danger">{{ implode(', ', $errors->all()) }}</p>
+            @endif
 
         <p class="mb-1"><strong>
                 Anda Akan Membuat Akun Sebagai?
             </strong></p>
-
+ 
         <!-- Bagian Button -->
         <div class="d-flex justify-content-center gap-2 mb-0">
             <div class="btn-group rounded-5 border border-danger overflow-hidden" role="group">
@@ -93,6 +96,8 @@
                     </div>
                 </div>
 
+                
+
                 <button class="btn w-100 rounded-5 hover-red-dark"
                     style="background-color: #991b1b; height: 35px; color: white; margin-top: 129px">
                     <strong>Buat Akun!</strong>
@@ -108,6 +113,7 @@
         </style>
 
         <div class="d-flex justify-content-center gap-1 mt-2">
+           
             <strong>
                 <p class="mb-0" style="color: #666666;">Sudah punya akun?</p>
             </strong>
