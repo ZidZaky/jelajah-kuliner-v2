@@ -70,19 +70,22 @@
                 <div class="w-auto h-100 d-flex flex-row position-relative gap-2 align-items-center justify-content-center">
                     <p class="fs-6 p-0 m-0">Hello, {{session('account')['nama']}}</p>
                     <button class="btn h-100 rounded-5 p-1 m-0 w-auto border-line-red d-flex flex-row  gap-3 justify-content-center align-items-center"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="{{ auto_asset('assets/farhan.jpg') }}" alt="" class="circle-preview">
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="{{ asset('storage/' . Auth::user()->foto) }}" alt="" class="circle-preview">
                         <i class="bi bi-caret-down-fill primary-color px-2 m-0"></i>
                     </button>
                     <ul class="dropdown-menu mt-3 position-absolute" style="right: -20px;">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        @if (session('account')['status'] == 'PKL')
+                        <li><a class="dropdown-item" href="/dataPKL/{{session('account')['id']}}">Data PKL</a></li>
+                        @endif
+                        <li><a class="dropdown-item" href="/pesanan/show/{{session('account')['id']}}">List Pesanan</a></li>
+                        <li><a class="dropdown-item" href="/profile">My Profile</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item bg-prim-dark cl-white" href="#">Separated link</a></li>
+                        <li><a class="dropdown-item bg-prim-dark cl-white" href="/logout">Logout</a></li>
                     </ul>
+                    
                 </div>
                 @endif
 

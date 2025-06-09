@@ -59,7 +59,7 @@ Route::get('/login', function () {
 })->name('login');
 Route::resource('/account', AccountController::class);
 
-Route::middleware(['status:Pelanggan,PKL,Admin'])->group(function () {
+Route::middleware(['status:PKL|Pelanggan|Admin'])->group(function () {
     Route::get('/profile', function () {
         return view('profile');
     });
@@ -70,11 +70,12 @@ Route::middleware(['status:Pelanggan,PKL,Admin'])->group(function () {
     Route::resource('/PKL', PKLController::class);
     Route::resource('/produk', ProdukController::class);
     Route::resource('/pesanan', PesananController::class);
+    Route::get('/pesanan/show/{id}', [PesananController::class, 'ShowByIdUser']);
     Route::resource('/report', ReportController::class);
     Route::get('/pesanan/create/{id}', [PesananController::class, 'createWithId'])->name('pesanan.createWithId');
-    Route::get('logout', [AccountController::class, 'logoutAccount']);
     Route::get('batalPesanan/{id}', [PesananController::class, 'batalPesanan']);
 });
+Route::get('/logout', [AccountController::class, 'logoutAccount']);
 Route::resource('/ulasan', UlasanController::class);
 Route::get('/ulasan/create/{id}', [UlasanController::class, 'createWithId']);
 

@@ -57,17 +57,25 @@
 <div class="bg-prim-dark p-5 d-flex w-100 h-100 flex-column gap-5 justify-content-start align-items-center" style="height: 100%; min-height: 85.4vh;">
     <div class="w-100" style="height: fit-content;">
         <div class="ms-3 d-flex cl-white gap-2 pb-2 flex-row align-items-center w-full-ls">
-            <h3>Profile</h3>
+            <h3>{{ session('account')['nama'] }}</h3>
             <button type="button" onclick="pklRole(1,this)" class="customer-role btn d-flex greenButton btn-btn-outline-dark rounded-5 justify-content-between d-flex flex-row gap-1"
-                type="button" style="width: 120px;">
+                type="button" style="width: fit-content;">
+                @if (session('account')['status'] == 'Pelanggan')
+                <p class="p-clear ">{{ session('account')['status'] }}</p>
+                @endif
+                @if (session('account')['status'] == 'PKL')
                 <p class="p-clear ">Customer</p>
                 <i class="bi bi-toggle2-on"></i>
+                @endif
             </button>
+            @if (session('account')['status'] == 'PKL')
             <button type="button" onclick="customerRole(1,this)" class="pkl-role btn d-none greenButton btn-outline-dark justify-content-between rounded-5 d-flex flex-row gap-1"
                 type="button" style="width: 120px;">
                 <p class="p-clear ">PKL</p>
                 <i class="bi bi-toggle2-off"></i>
             </button>
+            @endif
+            
 
 
         </div>
@@ -108,7 +116,7 @@
                             <i class="cl-white bi bi-folder2-open"></i>
                             Klik untuk ubah foto
                         </button>
-                        <img class="circle-preview w-100 h-100" src="{{ auto_asset('assets/profile-icon.png') }}" alt="">
+                        <img class="circle-preview w-100 h-100" src="{{ asset('storage/' . Auth::user()->foto) }}" alt="">
                     </div>
                     <div class="foto-pkl d-none h-100 position-relative" style="width:100%;">
                         <button onclick="takefile('Pkl')" class="w-100 h-100 cl-white circle-preview opacity-50 d-none bg-dark flex-column justify-content-center align-items-center position-absolute">
@@ -119,7 +127,7 @@
                     </div>
                 </div>
             </div>
-            <h2>Zhao Linghe</h2>
+            <h2>{{session('account')['nama']}}</h2>
         </div>
         <div class="rounded-2 p-4 border-2 border-opacity-50 btn-outline-success border h-auto" style="flex: 1 1;">
             <div class="header-profile d-flex flex-row justify-content-between align-items-center">
@@ -150,11 +158,11 @@
             <form class="customer d-flex flex-column ps-3 ps-md-5 pt-5 gap-3">
                 <div class="d-flex flex-column">
                     <p class="p-clear opacity-50">Nama Lengkap</p>
-                    <input type="text" class="p-clear bg-transparent border-0 cl-white" value="Zhang Linghe" style="outline: none;">
+                    <input type="text" class="p-clear bg-transparent border-0 cl-white" value="{{session('account')['nama']}}" style="outline: none;">
                 </div>
                 <div class="d-flex flex-column">
                     <p class="p-clear opacity-50">Nomor Telepon</p>
-                    <input type="text" class="p-clear bg-transparent border-0 cl-white" value="0897524164486" style="outline: none;" disabled>
+                    <input type="text" class="p-clear bg-transparent border-0 cl-white" value="{{session('account')['nohp']}}" style="outline: none;" disabled>
                 </div>
                 <div class="d-none flex-column">
                     <p class="p-clear opacity-50">Nama PKL</p>
@@ -162,7 +170,7 @@
                 </div>
                 <div class="d-flex flex-column">
                     <p class="p-clear opacity-50">Email</p>
-                    <input type="text" class="p-clear bg-transparent border-0 cl-white" value="0897524164486" style="outline: none;" disabled>
+                    <input type="text" class="p-clear bg-transparent border-0 cl-white" value="{{session('account')['email']}}" style="outline: none;" disabled>
                 </div>
             </form>
             <form class="pkl d-none flex-column ps-3 ps-md-5 pt-5 gap-3" style="height: fit-content; min-height: 200px;">
@@ -172,7 +180,7 @@
                 </div>
                 <div class="d-none flex-column">
                     <p class="p-clear opacity-50">Nama PKL</p>
-                    <input type="file" accept="image/*" class="inpFotoPkl p-clear bg-transparent border-0 cl-white" value="mamang Pentol carok madura" style="outline: none;">
+                    <input type="file" accept="{{asset('storage/' . Auth::user()->foto)}}" class="inpFotoPkl p-clear bg-transparent border-0 cl-white" value="mamang Pentol carok madura" style="outline: none;">
                 </div>
                 <div class="d-flex flex-column h-auto">
                     <p class="p-clear opacity-50">Deskripsi</p>
