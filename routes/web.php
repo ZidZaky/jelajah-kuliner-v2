@@ -67,6 +67,7 @@ Route::middleware(['status:PKL|Pelanggan|Admin'])->group(function () {
     Route::get('/Profile', function () {
         return redirect('/profile');
     });
+    Route::post('/account/update-photo', [AccountController::class, 'updatePhoto']);
     Route::post('/account/{id}', [AccountController::class, 'editProfile']);
     Route::resource('/PKL', PKLController::class);
     Route::resource('/produk', ProdukController::class);
