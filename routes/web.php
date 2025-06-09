@@ -58,6 +58,7 @@ Route::get('/login', function () {
     return view('login');
 })->name('login');
 Route::resource('/account', AccountController::class);
+Route::get('/accountCreate/PKL/Create', [AccountController::class,'RegisterAsPKL']);
 
 Route::middleware(['status:PKL|Pelanggan|Admin'])->group(function () {
     Route::get('/profile', function () {

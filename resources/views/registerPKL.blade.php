@@ -31,22 +31,27 @@
         <!-- Bagian Button -->
         <div class="d-flex justify-content-center gap-2 mb-0">
             <div class="btn-group rounded-5 border border-danger overflow-hidden" role="group">
-                <input type="radio" class="btn-check" name="status" id="PKL" value="PKL" autocomplete="off">
+               <input type="radio" class="btn-check" name="status" id="PKL" value="PKL" autocomplete="off" checked>
                 <label class="btn btn-outline-danger px-4 rounded-start-5"
                     style="border: 2px solid #991b1b !important; color: black;" for="PKL"><strong>PKL</strong></label>
 
-                <input type="radio" class="btn-check" name="status" id="Pelanggan" value="Pelanggan" autocomplete="off" checked>
+                <input type="radio" class="btn-check" name="status" id="Pelanggan" value="Pelanggan" autocomplete="off" >
                 <label class="btn btn-outline-danger px-4 rounded-end-5"
                     style="border: 2px solid #991b1b !important; color: black;" for="Pelanggan"><strong>Pelanggan</strong></label>
 
             </div>
         </div>
-        <form method="POST" action="/account" enctype="multipart/form-data" id="registerForm">
+        <!-- Form PKL -->
+        <form method="POST" action="/account" enctype="multipart/form-data" id="formRegistrasiPKL">
             @csrf
-            <!-- Form Pelanggan -->
-            <div id="formPelanggan" class="w-100 px-4">
+            <input type="text" name="status" value="PKL" id="pkl" hidden>
+            <input type="text" name="latitude" id="latitude" placeholder="Latitude" hidden>
+            <input type="text" name="longitude" id="longitude" placeholder="Longitude" hidden>
+            <div id="formPKL" class="w-100 px-4">
                 <div class="d-flex gap-4">
-                    <div class="w-50 pt-4">
+                    <!-- Form Akun -->
+                    <div class="w-50">
+                        <h6 class="mb-3"><strong>Data Akun</strong></h6>
                         <div class="mb-3">
                             <input type="text" name="nama" class="form-control rounded-5"
                                 style="background-color: #E5E5E5; border: 2px solid #991b1b; height: 35px;"
@@ -62,9 +67,6 @@
                                 style="background-color: #E5E5E5; border: 2px solid #991b1b; height: 35px;"
                                 placeholder="Nomor Telepon" required>
                         </div>
-                    </div>
-
-                    <div class="w-50">
                         <div class="mb-3">
                             <small class="text-muted">Upload foto profil Anda</small>
                             <input type="file" name="foto" class="form-control rounded-5"
@@ -73,28 +75,49 @@
                         </div>
                         <div class="mb-3 position-relative">
                             <input type="password" name="password" class="form-control rounded-5"
-                                style="background-color: #E5E5E5; border: 2px solid #991b1b; height: 35px;"
-                                id="passwordPelanggan" placeholder="Password" required>
+                                style="background-color: #E5E5E5; border: 2px solid #991b1b; height: 35px;" id="passwordPKL"
+                                placeholder="Password" required>
                             <button class="btn position-absolute end-0 top-50 translate-middle-y me-2" type="button"
-                                onclick="togglePasswordPelanggan()">
-                                <i class="bi bi-eye" id="toggleIconPelanggan"></i>
+                                onclick="togglePasswordPKL()">
+                                <i class="bi bi-eye" id="toggleIconPKL"></i>
                             </button>
+                        </div>
+                    </div>
+
+                    <!-- Form PKL -->
+                    <div class="w-50">
+                        <h6 class="mb-3 text-end"><strong>Data PKL</strong></h6>
+                        <div class="mb-3">
+                            <input type="text" class="form-control rounded-5" id="namaPKL" name="namaPKL"
+                                style="background-color: #E5E5E5; border: 2px solid #991b1b; height: 35px;"
+                                placeholder="Nama Toko" required>
+                        </div>
+                        <div class="mb-2">
+                            <textarea class="form-control rounded-5" name="desc" id="desc"
+                                style="background-color: #E5E5E5; border: 2px solid #991b1b;" placeholder="Deskripsi Toko"
+                                rows="3" required></textarea>
+                        </div>
+
+                        <div class="mb-3 d-flex flex-column">
+                            <small class="text-muted">Upload foto toko Anda</small>
+                            <input type="file" name="picture" class="form-control rounded-5"
+                                style="background-color: #E5E5E5; border: 2px solid #991b1b; height: 35px;" accept="image/*"
+                                required>
                         </div>
                         <div class="mb-3 position-relative">
                             <input type="password" name="passwordkonf" class="form-control rounded-5"
                                 style="background-color: #E5E5E5; border: 2px solid #991b1b; height: 35px;"
-                                id="confirmPasswordPelanggan" placeholder="Konfirmasi Password" required>
+                                id="confirmPasswordPKL" placeholder="Konfirmasi Password" required>
                             <button class="btn position-absolute end-0 top-50 translate-middle-y me-2" type="button"
-                                onclick="toggleConfirmPasswordPelanggan()">
-                                <i class="bi bi-eye" id="toggleConfirmIconPelanggan"></i>
+                                onclick="toggleConfirmPasswordPKL()">
+                                <i class="bi bi-eye" id="toggleConfirmIconPKL"></i>
                             </button>
                         </div>
-                        <input type="text" name="status" value="Pelanggan" id="" hidden>
                     </div>
                 </div>
 
-                <button class="btn w-100 rounded-5 hover-red-dark"
-                    style="background-color: #991b1b; height: 35px; color: white; margin-top: 129px">
+                <button type="submit" class="btn w-100 rounded-5 hover-red-dark"
+                    style="background-color: #991b1b; height: 35px; color: white;">
                     <strong>Buat Akun!</strong>
                 </button>
             </div>
@@ -143,7 +166,6 @@
     }
   });
 </script>
-
 <script>
     function togglePasswordPKL() {
         const passwordField = document.getElementById('passwordPKL');
