@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class AccountController extends Controller
 {
@@ -246,5 +247,35 @@ class AccountController extends Controller
     {
         Account::destroy($account->id);
         return redirect('account-list');
+    }
+
+    public function updatePhoto(Request $request)
+    {
+        // 1. Validasi request: pastikan file yang diupload adalah gambar
+        $request->validate([
+            'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5120', // Maks 5MB
+        ]);
+
+        // 2. Dapatkan user yang sedang login
+        $user = Auth::user();
+
+        // 3. Hapus foto lama jika ada untuk menghemat ruang penyimpanan
+        if ($user->foto && Storage::disk('public')->exists($user->foto)) {
+            Storage::disk('public')->delete($user->foto);
+        }
+
+        // 4. Simpan file baru dan dapatkan path-nya
+        $filePath = $request->file('foto')->store('account', 'public');
+
+        // 5. Update kolom 'foto' di database untuk user tersebut
+        $user->foto = $filePath;
+        $user->save();
+
+        // 6. Kembalikan response JSON yang menandakan sukses
+        return response()->json([
+            'success' => true,
+            'message' => 'Foto profil berhasil diperbarui.',
+            'new_photo_url' => Storage::url($filePath) // Kirim URL foto baru ke frontend
+        ]);
     }
 }
