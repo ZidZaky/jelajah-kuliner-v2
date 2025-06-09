@@ -77,6 +77,7 @@
                     <ul class="dropdown-menu mt-3 position-absolute" style="right: -20px;">
                         @if (session('account')['status'] == 'PKL')
                         <li><a class="dropdown-item" href="/dataPKL/{{session('account')['id']}}">Data PKL</a></li>
+                        <li><a class="dropdown-item" href="/Dashboard-Penjualan">Data Penjualan</a></li>
                         @endif
                         <li><a class="dropdown-item" href="/pesanan/show/{{session('account')['id']}}">List Pesanan</a></li>
                         <li><a class="dropdown-item" href="/profile">My Profile</a></li>

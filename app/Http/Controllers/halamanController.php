@@ -74,8 +74,6 @@ class halamanController extends Controller
     
     //doneTest
     public function DashboardPenjualan($idAccVApa){
-
-        // dd($idAccVApa);
         $split = explode("V",$idAccVApa);
         // dd($split);
         $idAcc = $split[0];
@@ -263,7 +261,8 @@ class halamanController extends Controller
             try{
                 if($Today[0]->TerjualKeseluruhan!="0" && $month[0]->TerjualKeseluruhan!="0" && $year[0]->TerjualKeseluruhan!="0" && $this->hitung($Produs)>0){
                  
-                        return view('dp',['DataToday'=>$Today[0],'DataMonth'=>$month[0],'DataYear'=>$year[0],'produs'=>$Produs,'startdate'=>$startdate,'apa'=>$apa]);
+                        return view('PKL.dashboard-penjualan',['DataToday'=>$Today[0],'DataMonth'=>$month[0],'DataYear'=>$year[0],'produs'=>$Produs,'startdate'=>$startdate,'apa'=>$apa]);
+
 
                 }
             }
@@ -271,7 +270,7 @@ class halamanController extends Controller
                 try{
                     if($month[0]->TerjualKeseluruhan!="0" && $year[0]->TerjualKeseluruhan!="0" && $this->hitung($Produs)>0){
                         // dd('masukbulan');
-                            return view('dp',['DataToday'=>[],'DataMonth'=>$month,'DataYear'=>$year,'produs'=>$Produs,'startdate'=>$startdate,'apa'=>$apa]);
+                            return view('PKL.dashboard-penjualan',['DataToday'=>[],'DataMonth'=>$month,'DataYear'=>$year,'produs'=>$Produs,'startdate'=>$startdate,'apa'=>$apa]);
         
                     }
                 }
@@ -279,7 +278,7 @@ class halamanController extends Controller
                     try{
                         if($year[0]->TerjualKeseluruhan!="0" && $this->hitung($Produs)>0){
                             // dd('masuktahun');
-                            return view('dp',['DataToday'=>[],'DataMonth'=>[],'DataYear'=>$year,'produs'=>$Produs,'startdate'=>$startdate,'apa'=>$apa]);
+                            return view('PKL.dashboard-penjualan',['DataToday'=>[],'DataMonth'=>[],'DataYear'=>$year,'produs'=>$Produs,'startdate'=>$startdate,'apa'=>$apa]);
                             
                         }
                     }
@@ -287,7 +286,7 @@ class halamanController extends Controller
                         // dd('masukelse');
         
                         $ary = [];
-                        return view('dp',['DataToday'=>$ary,'DataMonth'=>$ary,'DataYear'=>$ary,'produs'=>$ary,'apa'=>$apa]);
+                        return view('PKL.dashboard-penjualan',['DataToday'=>$ary,'DataMonth'=>$ary,'DataYear'=>$ary,'produs'=>$ary,'apa'=>$apa]);
         
                     }
                 }
@@ -296,7 +295,7 @@ class halamanController extends Controller
             }
         
         $ary = [];
-        return view('dp',['DataToday'=>$ary,'DataMonth'=>$ary,'DataYear'=>$ary,'produs'=>$ary,'apa'=>$apa]);
+        return view('PKL.dashboard-penjualan',['DataToday'=>$ary,'DataMonth'=>$ary,'DataYear'=>$ary,'produs'=>$ary,'apa'=>$apa]);
         }
         
     }
