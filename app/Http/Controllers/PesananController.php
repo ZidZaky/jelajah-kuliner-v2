@@ -149,6 +149,13 @@ class PesananController extends Controller
             ['dataPesanan' => $Pesanan];
     }
 
+    public static function ShowByIdUser()
+    {
+        $Pesanan = Pesanan::all();
+        return
+            ['dataPesanan' => $Pesanan];
+    }
+
     public static function showDetail($idAccount)
     {
         $PesananData = Pesanan::where('idAccount', $idAccount)->first();

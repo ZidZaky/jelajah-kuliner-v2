@@ -17,8 +17,8 @@ class RoleMiddleware
     public function handle(Request $request, Closure $next,$status)
     {
         // Ubah string menjadi array
-    $roles = explode(',', $status);
-
+    $roles = explode('|', $status);
+// DD($roles);
     if (session()->has('account') && in_array(session('account')['status'], $roles)) {
         return $next($request);
     }

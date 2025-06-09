@@ -82,7 +82,7 @@ class AccountController extends Controller
     public function store(Request $request)
     {
 
-
+        // dd($request);
         if ($request->password == $request->passwordkonf) {
 
             $valdata = $request->validate([
