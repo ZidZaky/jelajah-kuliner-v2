@@ -3,6 +3,7 @@
 
 @section('css')
 <link rel="stylesheet" href="{{ auto_asset('css/dashboard-user.css') }}">
+<link rel="stylesheet" href="{{ auto_asset('css/registerNew.css') }}">
 <style>
     #map {
         height: calc(100vh - 90px - 20px + 3px);
@@ -31,11 +32,11 @@
         <!-- Bagian Button -->
         <div class="d-flex justify-content-center gap-2 mb-0">
             <div class="btn-group rounded-5 border border-danger overflow-hidden" role="group">
-               <input type="radio" class="btn-check" name="status" id="PKL" value="PKL" autocomplete="off" checked>
+                <button type="radio" onclick="toPKL()" class="PKL btn-check" name="status" id="PKL" value="PKL" autocomplete="off"></button>
                 <label class="btn btn-outline-danger px-4 rounded-start-5"
                     style="border: 2px solid #991b1b !important; color: black;" for="PKL"><strong>PKL</strong></label>
 
-                <input type="radio" class="btn-check" name="status" id="Pelanggan" value="Pelanggan" autocomplete="off" >
+                <button type="radio" onclick="toPelanggan()" class="PELANGGAN active btn-check" name="status" id="Pelanggan" value="Pelanggan" autocomplete="off"></button>
                 <label class="btn btn-outline-danger px-4 rounded-end-5"
                     style="border: 2px solid #991b1b !important; color: black;" for="Pelanggan"><strong>Pelanggan</strong></label>
 
@@ -153,6 +154,8 @@
 @endsection
 
 @section('js')
+<script src="{{ auto_asset('js/loginregis.js') }}"></script>
+
 <script>
   document.getElementById("PKL").addEventListener("change", function () {
     if (this.checked) {

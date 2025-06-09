@@ -91,9 +91,12 @@
 
 @section('js')
 <script>
-    @if((session('alert')!=null))
- erorAlert('Login Gagal', '{{session('alert')}}')
-@endif
+    @if(session('alert')!=null)
+        successAlert("{{session('alert')[0]}}","{{session('alert')[1]}}")
+    @endif
+
+    
+
     function setViewPopupPKL(wht) {
         button1 = document.querySelector('.button1').querySelectorAll('button')
         button2 = document.querySelector('.button2').querySelectorAll('button')

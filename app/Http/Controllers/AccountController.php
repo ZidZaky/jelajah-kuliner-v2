@@ -46,7 +46,7 @@ class AccountController extends Controller
         }
 
         // Authentication failed
-        return redirect('/login')->with('alert', 'email atau password salah!'); // Redirect back to the login page if authentication fails
+        return redirect('/login')->with('alert', ['Login Gagal','email atau password salah!']); // Redirect back to the login page if authentication fails
     }
 
     public function loginAccount(Request $request)
@@ -93,7 +93,7 @@ class AccountController extends Controller
         // dd($request);
         // if ($request->password == $request->passwordkonf) {
         if ($request->password == $request->passwordkonf) {
-
+            // dd($request);
             $valdata = $request->validate([
                 'nama' => 'required',
                 'email' => [
@@ -107,15 +107,14 @@ class AccountController extends Controller
                 ],
                 'nohp' => [
                     'required',
-                    'nohp',
                     function ($attribute, $value, $fail) {
-                        if (Account::where('nohp', $value)->first()->id) {
+                        if (!$this->isNohpExist($value)) {
                             $fail('Nomor sudah terdaftar');
                         }
                     }
                 ],
                 'password' => 'required',
-                'passwordkonf' => 'required}same:password',
+                'passwordkonf' => 'required|same:password',
                 'status' => 'required',
                 'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
             ], [
@@ -189,18 +188,18 @@ class AccountController extends Controller
                 $berhasil = $pkl->save();
                 // dd($berhasil);
                 if ($berhasil) {
-                    return redirect('/dashboard');
+                    return redirect('/login')->with('alert', ['Registrasi Berhasil','Silahkan Login']);
                 } else {
                     return redirect('/account/create')->with('error', 'Gagal menyimpan data PKL.');
                 }
             }
-
-            return redirect('/login');
-            // } else {
-            //     return redirect()->back()->with('alert', 'Password berbeda');
-            // }
+            
+            return redirect('/login')->with('alert', ['Registrasi Berhasil','Silahkan Login']);
+            } else {
+                return redirect()->back()->with('alert', 'Password berbeda');
+            }
         }
-    }
+    // }
 
     public function isExistEmail($email)
     {
@@ -212,7 +211,7 @@ class AccountController extends Controller
         return $result;
     }
 
-    public function isExistNumber($number)
+    public function isNohpExist($number)
     {
         $hasil = Account::firstWhere('nohp', $number);
         $result = false;
