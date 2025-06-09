@@ -70,7 +70,7 @@ Route::middleware(['status:PKL|Pelanggan|Admin'])->group(function () {
     Route::post('/account/{id}', [AccountController::class, 'editProfile']);
     Route::resource('/PKL', PKLController::class);
     Route::resource('/produk', ProdukController::class);
-    Route::resource('/pesanan', PesananController::class);
+    // Route::resource('/pesanan', PesananController::class);
     Route::get('/pesanan/show/{id}', [PesananController::class, 'ShowByIdUser']);
     Route::resource('/report', ReportController::class);
     Route::get('/pesanan/create/{id}', [PesananController::class, 'createWithId'])->name('pesanan.createWithId');
@@ -193,7 +193,6 @@ Route::get('/getIDPkl/{id}', [PKLController::class, 'getIdPKL']);
 // Route::get('tolakPesanan/{id}', [PesananController::class, 'tolakPesanan']);
 // Route::get('selesaiPesanan/{id}', [PesananController::class, 'selesaiPesanan']);
 // Route::get('riwayatProduk/{id}', [ProdukController::class, 'riwayatProduk']);
-// Route::get('/Dashboard-Penjualan/{idAccVApa}', [halamanController::class, 'DashboardPenjualan']);
 // Route::post('/MakeStokAwal', [halamanController::class, 'UpdateStatusStok'])->name('MakeStokAwal');
 // Route::post('/updateStokAkhir', [halamanController::class, 'UpdateStokAkhir'])->name('updateStokAkhir');
 // Route::get('/buatStokAkhir/{id}', [ProdukController::class, 'buatStokAkhir']);
@@ -253,9 +252,11 @@ Route::get('/access-denied', function () {
 // Route::get('/baseRegist', function () {
 //     return view('NEW.registPage');
 // });
-Route::get('/pesanan', function () {
-    return view('NEW.pesanan');
-});
+
+Route::get('/pesanan/{id}', [PesananController::class, 'ViewPesanan']);
+
+
+
 Route::get('/ulasantes', function () {
     return view('NEW.ulasan');
 });
@@ -279,3 +280,7 @@ Route::get('/ListAccount',function(){
 Route::get('/Dashboard-PKL',function(){
     return view('NEW.PKL.dashboard_pkl');
 });
+Route::get('/Dashboard-Penjualan',function(){
+    return view('PKL.dashboard-penjualan');
+});
+Route::get('/Dashboard-Penjualan/{idAccVApa}', [halamanController::class, 'DashboardPenjualan']);

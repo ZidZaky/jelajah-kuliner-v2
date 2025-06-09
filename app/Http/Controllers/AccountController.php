@@ -25,9 +25,9 @@ class AccountController extends Controller
             'email' => 'required|email',
             'password' => 'required',
         ], [
-                'email.required' => 'Email wajib diisi.',
-                'password.required' => 'Password wajib diisi.',
-            ]);
+            'email.required' => 'Email wajib diisi.',
+            'password.required' => 'Password wajib diisi.',
+        ]);
         $credentials = $request->only('email', 'password');
         // dd(Auth::attempt($credentials));
         if (Auth::attempt($credentials)) {
@@ -46,7 +46,7 @@ class AccountController extends Controller
         }
 
         // Authentication failed
-        return redirect('/login')->with('alert', ['Login Gagal','email atau password salah!']); // Redirect back to the login page if authentication fails
+        return redirect('/login')->with('alert', ['Login Gagal', 'email atau password salah!']); // Redirect back to the login page if authentication fails
     }
 
     public function loginAccount(Request $request)
@@ -188,17 +188,17 @@ class AccountController extends Controller
                 $berhasil = $pkl->save();
                 // dd($berhasil);
                 if ($berhasil) {
-                    return redirect('/login')->with('alert', ['Registrasi Berhasil','Silahkan Login']);
+                    return redirect('/login')->with('alert', ['Registrasi Berhasil', 'Silahkan Login']);
                 } else {
                     return redirect('/account/create')->with('error', 'Gagal menyimpan data PKL.');
                 }
             }
-            
-            return redirect('/login')->with('alert', ['Registrasi Berhasil','Silahkan Login']);
-            } else {
-                return redirect()->back()->with('alert', 'Password berbeda');
-            }
+
+            return redirect('/login')->with('alert', ['Registrasi Berhasil', 'Silahkan Login']);
+        } else {
+            return redirect()->back()->with('alert', 'Password berbeda');
         }
+    }
     // }
 
     public function isExistEmail($email)
