@@ -82,16 +82,40 @@ class AccountController extends Controller
     public function store(Request $request)
     {
 
-
-        if ($request->password == $request->passwordkonf) {
+        // dd($request);
+        // if ($request->password == $request->passwordkonf) {
 
             $valdata = $request->validate([
                 'nama' => 'required',
-                'email' => 'required',
-                'nohp' => 'required',
+                'email' => [
+                    'required',
+                    'email',function($attribute, $value, $fail){
+                        if(!$this->isExistEmail($value)){
+                            $fail('Email sudah terdaftar');
+                        }
+                    }
+                ],
+                'nohp' => [
+                    'required',
+                    'nohp',function($attribute, $value, $fail){
+                        if(Account::where('nohp',$value)->first()->id){
+                            $fail('Nomor sudah terdaftar');
+                        }
+                    }
+                ],
                 'password' => 'required',
+                'passwordkonf'=>'required}same:password',
                 'status' => 'required',
-                'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
+                'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
+            ], [
+                'nama.required' => 'Nama wajib diisi.',
+                'email.required' => 'Email wajib diisi.',
+                'nohp.required' => 'Nomor HP wajib diisi.',
+                'password.required' => 'Password wajib diisi.',
+                'passwordkonf.required' => 'Konfirmasi password wajib diisi.',
+                'passwordkonf.same' => 'Konfirmasi password tidak sama dengan password.', 
+                'foto.mimes' => 'Format gambar harus jpeg, png, jpg, gif, atau svg.',
+                'foto.max'=>'Ukuran maksimal hanya boleh 5 MB'
             ]);
 
             if ($request->hasFile('foto')) {
@@ -161,9 +185,27 @@ class AccountController extends Controller
             }
 
             return redirect('/login');
-        } else {
-            return redirect()->back()->with('alert', 'Password berbeda');
+        // } else {
+        //     return redirect()->back()->with('alert', 'Password berbeda');
+        // }
+    }
+
+    public function isExistEmail($email){
+        $email = Account::firstWhere('email', $email);
+        $result = false;
+        if($email==null){
+            $result = true;
         }
+        return $result;
+    }
+
+    public function isExistNumber($number){
+        $hasil = Account::firstWhere('nohp', $number);
+        $result = false;
+        if($hasil==null){
+            $result = true;
+        }
+        return $result;
     }
 
     //edit

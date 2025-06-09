@@ -273,3 +273,7 @@ Route::get('/ListReport',function(){
 Route::get('/ListAccount',function(){
     return view('NEW.List_Account');
 });
+
+Route::get('/Dashboard-PKL',function(){
+    return view('NEW.PKL.dashboard_pkl');
+});
