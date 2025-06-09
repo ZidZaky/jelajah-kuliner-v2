@@ -253,7 +253,7 @@ Route::get('/access-denied', function () {
 //     return view('NEW.registPage');
 // });
 
-Route::get('/pesanan/{id}', [PesananController::class, 'ViewPesanan']);
+Route::get('/pesanan/create/{id}', [PesananController::class, 'createWithId']);
 
 
 
