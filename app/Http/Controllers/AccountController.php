@@ -80,6 +80,11 @@ class AccountController extends Controller
         return view('register');
     }
 
+    public function RegisterAsPKL()
+    {
+        return view('registerPKL');
+    }
+
 
     //save
     public function store(Request $request)
