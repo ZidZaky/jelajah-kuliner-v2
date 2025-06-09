@@ -13,6 +13,7 @@
 @endsection
 
 @section('AddOn')
+
 <form action="/loginAccount" method="POST" id="loginForm">
     @csrf
     <div class="position-fixed" style="width: 50%; height: 100%; right: 0; background-color: white; margin-top: -15px; padding: 7% 0;">
@@ -90,6 +91,9 @@
 
 @section('js')
 <script>
+    @if((session('alert')!=null))
+ erorAlert('Login Gagal', '{{session('alert')}}')
+@endif
     function setViewPopupPKL(wht) {
         button1 = document.querySelector('.button1').querySelectorAll('button')
         button2 = document.querySelector('.button2').querySelectorAll('button')

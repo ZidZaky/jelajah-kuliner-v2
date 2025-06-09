@@ -24,7 +24,10 @@ class AccountController extends Controller
         $validated = $request->validate([
             'email' => 'required|email',
             'password' => 'required',
-        ]);
+        ], [
+                'email.required' => 'Email wajib diisi.',
+                'password.required' => 'Password wajib diisi.',
+            ]);
         $credentials = $request->only('email', 'password');
         // dd(Auth::attempt($credentials));
         if (Auth::attempt($credentials)) {
@@ -43,7 +46,7 @@ class AccountController extends Controller
         }
 
         // Authentication failed
-        return redirect('/login')->with('alert', 'email dan password salah!'); // Redirect back to the login page if authentication fails
+        return redirect('/login')->with('alert', 'email atau password salah!'); // Redirect back to the login page if authentication fails
     }
 
     public function loginAccount(Request $request)
