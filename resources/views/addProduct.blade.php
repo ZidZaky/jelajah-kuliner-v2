@@ -1,8 +1,7 @@
-@extends('layouts.layout')
-
+@extends('NEW.EVI.base-page')
 
 @section('title')
-    Tambah Produk || JELAJAHKULINER
+Tambah Produk || JELAJAHKULINER
 @endsection
 
 @section('css')
@@ -11,7 +10,7 @@
 
 <style>
     #map {
-       height: calc(100vh - 90px - 20px + 3px);
+        height: calc(100vh - 90px - 20px + 3px);
         filter: grayscale(100%);
 
     }
@@ -68,6 +67,8 @@
                     <input type="file" class="form-control rounded-pill border-2" name="fotoProduk" required>
                     <button type="submit" class="btn btn-danger rounded-pill px-4">Tambah</button>
                 </div>
+                <input type="text" name="idPKL" id="idPKL" value="{{ session('pkl')['id'] }}" readonly hidden>
+                <input type="text" name="idAccount" id="idAccount" value="{{ session('pkl')['id'] }}" readonly hidden>
             </form>
         </div>
     </div>
