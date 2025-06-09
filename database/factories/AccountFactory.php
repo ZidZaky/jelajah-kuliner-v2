@@ -12,8 +12,8 @@ class AccountFactory extends Factory
     public function definition(): array
     {
         $foto=[
-            'jawa.jpg',
-            'sunda.png',
+            'evi.jpg',
+            'dika.png',
         ];
         $status = ['PKL','Pelanggan'];
         return [
