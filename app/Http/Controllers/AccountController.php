@@ -47,14 +47,14 @@ class AccountController extends Controller
                 return redirect('/dashboard')->with('alert', ['Login Berhasil', 'Terimakasih']);
             } else {
                 // session(['account' => $account]);
-                return redirect('/login')->with('alert', 'Anda Di Ban');
+                return redirect('/login')->with('erorAlert', 'Anda Di Ban');
             }
 
             // Redirect to the intended URL after successful login
         }
 
         // Authentication failed
-        return redirect('/login')->with('alert', ['Login Gagal', 'email atau password salah!']); // Redirect back to the login page if authentication fails
+        return redirect('/login')->with('erorAlert', ['Login Gagal', 'email atau password salah!']); // Redirect back to the login page if authentication fails
     }
 
     public function loginAccount(Request $request)

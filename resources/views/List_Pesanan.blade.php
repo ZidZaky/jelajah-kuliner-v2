@@ -553,57 +553,15 @@
                         @if($data->status=='Pesanan Diproses')
                         <tr>
                             <td class="text-center align-middle d-none d-md-table-cell">{{{$data->id}}}</td>
-                            <td class="text-center align-middle">{{{$data->namaPemesan}}} </td>
+                            <td class="text-center align-middle">{{{$data->namaPKL}}} </td>
                             <td class="d-none d-md-table-cell">{{{$data->Keterangan}}}</td>
 
-                            <td class="d-none text-center align-middle d-md-table-cell justify-content-center">
-                                @if($data->status=='Pesanan Baru')
-                                <div class="statusPesanan new w-auto px-2 open bg-transparent border rounded-4 d-flex justify-content-center align-items-center">
-                                    <p class="p-clear p-1">{{{$data->status}}}</p>
-                                </div>
-                                @elseif($data->status=='Pesanan Diproses')
-                                <div class="statusPesanan process w-auto px-2 open bg-transparent border rounded-4 d-flex justify-content-center align-items-center">
-                                    <p class="p-clear p-1">{{{$data->status}}}</p>
-                                </div>
-                                @elseif($data->status=='Pesanan Siap Diambil')
-                                <div class="statusPesanan ready w-auto px-2 open bg-transparent border rounded-4 d-flex justify-content-center align-items-center">
-                                    <p class="p-clear p-1">{{{$data->status}}}</p>
-                                </div>
-                                @elseif($data->status=='Pesanan Selesai')
-                                <div class="statusPesanan done w-auto px-2 open bg-transparent border rounded-4 d-flex justify-content-center align-items-center">
-                                    <p class="p-clear p-1">{{{$data->status}}}</p>
-                                </div>
-                                @else
-                                <div class="statusPesanan reject w-auto px-2 open bg-transparent border rounded-4 d-flex justify-content-center align-items-center">
-                                    <p class="p-clear p-1">{{{$data->status}}}</p>
-                                </div>
-                                @endif
-                            </td>
+                            
                             <td class="TotalBayar text-center align-middle">{{{$data->TotalBayar}}}</td>
 
 
                             <td class="actionButton text-center align-middle d-none d-md-table-cell d-flex flex-row gap-2">
                                 {{{$data->created_at}}}
-                            </td>
-                            <td class="d-block">
-                                <div class="buttongroup btn-group w-100 " role="group" aria-label="Basic mixed styles example">
-                                    @if($data->status=='Pesanan Baru')
-                                    <button type="button" onclick="window.location.href='/terimaPesanan/?id={{{$data->id}}}&wht=Pesanan'" class="btn btn-outline-success">
-                                        <p class="p-clear">Terima</p>
-                                    </button>
-                                    <button type="button" onclick="window.location.href='/tolakPesanan/?id={{{$data->id}}}&wht=Pesanan'" class="btn btn-outline-danger">
-                                        <p class="p-clear">Tolak</p>
-                                    </button>
-                                    @elseif($data->status=='Pesanan Diproses')
-                                    <button type="button" onclick="window.location.href='/siapDiambilPesanan/?id={{{$data->id}}}&wht=Pesanan'" class="btn btn-outline-success">
-                                        <p class="p-clear">Pesanan Siap Diambil</p>
-                                    </button>
-                                    @elseif($data->status=='Pesanan Siap Diambil')
-                                    <button type="button" onclick="window.location.href='/selesaiPesanan/?id={{{$data->id}}}&wht=Pesanan'" class="btn btn-outline-success">
-                                        <p class="p-clear">Pesanan Selesai</p>
-                                    </button>
-                                    @endif
-                                </div>
                             </td>
 
 
@@ -630,58 +588,17 @@
                         @if($data->status=='Pesanan Siap Diambil')
                         <tr>
                             <td class="text-center align-middle d-none d-md-table-cell">{{{$data->id}}}</td>
-                            <td class="text-center align-middle">{{{$data->namaPemesan}}} </td>
+                            <td class="text-center align-middle">{{{$data->namaPKL}}} </td>
                             <td class="d-none text-center align-middle d-md-table-cell">{{{$data->Keterangan}}}</td>
 
-                            <td class="d-none text-center align-middle d-md-table-cell justify-content-center">
-                                @if($data->status=='Pesanan Baru')
-                                <div class="statusPesanan new w-auto px-2 open bg-transparent border rounded-4 d-flex justify-content-center align-items-center">
-                                    <p class="p-clear p-1">{{{$data->status}}}</p>
-                                </div>
-                                @elseif($data->status=='Pesanan Diproses')
-                                <div class="statusPesanan process w-auto px-2 open bg-transparent border rounded-4 d-flex justify-content-center align-items-center">
-                                    <p class="p-clear p-1">{{{$data->status}}}</p>
-                                </div>
-                                @elseif($data->status=='Pesanan Siap Diambil')
-                                <div class="statusPesanan ready w-auto px-2 open bg-transparent border rounded-4 d-flex justify-content-center align-items-center">
-                                    <p class="p-clear p-1">{{{$data->status}}}</p>
-                                </div>
-                                @elseif($data->status=='Pesanan Selesai')
-                                <div class="statusPesanan done w-auto px-2 open bg-transparent border rounded-4 d-flex justify-content-center align-items-center">
-                                    <p class="p-clear p-1">{{{$data->status}}}</p>
-                                </div>
-                                @else
-                                <div class="statusPesanan reject w-auto px-2 open bg-transparent border rounded-4 d-flex justify-content-center align-items-center">
-                                    <p class="p-clear p-1">{{{$data->status}}}</p>
-                                </div>
-                                @endif
-                            </td>
+                            
                             <td class="TotalBayar text-center align-middle">{{{$data->TotalBayar}}}</td>
 
 
                             <td class="actionButton text-center align-middle d-none d-md-table-cell d-flex flex-row gap-2">
                                 {{{$data->created_at}}}
                             </td>
-                            <td>
-                                <div class="buttongroup btn-group w-100 " role="group" aria-label="Basic mixed styles example">
-                                    @if($data->status=='Pesanan Baru')
-                                    <button type="button" onclick="window.location.href='/terimaPesanan/?id={{{$data->id}}}&wht=Pesanan'" class="btn btn-outline-success">
-                                        <p class="p-clear">Terima</p>
-                                    </button>
-                                    <button type="button" onclick="window.location.href='/tolakPesanan/?id={{{$data->id}}}&wht=Pesanan'" class="btn btn-outline-danger">
-                                        <p class="p-clear">Tolak</p>
-                                    </button>
-                                    @elseif($data->status=='Pesanan Diproses')
-                                    <button type="button" onclick="window.location.href='/siapDiambilPesanan/?id={{{$data->id}}}&wht=Pesanan'" class="btn btn-outline-success">
-                                        <p class="p-clear">Pesanan Siap Diambil</p>
-                                    </button>
-                                    @elseif($data->status=='Pesanan Siap Diambil')
-                                    <button type="button" onclick="window.location.href='/selesaiPesanan/?id={{{$data->id}}}&wht=Pesanan'" class="btn btn-outline-success">
-                                        <p class="p-clear">Pesanan Selesai</p>
-                                    </button>
-                                    @endif
-                                </div>
-                            </td>
+                            
 
 
 
@@ -705,58 +622,17 @@
                         @if($data->status=='Pesanan Selesai')
                         <tr>
                             <td class="text-center align-middle d-none d-md-table-cell">{{{$data->id}}}</td>
-                            <td class="text-center align-middle">{{{$data->namaPemesan}}} </td>
+                            <td class="text-center align-middle">{{{$data->namaPKL}}} </td>
                             <td class="d-none d-md-table-cell">{{{$data->Keterangan}}}</td>
 
-                            <td class="d-none text-center align-middle d-md-table-cell justify-content-center">
-                                @if($data->status=='Pesanan Baru')
-                                <div class="statusPesanan new w-auto px-2 open bg-transparent border rounded-4 d-flex justify-content-center align-items-center">
-                                    <p class="p-clear p-1">{{{$data->status}}}</p>
-                                </div>
-                                @elseif($data->status=='Pesanan Diproses')
-                                <div class="statusPesanan process w-auto px-2 open bg-transparent border rounded-4 d-flex justify-content-center align-items-center">
-                                    <p class="p-clear p-1">{{{$data->status}}}</p>
-                                </div>
-                                @elseif($data->status=='Pesanan Siap Diambil')
-                                <div class="statusPesanan ready w-auto px-2 open bg-transparent border rounded-4 d-flex justify-content-center align-items-center">
-                                    <p class="p-clear p-1">{{{$data->status}}}</p>
-                                </div>
-                                @elseif($data->status=='Pesanan Selesai')
-                                <div class="statusPesanan done w-auto px-2 open bg-transparent border rounded-4 d-flex justify-content-center align-items-center">
-                                    <p class="p-clear p-1">{{{$data->status}}}</p>
-                                </div>
-                                @else
-                                <div class="statusPesanan reject w-auto px-2 open bg-transparent border rounded-4 d-flex justify-content-center align-items-center">
-                                    <p class="p-clear p-1">{{{$data->status}}}</p>
-                                </div>
-                                @endif
-                            </td>
+                            
                             <td class="TotalBayar text-center align-middle">{{{$data->TotalBayar}}}</td>
 
 
                             <td class="actionButton text-center align-middle d-none d-md-table-cell d-flex flex-row gap-2">
                                 {{{$data->created_at}}}
                             </td>
-                            <td>
-                                <div class="buttongroup btn-group w-100 " role="group" aria-label="Basic mixed styles example">
-                                    @if($data->status=='Pesanan Baru')
-                                    <button type="button" onclick="window.location.href='/terimaPesanan/?id={{{$data->id}}}&wht=Pesanan'" class="btn btn-outline-success">
-                                        <p class="p-clear">Terima</p>
-                                    </button>
-                                    <button type="button" onclick="window.location.href='/tolakPesanan/?id={{{$data->id}}}&wht=Pesanan'" class="btn btn-outline-danger">
-                                        <p class="p-clear">Tolak</p>
-                                    </button>
-                                    @elseif($data->status=='Pesanan Diproses')
-                                    <button type="button" onclick="window.location.href='/siapDiambilPesanan/?id={{{$data->id}}}&wht=Pesanan'" class="btn btn-outline-success">
-                                        <p class="p-clear">Pesanan Siap Diambil</p>
-                                    </button>
-                                    @elseif($data->status=='Pesanan Siap Diambil')
-                                    <button type="button" onclick="window.location.href='/selesaiPesanan/?id={{{$data->id}}}&wht=Pesanan'" class="btn btn-outline-success">
-                                        <p class="p-clear">Pesanan Selesai</p>
-                                    </button>
-                                    @endif
-                                </div>
-                            </td>
+                            
 
 
 
@@ -781,57 +657,15 @@
                         @if($data->status=='Pesanan Ditolak')
                         <tr>
                             <td class="text-center align-middle d-none d-md-table-cell">{{{$data->id}}}</td>
-                            <td class="text-center align-middle">{{{$data->namaPemesan}}} </td>
+                            <td class="text-center align-middle">{{{$data->namaPKL}}} </td>
                             <td class="d-none d-md-table-cell">{{{$data->Keterangan}}}</td>
 
-                            <td class="d-none text-center align-middle d-md-table-cell justify-content-center">
-                                @if($data->status=='Pesanan Baru')
-                                <div class="statusPesanan new w-auto px-2 open bg-transparent border rounded-4 d-flex justify-content-center align-items-center">
-                                    <p class="p-clear p-1">{{{$data->status}}}</p>
-                                </div>
-                                @elseif($data->status=='Pesanan Diproses')
-                                <div class="statusPesanan process w-auto px-2 open bg-transparent border rounded-4 d-flex justify-content-center align-items-center">
-                                    <p class="p-clear p-1">{{{$data->status}}}</p>
-                                </div>
-                                @elseif($data->status=='Pesanan Siap Diambil')
-                                <div class="statusPesanan ready w-auto px-2 open bg-transparent border rounded-4 d-flex justify-content-center align-items-center">
-                                    <p class="p-clear p-1">{{{$data->status}}}</p>
-                                </div>
-                                @elseif($data->status=='Pesanan Selesai')
-                                <div class="statusPesanan done w-auto px-2 open bg-transparent border rounded-4 d-flex justify-content-center align-items-center">
-                                    <p class="p-clear p-1">{{{$data->status}}}</p>
-                                </div>
-                                @else
-                                <div class="statusPesanan reject w-auto px-2 open bg-transparent border rounded-4 d-flex justify-content-center align-items-center">
-                                    <p class="p-clear p-1">{{{$data->status}}}</p>
-                                </div>
-                                @endif
-                            </td>
+                            
                             <td class="TotalBayar text-center align-middle">{{{$data->TotalBayar}}}</td>
 
 
                             <td class="actionButton text-center align-middle d-none d-md-table-cell d-flex flex-row gap-2">
                                 {{{$data->created_at}}}
-                            </td>
-                            <td class="actionButton text-center align-middle">
-                                <div class="buttongroup btn-group w-100 " role="group" aria-label="Basic mixed styles example">
-                                    @if($data->status=='Pesanan Baru')
-                                    <button type="button" onclick="window.location.href='/terimaPesanan/?id={{{$data->id}}}&wht=Pesanan'" class="btn btn-outline-success">
-                                        <p class="p-clear">Terima</p>
-                                    </button>
-                                    <button type="button" onclick="window.location.href='/tolakPesanan/?id={{{$data->id}}}&wht=Pesanan'" class="btn btn-outline-danger">
-                                        <p class="p-clear">Tolak</p>
-                                    </button>
-                                    @elseif($data->status=='Pesanan Diproses')
-                                    <button type="button" onclick="window.location.href='/siapDiambilPesanan/?id={{{$data->id}}}&wht=Pesanan'" class="btn btn-outline-success">
-                                        <p class="p-clear">Pesanan Siap Diambil</p>
-                                    </button>
-                                    @elseif($data->status=='Pesanan Siap Diambil')
-                                    <button type="button" onclick="window.location.href='/selesaiPesanan/?id={{{$data->id}}}&wht=Pesanan'" class="btn btn-outline-success">
-                                        <p class="p-clear">Pesanan Selesai</p>
-                                    </button>
-                                    @endif
-                                </div>
                             </td>
 
 

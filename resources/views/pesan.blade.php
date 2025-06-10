@@ -7,24 +7,32 @@
 
 <style>
     body {
-        overflow-y: hidden;
+        /* overflow-y: hidden; */
     }
 
     .produkSpace {
         width: 60% !important;
     }
+    .fullSetengah{
+        width: 75% !important;
+    }
 
     @media (max-width: 768px) {
+        .fullSetengah{
+        width: 100% !important;
+    }
         body {
             /* overflow-y: scroll; */
         }
-
+        .produkKiri{
+            width: 300px !important;
+        }
         .produkSpace {
             width: 100% !important;
         }
 
         .Pesanan {
-            position: absolute;
+            /* position: absolute; */
             width: 100% !important;
             height: 100%;
             z-index: 4;
@@ -94,17 +102,13 @@
 <form action="{{ route('pesanan.store') }}" method="POST" class="contPesanan position-relative d-flex flex-md-row flex-column w-100 h-100 justify-content-between bg-prim-dark">
     @csrf
 
-    <div class="d-flex d-md-none rounded-start flex-column bg-prim-dark position-absolute justify-content-center align-items-center"
-        style="width: 70px; height: 70px; right: 0;">
-        <i class="bi bi-cart4 p-clear text-white fs-3"></i>
-        <p class="text-white p-clear">Cart</p>
-    </div>
+   
     <div class="produkSpace h-100 d-flex bg-body flex-column justify-content-evenly align-items-center" style="min-height: 100%; max-height:100%; width: 60%;">
         <div class="d-flex p-5 justify-content-center align-items-center">
             <h1 class="p-clear cl-prim-dark fw-bolder">PKL JAWA'S PRODUK</h1>
         </div>
         <div class="w-100 d-flex mb-5 justify-content-center align-items-center flex-1" style="min-height: 100%; max-height:100%;">
-            <div class="area produks SecondScroll w-75 gap-4 d-flex flex-column overflow-y-auto h-100 justify-content-start align-items-center"
+            <div class="area produks SecondScroll fullSetengah gap-4 d-flex flex-column overflow-y-auto h-100 justify-content-start align-items-center"
                 style="width: fit-content; max-width: 100%; max-height: 70vh;">
                 @if($produk->isEmpty())
                 <p>Belum ada produk yang terdaftar</p>
@@ -123,7 +127,7 @@
                             <i class="p-clear fs-5 bi bi-plus-lg"></i>
                         </button>
                     </div>
-                    <img class="circle-preview position-absolute z-1 shadow" src="{{auto_asset('storage/'.$item->foto)}}" alt="" style="height: 75%; width: fit-content; left: 0;">
+                    <img class="circle-preview d-none d-lg-flex d-md-flex position-absolute z-1 shadow" src="{{auto_asset('storage/'.$item->foto)}}" alt="" style="height: 75%; width: fit-content; left: 0;">
                     <div class="position-absolute shadow z-0 py-2 pe-2 d-flex flex-column gap-1 justify-content-between align-items-end bg-prim-dark border-left-top border-right-bottom" style="right: 0; width:87%; height:95%; max-height: 95%; min-height: 95%;  ">
 
                         <div class="contisi d-flex flex-column first-cl justify-content-end align-items-end w-50">

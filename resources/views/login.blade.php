@@ -8,6 +8,16 @@
         height: calc(100vh - 90px - 20px + 3px);
         filter: grayscale(100%);
     }
+
+    .fullSetengah {
+        width: 50% !important;
+    }
+
+    @media (max-width: 768px) {
+        .fullSetengah {
+        width: 100% !important;
+    }
+    }
 </style>
 
 @endsection
@@ -16,8 +26,8 @@
 
 <form action="/loginAccount" method="POST" id="loginForm">
     @csrf
-    <div class="position-fixed" style="width: 50%; height: 100%; right: 0; background-color: white; margin-top: -15px; padding: 7% 0;">
-        <div class="position-fixed d-flex flex-column align-items-center" style="width: 25%; height: 60%; right: 12.5%">
+    <div class="position-fixed fullSetengah d-flex justify-content-center align-items-center" style="height: 100%; right: 0; background-color: white;">
+        <div class="d-flex flex-column fullSetengah align-items-center justify-content-center h-100" style="">
             <img src="{{ auto_asset('assets/logoJelajahKuliner.svg') }}" alt="newLogoApp"
                 class="mt-4" style="width: 40%;">
 
@@ -91,11 +101,14 @@
 
 @section('js')
 <script>
-    @if(session('alert')!=null)
-        successAlert("{{session('alert')[0]}}","{{session('alert')[1]}}")
+    @if(session('alert') != null)
+    successAlert("{{session('alert')[0]}}", "{{session('alert')[1]}}")
+    @endif
+    @if(session('erorAlert') != null)
+    erorAlert("{{session('erorAlert')[0]}}", "{{session('erorAlert')[1]}}")
     @endif
 
-    
+
 
     function setViewPopupPKL(wht) {
         button1 = document.querySelector('.button1').querySelectorAll('button')

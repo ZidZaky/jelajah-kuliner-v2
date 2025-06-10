@@ -48,13 +48,18 @@
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
                         @if (!Auth::check())
-                        <li><a class="dropdown-item cl-white hover-red-dark" href="#" style="background-color: #a73636;">Login</a></li>
-                        <li><a class="dropdown-item btn-prm hover-red-dark" href="#">Register</a></li>
+                        <li><a class="dropdown-item cl-white hover-red-dark" href="/login" style="background-color: #a73636;">Login</a></li>
+                        <li><a class="dropdown-item btn-prm hover-red-dark" href="/account/create">Register</a></li>
                         @endif
                         @if (Auth::check())
-                        <li><a class="dropdown-item cl-white hover-red-dark" href="#" style="background-color: #a73636;">My Profile</a></li>
+                        @if(session('account')->status=='pkl')
+                        <li><a class="dropdown-item cl-white hover-red-dark" href="/Dashboard-Penjualan/{{{session('account')->id}}}VToday" style="background-color: #a73636;">Data Penjualan</a></li>
+                        <li><a class="dropdown-item cl-white hover-red-dark" href="/dataPKL/{{session('account')['id']}}" style="background-color: #a73636;">Data PKL</a></li>
+                        <li><a class="dropdown-item cl-white hover-red-dark" href="/pesanan/show/?id={{session('account')['id']}}&wht={{{'Pesanan Baru'}}}" style="background-color: #a73636;">List Pesanan</a></li>
+                        @endif
+                        <li><a class="dropdown-item cl-white hover-red-dark" href="/profile" style="background-color: #a73636;">My Profile</a></li>
                         <li><a class="dropdown-item btn-prm hover-red-dark" href="/pesanan/show/?id={{{session('account')->id}}}&wht=Pesanan Baru">List Pesanan</a></li>
-                        <li><a class="dropdown-item btn-prm hover-red-dark" href="#">Logout</a></li>
+                        <li><a class="dropdown-item btn-prm hover-red-dark" href="/logout">Logout</a></li>
                         @endif
                         <!-- <li><  a class="dropdown-item" href="#">User Guide</a></li> -->
                     </ul>

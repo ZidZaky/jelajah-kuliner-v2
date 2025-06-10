@@ -2,3 +2,23 @@ label.active {
     background-color: #6D2323 !important;
     color: white !important;
 }
+button.active {
+        background-color: #991b1b !important;
+        color: white !important;
+    }
+
+    .fullSetengah {
+        width: 50% !important;
+    }
+    .empatSetengah{
+        width: 40% !important;
+    }
+
+    @media (max-width: 768px) {
+        .fullSetengah {
+        width: 100% !important;
+    }
+    .empatSetengah{
+        width: 90% !important;
+    }
+    }

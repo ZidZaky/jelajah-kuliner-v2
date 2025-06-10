@@ -180,6 +180,7 @@ class PesananController extends Controller
             }
             // dd($Pesanan);
         }
+        // dd($Pesanan);
         
         return view('List_Pesanan', ['dataPesanan' => $Pesanan, 'wht'=>$wht]);
     }
