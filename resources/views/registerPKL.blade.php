@@ -9,6 +9,8 @@
         height: calc(100vh - 90px - 20px + 3px);
         filter: grayscale(100%);
     }
+
+    
 </style>
 
 @endsection
@@ -33,7 +35,7 @@
         <div class="d-flex justify-content-center gap-2 mb-0">
             <div class="btn-group rounded-5 border border-danger overflow-hidden" role="group">
                 <button type="radio" onclick="toPKL()" class="PKL btn-check" name="status" id="PKL" value="PKL" autocomplete="off"></button>
-                <label class="btn btn-outline-danger px-4 rounded-start-5"
+                <label class="btn  btn-outline-danger px-4  {{$active=='Pkl'?'active':null}} rounded-start-5"
                     style="border: 2px solid #991b1b !important; color: black;" for="PKL"><strong>PKL</strong></label>
 
                 <button type="radio" onclick="toPelanggan()" class="PELANGGAN active btn-check" name="status" id="Pelanggan" value="Pelanggan" autocomplete="off"></button>
@@ -157,17 +159,17 @@
 <script src="{{ auto_asset('js/loginregis.js') }}"></script>
 
 <script>
-  document.getElementById("PKL").addEventListener("change", function () {
-    if (this.checked) {
-      window.location.href = "/accountCreate/PKL/Create";
-    }
-  });
+    document.getElementById("PKL").addEventListener("change", function() {
+        if (this.checked) {
+            window.location.href = "/accountCreate/PKL/Create";
+        }
+    });
 
-  document.getElementById("Pelanggan").addEventListener("change", function () {
-    if (this.checked) {
-      window.location.href = "/account/create";
-    }
-  });
+    document.getElementById("Pelanggan").addEventListener("change", function() {
+        if (this.checked) {
+            window.location.href = "/account/create";
+        }
+    });
 </script>
 <script>
     function togglePasswordPKL() {

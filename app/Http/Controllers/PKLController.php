@@ -211,6 +211,13 @@ class PKLController extends Controller
         return $results;
     }
 
+    public function getDataPklbyId($id){    
+        $hasil = PKL::firstWhere('idAccount', $id);
+        // dd($hasil, 'hasi;',session('account')->id);
+        return $hasil;
+        
+    }
+
     public function updateLocation(Request $request)
     {
         // Validate the request data

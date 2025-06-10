@@ -61,6 +61,7 @@ class PesananController extends Controller
     //save
     public function store(Request $request)
     {
+        // dd($request);
         // Create a new Pesanan instance
         // dd($request);
         $validate = Validator::make($request->all(), [
@@ -71,11 +72,12 @@ class PesananController extends Controller
             return redirect()->back()->with('alert', 'Belum ada barang yang dicheckout');
         }
         $pesanan = new Pesanan();
-        $pesanan->idAccount = $request->input('idAccount');
+        // dd( session('account')->id);
+        $pesanan->idAccount = session('account')->id;
         $pesanan->idPKL = $request->input('idPKL');
         $pesanan->Keterangan = $request->input('keterangan') ?? '';
         $pesanan->TotalBayar = $request->input('totalHarga');
-        $pesanan->status = $request->input('status');
+        $pesanan->status = 'pending';
 
         // Save the Pesanan instance
         if ($pesanan->save()) {
@@ -86,7 +88,8 @@ class PesananController extends Controller
             foreach ($request->except(['_token', 'idAccount', 'idPKL', 'totalHarga', 'keterangan', 'status']) as $key => $value) {
                 // Extract the product ID from the input name
                 // dd($key);
-                $idProduk = explode('_', $key)[1];
+                // dd($key);
+                $idProduk = explode('produk', $key)[1];
 
                 // Check if a record with the same idPesanan and idProduk already exists
                 $existingRecord = DB::table('produk_dipesan')
@@ -96,11 +99,13 @@ class PesananController extends Controller
 
                 // If no existing record found, insert a new record
                 if (!$existingRecord) {
-                    DB::table('produk_dipesan')->insert([
-                        'idPesanan' => $idPesanan,
-                        'idProduk' => $idProduk,
-                        'JumlahProduk' => $value
-                    ]);
+                    if ($value != 0) {
+                        DB::table('produk_dipesan')->insert([
+                            'idPesanan' => $idPesanan,
+                            'idProduk' => $idProduk,
+                            'JumlahProduk' => $value
+                        ]);
+                    }
                 }
             }
 
@@ -145,15 +150,23 @@ class PesananController extends Controller
     public static function showAll()
     {
         $Pesanan = Pesanan::all();
+
+
         return
             ['dataPesanan' => $Pesanan];
     }
 
     public static function ShowByIdUser()
     {
-        $Pesanan = Pesanan::all();
-        return
-            ['dataPesanan' => $Pesanan];
+        $idPKL = ((new PKLController())->getDataPklbyId(session('account')->id))->id;
+        // dd($idPKL);
+        $Pesanan = Pesanan::where('idPKL', $idPKL)->get();
+        foreach ($Pesanan as $data) {
+            $data['namaPemesan'] = (new AccountController())->getNameById($data->idAccount);
+            // dd($data);
+        }
+
+        return view('List_Pesanan', ['dataPesanan' => $Pesanan]);
     }
 
     public static function showDetail($idAccount)
@@ -195,7 +208,7 @@ class PesananController extends Controller
                 ->get();
             // dd($Produks);
 
-     
+
             return view('pesan', [
                 'pkl' => $PKL,
                 'produk' => $Produks
@@ -208,15 +221,21 @@ class PesananController extends Controller
     public function pesanDetail($id)
     {
         $pesan = Pesanan::find($id);
-        // dd($pesan);
+        $pesan->namaPemesan = (new AccountController())->getNameById($pesan->idAccount);
         $query = "select * from produk_dipesan where idPesanan = ?";
         // Execute the query
         $produk = DB::select($query, [$pesan->id]);
+        foreach ($produk as $item) {
+            $data = (new ProdukController())->getDataNameById($item->idProduk);
+            $item->nama = $data->namaProduk;
+            $item->hargaSatuan = $data->harga;
+        }
+        // dd($pesan, $produk);
         // dd($pesan,$produk);
 
         // dd($produk);
         // $pesan = Pesanan::find($id);
-        return view('detilPesan', [
+        return view('List_DetilPesanan', [
             'pesan' => $pesan,
             'produks' => $produk
         ]);
@@ -240,10 +259,7 @@ class PesananController extends Controller
             $produk = DB::select($query, [$pesan->id]);
 
             // Return the view with the updated Pesanan and related products
-            return view('detilPesan', [
-                'pesan' => $pesan,
-                'produks' => $produk
-            ]);
+            return redirect('Detil/' . $id);
         } else {
             // Handle the case where Pesanan is not found
             return redirect()->back()->with('error', 'Pesanan not found.');
@@ -262,17 +278,7 @@ class PesananController extends Controller
 
             // Save the changes to the database
             $pesan->save();
-
-            $pesan2 = Pesanan::find($id);
-            $query = "select * from produk_dipesan where idPesanan = ?";
-            // Execute the query
-            $produk = DB::select($query, [$pesan2->id]);
-            // dd($produk);
-            // $pesan = Pesanan::find($id);
-            return view('detilPesan', [
-                'pesan' => $pesan2,
-                'produks' => $produk
-            ]);
+            return redirect('Detil/' . $id);
         } else {
             // Handle the case where Pesanan is not found
             return redirect()->back()->with('error', 'Pesanan not found.');
@@ -310,8 +316,16 @@ class PesananController extends Controller
             return redirect()->back()->with('error', 'Pesanan not found.');
         }
     }
-
+    public function DetilPesanan($idPesanan) {}
     public function selesaiPesanan($id)
+    {
+        $pesan = Pesanan::find($id);
+        $pesan->status = 'Pesanan Selesai';
+        $pesan->save();
+        return redirect('Detil/' . $id);
+    }
+
+    public function siapDiambilPesanan($id)
     {
         // Find the Pesanan by its ID
         $pesan = Pesanan::find($id);
@@ -334,7 +348,7 @@ class PesananController extends Controller
         // Check if Pesanan is found
         if ($pesan) {
             // Update the status to "Pesanan Diproses"
-            $pesan->status = 'Pesanan Selesai';
+            $pesan->status = 'Pesanan Siap Diambil';
 
             // Save the changes to the database
             $pesan->save();
@@ -342,10 +356,7 @@ class PesananController extends Controller
 
 
             // Return the view with the updated Pesanan and related products
-            return view('detilPesan', [
-                'pesan' => $pesan,
-                'produks' => $produk
-            ]);
+            return redirect('Detil/' . $id);
         } else {
             // Handle the case where Pesanan is not found
             return redirect()->back()->with('error', 'Pesanan not found.');
