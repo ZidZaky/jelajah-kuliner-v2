@@ -77,7 +77,7 @@ class PesananController extends Controller
         $pesanan->idPKL = $request->input('idPKL');
         $pesanan->Keterangan = $request->input('keterangan') ?? '';
         $pesanan->TotalBayar = $request->input('totalHarga');
-        $pesanan->status = 'pending';
+        $pesanan->status = 'Pesanan Baru';
 
         // Save the Pesanan instance
         if ($pesanan->save()) {
@@ -111,7 +111,7 @@ class PesananController extends Controller
 
 
             // Redirect to dashboard with success message
-            return redirect('/dashboard')->with('success', 'Pesanan berhasil disimpan. ID Pesanan: ' . $idPesanan);
+            return redirect('/dashboard')->with('alert', ['Pesanan berhasil disimpan',' ID Pesanan: ' . $idPesanan]);
         } else {
             // Redirect back to Pesanan create page with error message
             return redirect('/Pesanan/create')->with('error', 'Gagal menyimpan data Pesanan.');
@@ -156,17 +156,32 @@ class PesananController extends Controller
             ['dataPesanan' => $Pesanan];
     }
 
-    public static function ShowByIdUser()
+    public static function show(Request $request)
     {
-        $idPKL = ((new PKLController())->getDataPklbyId(session('account')->id))->id;
-        // dd($idPKL);
-        $Pesanan = Pesanan::where('idPKL', $idPKL)->get();
-        foreach ($Pesanan as $data) {
-            $data['namaPemesan'] = (new AccountController())->getNameById($data->idAccount);
-            // dd($data);
+        // dd($id,$wht);
+        // dd($request);
+        $id = $request->query('id');
+        $wht = $request->query('wht');
+        $role = session('account')->status;
+        $idPKL = null;
+        $Pesanan = null;
+        if($role=='PKL'){
+            $idPKL = ((new PKLController())->getDataPklbyId(session('account')->id))->id;
+            $Pesanan = Pesanan::where('idPKL', $idPKL)->get();
+            // dd($idPKL);
+            foreach ($Pesanan as $data) {
+                $data['namaPemesan'] = (new AccountController())->getNameById($data->idAccount);
+            }
         }
-
-        return view('List_Pesanan', ['dataPesanan' => $Pesanan]);
+        else{
+            $Pesanan = Pesanan::where('idAccount', $id)->get();
+            foreach ($Pesanan as $data) {
+                $data['namaPKL'] = (new PKLController())->getNamePklById($data->idPKL);
+            }
+            // dd($Pesanan);
+        }
+        
+        return view('List_Pesanan', ['dataPesanan' => $Pesanan, 'wht'=>$wht]);
     }
 
     public static function showDetail($idAccount)
@@ -221,7 +236,12 @@ class PesananController extends Controller
     public function pesanDetail($id)
     {
         $pesan = Pesanan::find($id);
-        $pesan->namaPemesan = (new AccountController())->getNameById($pesan->idAccount);
+        if(session('account')->status=='PKL'){
+            $pesan->namaPemesan = (new AccountController())->getNameById($pesan->idAccount);
+        }
+        else{
+            $pesan->namaPKL = (new PKLController())->getNamePklById($pesan->idPKL);
+        }
         $query = "select * from produk_dipesan where idPesanan = ?";
         // Execute the query
         $produk = DB::select($query, [$pesan->id]);
@@ -241,9 +261,11 @@ class PesananController extends Controller
         ]);
     }
 
-    public function terimaPesanan($id)
+    public function terimaPesanan(Request $request)
     {
         // Find the Pesanan by its ID
+        $id = $request->query('id');
+        $wht = $request->query('wht');
         $pesan = Pesanan::find($id);
 
         // Check if Pesanan is found
@@ -259,16 +281,24 @@ class PesananController extends Controller
             $produk = DB::select($query, [$pesan->id]);
 
             // Return the view with the updated Pesanan and related products
-            return redirect('Detil/' . $id);
+            if($wht=='Pesanan'){
+                return redirect('/pesanan/show/?id='.session('account')['id'].'&wht=Pesanan Baru');
+            }
+            else{
+                return redirect('Detil/' . $id);
+            }
         } else {
             // Handle the case where Pesanan is not found
             return redirect()->back()->with('error', 'Pesanan not found.');
         }
     }
 
-    public function tolakPesanan($id)
+    public function tolakPesanan(Request $request)
     {
         // Find the Pesanan by its ID
+        $id = $request->query('id');
+        $wht = $request->query('wht');
+
         $pesan = Pesanan::find($id);
 
         // Check if Pesanan is found
@@ -278,15 +308,23 @@ class PesananController extends Controller
 
             // Save the changes to the database
             $pesan->save();
-            return redirect('Detil/' . $id);
+            if($wht=='Pesanan'){
+                return redirect('/pesanan/show/?id='.session('account')['id'].'&wht=Pesanan Baru');
+            }
+            else{
+                return redirect('Detil/' . $id);
+            }
         } else {
             // Handle the case where Pesanan is not found
             return redirect()->back()->with('error', 'Pesanan not found.');
         }
     }
 
-    public function batalPesanan($id)
+    public function batalPesanan(Request $request)
     {
+        // dd($request);
+        $id = $request->query('id');
+        $wht = $request->query('wht');
         // Find the Pesanan by its ID
         // dd($id);
         $pesan = Pesanan::find($id);
@@ -294,35 +332,60 @@ class PesananController extends Controller
 
         // Check if Pesanan is found
         if ($pesan) {
+            // dd($pesan);
             // Update the status to "Pesanan Diproses"
-            $pesan->status = 'Pesanan Dibatalkan';
+            if($pesan->status == 'Pesanan Baru'){
+                $pesan->status = 'Pesanan Dibatalkan';
+                // Save the changes to the database
+                $pesan->save();
+    
+                // Retrieve the related products for the Pesanan
+                // $query = "select * from produk_dipesan where idPesanan = ?";
+                // Execute the query
+                // dd($produk);
+                // $pesan = Pesanan::find($id);
+                if($wht=='Pesanan'){
+                    // dd('masuk1');
+                    return redirect('/pesanan/show/?id='.session('account')['id'].'&wht=Pesanan Baru')->with('alert',['Berhasil', 'Pesanan Berhasil Dibatalkan']);
+                }
+                else{
+                    // dd('masuk2');
+                    // if()
+                    return redirect('Detil/' . $id)->with('alert',['Berhasil', 'Pesanan Berhasil Dibatalkan']);;
+                }
+            }
+            else{
+                if($wht=='Pesanan'){
+                    // dd('masuk1');
+                    return redirect('/pesanan/show/?id='.session('account')['id'].'&wht=Pesanan Baru')->with('erorAlert',['Gagal', 'Pesanan Sudah Diproses Oleh Penjual']);
+                }
+                else{
+                    // dd('masuk2');
+                    // if()
+                    return redirect('Detil/' . $id)->with('erorAlert',['Gagal', 'Pesanan Sudah Diproses Oleh Penjual']);;
+                }
+            }
 
-            // Save the changes to the database
-            $pesan->save();
-
-            // Retrieve the related products for the Pesanan
-            $pesan2 = Pesanan::find($id);
-            $query = "select * from produk_dipesan where idPesanan = ?";
-            // Execute the query
-            $produk = DB::select($query, [$pesan2->id]);
-            // dd($produk);
-            // $pesan = Pesanan::find($id);
-            return view('detilPesan', [
-                'pesan' => $pesan2,
-                'produks' => $produk
-            ]);
         } else {
             // Handle the case where Pesanan is not found
             return redirect()->back()->with('error', 'Pesanan not found.');
         }
     }
     public function DetilPesanan($idPesanan) {}
-    public function selesaiPesanan($id)
+    public function selesaiPesanan(Request $request)
     {
+        // Find the Pesanan by its ID
+        $id = $request->query('id');
+        $wht = $request->query('wht');
         $pesan = Pesanan::find($id);
         $pesan->status = 'Pesanan Selesai';
         $pesan->save();
-        return redirect('Detil/' . $id);
+        if($wht=='Pesanan'){
+                return redirect('/pesanan/show/?id='.session('account')['id'].'&wht=Pesanan Siap Diambil');
+            }
+            else{
+                return redirect('Detil/' . $id);
+            }
     }
 
     public function reportPesanan($id)
@@ -332,8 +395,11 @@ class PesananController extends Controller
         $pesan->save();
     }
 
-    public function siapDiambilPesanan($id)
+    public function siapDiambilPesanan(Request $request)
     {
+        // Find the Pesanan by its ID
+        $id = $request->query('id');
+        $wht = $request->query('wht');
         // Find the Pesanan by its ID
         $pesan = Pesanan::find($id);
 
@@ -363,7 +429,12 @@ class PesananController extends Controller
 
 
             // Return the view with the updated Pesanan and related products
-            return redirect('Detil/' . $id);
+            if($wht=='Pesanan'){
+                return redirect('/pesanan/show/?id='.session('account')['id'].'&wht=Pesanan Diproses');
+            }
+            else{
+                return redirect('Detil/' . $id);
+            }
         } else {
             // Handle the case where Pesanan is not found
             return redirect()->back()->with('error', 'Pesanan not found.');

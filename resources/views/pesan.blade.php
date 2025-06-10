@@ -310,15 +310,6 @@
 
     }
 
-    function formatRupiah(angka) {
-        // Pastikan input berupa integer atau bisa diubah ke integer
-        let number = parseInt(angka);
-
-        if (isNaN(number)) return 'Rp. 0';
-
-        return 'Rp. ' + number.toLocaleString('id-ID');
-    }
-
     function minus(idProduk) {
         let inp = document.querySelector('#qty' + idProduk)
         let qty_awal = parseInt(inp.value)

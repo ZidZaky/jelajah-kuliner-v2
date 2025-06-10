@@ -24,7 +24,9 @@
 </head>
 
 
-<body class="first-bg d-flex flex-column min-vh-100">
+<body class="first-bg d-flex flex-column justify-content-center min-vh-100">
+
+    @yield('unrelative')
     <nav class="navbar w-full d-flex justify-content-center align-items-center" style="height: 80px; max-height:fit-content;">
         <div class="second-bg d-flex justify-content-between flex-row px-2 px-md-5 rounded-3 h-auto" style="padding: 10px 2px; width: 98%;">
             <div class="containerLeftNavbar d-flex flex-row justify-content-sm-between">
@@ -34,7 +36,7 @@
                 </a>
                 <div class="container-fluid w-75 h-25">
                     <div class="input-group">
-                        <input type="text" id="inpSearch" class="form-control noOutline" aria-label="Text input with segmented dropdown button" placeholder="Cari PKL atau menu...">
+                        <input type="text" id="inpSearch" oninput="MainSearch(this)" class="form-control noOutline" aria-label="Text input with segmented dropdown button" placeholder="Cari PKL atau menu...">
                         <button type="button" class="btn btn-sm primary-bg-cl noOutline" onclick="cari5()">
                             <i class="bi bi-search text-light"></i>
                         </button>
@@ -51,7 +53,7 @@
                         @endif
                         @if (Auth::check())
                         <li><a class="dropdown-item cl-white hover-red-dark" href="#" style="background-color: #a73636;">My Profile</a></li>
-                        <li><a class="dropdown-item btn-prm hover-red-dark" href="#">List Pesanan</a></li>
+                        <li><a class="dropdown-item btn-prm hover-red-dark" href="/pesanan/show/?id={{{session('account')->id}}}&wht=Pesanan Baru">List Pesanan</a></li>
                         <li><a class="dropdown-item btn-prm hover-red-dark" href="#">Logout</a></li>
                         @endif
                         <!-- <li><  a class="dropdown-item" href="#">User Guide</a></li> -->
@@ -67,6 +69,14 @@
                 @endif
                 <!-- udh login -->
                 @if (Auth::check())
+                @if(session('account')->status=='PKL')
+                <form action="/update-location" method="POST">
+                    @csrf
+                    <button type="button" class="btn bg-prim-dark cl-white btn-danger" onclick="getCurrentLocation(this)">Update Lokasi</button>
+                    <input type="text" name="latitude" id="latitude" class="d-none">
+                    <input type="text" name="longitude" id="longitude" class="d-none">
+                </form>
+                @endif
                 <div class="w-auto h-100 d-flex flex-row position-relative gap-2 align-items-center justify-content-center">
                     <!-- <p class="fs-6 p-0 m-0">Hello, {{session('account')['nama']}}</p>
                       -->
@@ -80,9 +90,9 @@
                     <ul class="dropdown-menu mt-3 position-absolute" style="right: -20px;">
                         @if (session('account')['status'] == 'PKL')
                         <li><a class="dropdown-item" href="/dataPKL/{{session('account')['id']}}">Data PKL</a></li>
-                        <li><a class="dropdown-item" href="/Dashboard-Penjualan">Data Penjualan</a></li>
+                        <li><a class="dropdown-item" href="/Dashboard-Penjualan/{{{session('account')->id}}}VToday">Data Penjualan</a></li>
                         @endif
-                        <li><a class="dropdown-item" href="/pesanan/show/{{session('account')['id']}}">List Pesanan</a></li>
+                        <li><a class="dropdown-item" href="/pesanan/show/?id={{session('account')['id']}}&wht={{{'Pesanan Baru'}}}">List Pesanan</a></li>
                         <li><a class="dropdown-item" href="/profile">My Profile</a></li>
                         <li>
                             <hr class="dropdown-divider">
@@ -146,45 +156,48 @@
         });
     }
 
-    function cari5() {
-        let pin = document.querySelectorAll(`.leaflet-marker-icon`);
-        pin.forEach(o => {
-            o.style.display = 'none';
-        })
-        // console.log(pin.length);
-        let hasil = [];
+    function formatRupiah(angka) {
+        // Pastikan input berupa integer atau bisa diubah ke integer
+        let number = parseInt(angka);
+
+        if (isNaN(number)) return 'Rp. 0';
+
+        return 'Rp. ' + number.toLocaleString('id-ID');
+    }
+
+    function MainSearch(elemen) {
+        let AllPkl = document.querySelectorAll('.popup.getThis')
+        // console.log(AllPkl, 'all')
+        AllPkl.forEach(e => {
+            e.closest('.leaflet-marker-icon').style.display = 'none'
+
+            // console.log(e.textContent);
+        });
+        let match = []
         fetch(`/getData`)
             .then(response => response.json())
             .then(data => {
                 data.forEach(e => {
-                    // console.log(e);
-                    let inp = document.getElementById('inpSearch');
-                    let ary = [];
-                    ary.push(e.nama)
-                    ary.push(e.menu)
+                    // console.log(elemen.value.toLowerCase(),Object.values(e).join(' ').toLowerCase(),'cut')
+                    if (Object.values(e).join(' ').toLowerCase().includes(elemen.value.toLowerCase())) {
+                        // console.log(Object.values(e).join(' ').toLowerCase().includes(elemen.value.toLowerCase()))
 
-                    ary.forEach(i => {
-                        // console.log(i+"tipe : "+typeof(i)+" lower : "+i.toLowerCase());
-                        if (i.toLowerCase().includes(inp.value.toLowerCase())) {
-                            // console.log(hasil.includes(e.id))
-                            if (hasil.includes(e.id) == false) {
-                                hasil.push(e.id);
-                            }
-                            console.log('hasil dalam : ' + hasil);
+                        match.push(e.id);
+                    }
+                })
+                //here
+                match.forEach(show => {
+                    AllPkl.forEach(e => {
+                        if (e.classList.contains('ProdukPopUp' + show)) {
+                            e.closest('.leaflet-marker-icon').style.display = ''
                         }
                     })
-
                 })
-                console.log('hasil luar : ' + hasil);
-                hasil.forEach(c => {
-                    // console.log(('marker'+c));
-                    let depin = document.getElementById(('marker' + c));
-                    depin.style.display = '';
-                })
-            })
-            .catch(error => {
-                console.error('Error fetching coordinates:', error);
             });
+
+
+
+
 
     }
 </script>

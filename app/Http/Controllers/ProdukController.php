@@ -161,6 +161,11 @@ class ProdukController extends Controller
 
     }
 
+    public function getNamaProdukById($id){
+        $produk = Produk::find($id);
+        return $produk->namaProduk;
+    }
+
     public function buatHistory(Request $request){
         $valdata = $request->validate([
             'idPKL' => 'required',

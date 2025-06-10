@@ -17,7 +17,7 @@
 @section('isi')
 <div class="w-100" style="padding: 1%; padding-top: 10px;">
     <div class="back">
-        <p>Selamat Pagi, Dika</p>
+        <p>Selamat Pagi, {{session('pkl')->namaPKL}}</p>
         <p id="ket">Dashboard ini di siapkan agar kamu lebih mudah melihat rangkuman penjualanmu</p>
     </div>
     <div class="content">
@@ -64,29 +64,27 @@
                         <p class="subsatuan">Pcs</p>
                     </div>
                 </div>
-    
-    
-    
+
+
+
             </div>
             <hr>
             <div class="product">
                 <p>Analytics Product</p>
                 <div>
                     @if($produs!=null)
-                                <div class="Bagan">
-                                    <canvas id="myChart" width="400" height="400" ></canvas>
-                                    <!-- <canvas id="myChart2" width="400" height="400" ></canvas> -->
-                                </div>
-                                <div class="legend-container" id="legend"></div>
-                            <!-- <div class="legend-container" id="legend2"></div> -->
-                            @else
-                                <p class="noneProduk">Belum Ada Produk</p>
-                            @endif
+                    <div class="Bagan">
+                        <canvas id="myChart" width="400" height="400"></canvas>
+                    </div>
+                    <div class="legend-container" id="legend"></div>
+                    @else
+                    <p class="noneProduk">Belum Ada Produk</p>
+                    @endif
                 </div>
-    
+
             </div>
         </div>
-    
+
     </div>
 </div>
 
@@ -96,100 +94,156 @@
 <script>
     filter('Today')
 
-    function filter($apa) {
+    function filter(apa) {
         let buts = document.querySelectorAll('.filter button');
+        let subisi = document.getElementsByClassName('subisi')
+        // console.log("pjg : "+subisi[0].textContent)
         buts.forEach(a => {
             a.style.backgroundColor = "rgb(255,255,255,0.2)"
             a.style.color = "rgb(0,0,0,0.5)"
-            if ($apa == a.innerText) {
-                console.log('sama');
+            if (apa == a.innerText) {
+                // console.log('sama');
                 a.style.backgroundColor = "rgb(255,255,255,0.7)"
                 a.style.color = "rgb(0,0,0,0.9)"
             }
         });
+        let datas = [];
+        let produs = [];
+        let produk = [];
+        if (apa == "Today") {
+            datas = @json($DataToday);
+        }
+        if (apa == "Bulan Ini") {
+
+            datas = @json($DataMonth);
+
+            // console.log(produs)
+        }
+        if (apa == "Tahun Ini") {
+
+            datas = @json($DataYear);
+
+        }
+
+
+
+        subisi[0].textContent = 0
+        subisi[1].textContent = 0
+        subisi[2].textContent = 0
+        subisi[3].textContent = 0
+        subisi[4].textContent = 0
+        subisi[5].textContent = 0
+        // console.log("data : "+datas.length)
+        if (datas.length != 0) {
+            subisi[0].textContent = tR(datas.omzetKeseluruhan)
+            subisi[1].textContent = datas.TerjualKeseluruhan
+            subisi[2].textContent = tR(datas.omzetOnline)
+            subisi[3].textContent = tR(datas.omzetOffline)
+            subisi[4].textContent = datas.terjualOnline
+            subisi[5].textContent = datas.terjualOffline
+        }
+
+
+
+
+
     }
 
+    function tR($int) {
+        return (parseInt($int).toLocaleString('id-ID'));
+    }
 
-    // <block:setup:1>
-    // Kode konfigurasi Chart.js
-    const data = {
-        labels: [
-            'Pentol Rebus',
-            'Kentang Bakar Enak',
-            'Yellow',
-            'tes'
-        ],
-        datasets: [{
-            label: 'My First Dataset',
-            data: [300, 50, 100, 20],
-            backgroundColor: [
-                '#FFFFDD',
-                '#995556',
-                '#220000',
-                'white'
-            ],
-            hoverOffset: 4
-        }]
-    };
+    loadChart();
 
-    const config = {
-        type: 'doughnut',
-        data: data,
-        options: {
-            plugins: {
-                legend: {
-                    display: false // Menonaktifkan legend bawaan
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            let label = context.label || '';
-                            if (label) {
-                                label += ': ';
+    function loadChart() {
+
+        let colors = ['#3D332A', '#5E6B3D', '#D0AF68', '#440e2f', '#D08840', '#B75C3F', '#0e2f44', '#924034', '#929140', '#987140', '#C7135B', '#2D642A'];
+
+        let produk = @json($produs);
+        console.log(produk)
+        let namPro = [];
+        let qtyPro = [];
+        let colr = [];
+        console.log(produk);
+        //  = produs
+
+        for (k = 0; k < produk.length; k++) {
+            namPro.push(produk[k].produks);
+            qtyPro.push(produk[k].TerjualKeseluruhan);
+            colr.push(colors[k])
+        }
+        console.log(namPro)
+        console.log(qtyPro)
+        console.log(colr)
+        // console.log(data);
+        let data = {
+            labels: namPro,
+            datasets: [{
+                label: 'My First Dataset',
+                data: qtyPro,
+                backgroundColor: colr,
+                hoverOffset: 4
+            }]
+        };
+
+        let config = {
+            type: 'doughnut',
+            data: data,
+            options: {
+                plugins: {
+                    legend: {
+                        display: false // Menonaktifkan legend bawaan
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.raw !== null) {
+                                    label += context.raw;
+                                }
+                                return label;
                             }
-                            if (context.raw !== null) {
-                                label += context.raw;
-                            }
-                            return label;
                         }
                     }
                 }
             }
-        }
-    };
+        };
+        window.onload = function() {
+            let ctx = document.getElementById('myChart').getContext('2d');
+            let myChart = new Chart(ctx, config);
 
-    // Inisialisasi dan render grafik
-    window.onload = function() {
-        const ctx = document.getElementById('myChart').getContext('2d');
-        const myChart = new Chart(ctx, config);
+            // Membuat legend custom
+            let legendContainer = document.getElementById('legend');
+            data.labels.forEach((label, index) => {
+                let legendItem = document.createElement('div');
+                legendItem.style.display = 'flex';
+                legendItem.style.alignItems = 'center';
+                legendItem.style.marginBottom = '10px';
 
-        // Membuat legend custom
-        const legendContainer = document.getElementById('legend');
-        data.labels.forEach((label, index) => {
-            const legendItem = document.createElement('div');
-            legendItem.style.display = 'flex';
-            legendItem.style.alignItems = 'center';
-            legendItem.style.marginBottom = '10px';
+                let colorBox = document.createElement('span');
+                colorBox.style.backgroundColor = data.datasets[0].backgroundColor[index];
+                colorBox.style.width = '20px';
+                colorBox.style.height = '20px';
+                colorBox.style.display = 'inline-block';
+                colorBox.style.marginRight = '10px';
 
-            const colorBox = document.createElement('span');
-            colorBox.style.backgroundColor = data.datasets[0].backgroundColor[index];
-            colorBox.style.width = '20px';
-            colorBox.style.height = '20px';
-            colorBox.style.display = 'inline-block';
-            colorBox.style.marginRight = '10px';
+                let labelText = document.createElement('span');
+                labelText.textContent = label;
+                labelText.style.color = 'white';
 
-            const labelText = document.createElement('span');
-            labelText.textContent = label;
-            labelText.style.color = 'white';
+                legendItem.appendChild(colorBox);
+                legendItem.appendChild(labelText);
+                legendContainer.appendChild(legendItem);
+            });
 
-            legendItem.appendChild(colorBox);
-            legendItem.appendChild(labelText);
-            legendContainer.appendChild(legendItem);
-        });
-    };
+
+        };
+    }
 </script>
 <style>
-
     html::-webkit-scrollbar {
         width: 0;
     }
@@ -197,7 +251,8 @@
     body>* {
         /* border:1px black solid; */
     }
-    .isi{
+
+    .isi {
         flex: 0;
     }
 

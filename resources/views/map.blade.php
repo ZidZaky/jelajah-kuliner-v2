@@ -92,6 +92,25 @@
     @if(session('alert')!=null)
         successAlert("{{session('alert')[0]}}","{{session('alert')[1]}}")
     @endif
+    function getCurrentLocation(elemen) {
+        console.log(elemen)
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+            showPosition(position, elemen);
+        });
+        } else {
+            alert("Geolocation is not supported by this browser.");
+        }
+    }
+    function showPosition(position,elemen) {
+        // console.log(position)
+        document.getElementById("latitude").value = position.coords.latitude;
+        document.getElementById("longitude").value = position.coords.longitude;
+        elemen.closest('form').submit();
+
+        // Submit the form
+        
+    }
     // Fungsi-fungsi helper Anda
     function setViewPopupPKL(wht) {
         const popupNode = document.querySelector('.containerPopup');
@@ -274,7 +293,7 @@
                     if (data.length > 0) {
                         data.forEach(product => {
                             const productHTML = `
-                    <div class="produk align-items-center position-relative d-flex flex-row justify-content-end align-items-end" style="height:110px; min-height: 110px;">
+                    <div class="produk popup PopupProduk${product.id} align-items-center position-relative d-flex flex-row justify-content-end align-items-end" style="height:110px; min-height: 110px;">
                         <img class="circle-preview position-absolute z-1 shadow" src="${product.image}" alt="${product.nama}" style="height: 75%; width: fit-content; left: 0; top: 50%; transform: translateY(-50%); object-fit: cover; border-radius: 8px;">
                         <div class="position-absolute z-0 py-2 pe-2 d-flex flex-column gap-1 justify-content-between align-items-end bg-prim-dark border-left-top border-right-bottom" style="right: 0; width:87%; height:95%; max-height: 95%; min-height: 95%;">
                             <div class="contisi d-flex flex-column first-cl justify-content-end align-items-end w-50">
@@ -332,7 +351,7 @@
 
                 const customSquareIcon = L.divIcon({
                     className: 'custom-square-marker-icon',
-                    html: `<img src="${vendorForPopup.imageUrl}" alt="${vendorForPopup.name}'s Icon" class="pointImg">`,
+                    html: `<img src="${vendorForPopup.imageUrl}" alt="${vendorForPopup.name}'s Icon" class="pointImg ProdukPopUp${vendorForPopup.id} popup getThis">`,
                     iconSize: [60, 60],
                     iconAnchor: [30, 30],
                     popupAnchor: [0, -30]

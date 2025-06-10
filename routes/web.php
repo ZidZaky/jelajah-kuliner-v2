@@ -73,10 +73,11 @@ Route::middleware(['status:PKL|Pelanggan|Admin'])->group(function () {
     Route::resource('/PKL', PKLController::class);
     Route::resource('/produk', ProdukController::class);
     Route::resource('/pesanan', PesananController::class);
-    Route::get('/pesanan/show/{id}', [PesananController::class, 'ShowByIdUser']);
+    // Route::get('/pesanan/show/', [PesananController::class, 'ShowByIdUser']);
     Route::resource('/report', ReportController::class);
     Route::get('/pesanan/create/{id}', [PesananController::class, 'createWithId'])->name('pesanan.createWithId');
-    Route::get('batalPesanan/{id}', [PesananController::class, 'batalPesanan']);
+    // Route::get('batalPesanan/{id}', [PesananController::class, 'batalPesanan']);
+    Route::get('Detil/{id}', [PesananController::class, 'pesanDetail']);
 });
 Route::get('/logout', [AccountController::class, 'logoutAccount']);
 Route::resource('/ulasan', UlasanController::class);
@@ -85,12 +86,12 @@ Route::get('/ulasan/create/{id}', [UlasanController::class, 'createWithId']);
 Route::middleware(['status:PKL'])->group(function () {
     Route::post('/update-location', [PKLController::class, 'updateLocation']);
     Route::get('/rwt/{idpklpidproduk}', [halamanController::class, 'getrwtStok']);
+    Route::get('/History-Stok/{idProduk}',[halamanController::class, 'history']);
     Route::get('/chartTahun', [halamanController::class, 'ChartMonth']);
-    Route::get('/terimaPesanan/{id}', [PesananController::class, 'terimaPesanan']);
-    Route::get('Detil/{id}', [PesananController::class, 'pesanDetail']);
-    Route::get('tolakPesanan/{id}', [PesananController::class, 'tolakPesanan']);
-    Route::get('siapDiambilPesanan/{id}', [PesananController::class, 'siapDiambilPesanan']);
-    Route::get('selesaiPesanan/{id}', [PesananController::class, 'selesaiPesanan']);
+    Route::get('/terimaPesanan/', [PesananController::class, 'terimaPesanan']);
+    Route::get('tolakPesanan/', [PesananController::class, 'tolakPesanan']);
+    Route::get('/siapDiambilPesanan/', [PesananController::class, 'siapDiambilPesanan']);
+    Route::get('/selesaiPesanan/', [PesananController::class, 'selesaiPesanan']);
     Route::get('riwayatProduk/{id}', [ProdukController::class, 'riwayatProduk']);
     Route::get('/Dashboard-Penjualan/{idAccVApa}', [halamanController::class, 'DashboardPenjualan']);
     Route::post('/MakeStokAwal', [halamanController::class, 'UpdateStatusStok'])->name('MakeStokAwal');
@@ -99,7 +100,10 @@ Route::middleware(['status:PKL'])->group(function () {
     Route::get('/buatStokAwal/{id}', [ProdukController::class, 'buatStokAwal']);
     Route::post('/buatHistory', [ProdukController::class, 'buatHistory']);
     Route::post('/updateHistory', [ProdukController::class, 'updateHistory']);
+    Route::post('/update-location', [PKLController::class, 'updateLocation']);
 });
+Route::get('batalPesanan/', [PesananController::class, 'batalPesanan']);
+
 
 Route::middleware(['status:Admin'])->group(function () {
 
@@ -295,4 +299,10 @@ Route::get('/Dashboard-PKL',function(){
 Route::get('/Dashboard-Penjualan', function () {
     return view('PKL.dashboard-penjualan');
 });
+
+Route::get('/History', function () {
+    return view('HistoryStok');
+});
+
+
 Route::get('/Dashboard-Penjualan/{idAccVApa}', [halamanController::class, 'DashboardPenjualan']);

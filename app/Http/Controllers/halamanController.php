@@ -22,8 +22,8 @@ class halamanController extends Controller
         $val = $req->validate([
             'stokAwal'=>'required',
             'idproduk'=>'required',
-            'idPKL'=>'required'
         ]);
+        $val['idPKL']=session('pkl')->id;
         $stok = new HistoryStokController();
         $idStok = $stok->store($val['idproduk'],$val['stokAwal'],$val['idPKL']);
         // dd($id);
@@ -37,14 +37,12 @@ class halamanController extends Controller
     }
 
     //doneTest
-    public function getrwtStok($idPklpidProduk){
-        $pisah = explode("p",$idPklpidProduk);
-        $idPKL = $pisah[0];
-        $idProduk = $pisah[1];
+    public function getrwtStok($idPKL,$idProduk){
 
         $data = DB::select("SELECT * from history_stoks h where idPKL=".$idPKL." and idProduk=".$idProduk.";");
         // dd($data);
         if(count($data)>0){
+            // dd($data);
             // dd($data);
             return $data;
         }
@@ -56,8 +54,9 @@ class halamanController extends Controller
         $val = $req->validate([
             'stokAkhir'=>'required',
             'idproduk'=>'required',
-            'idPKL'=>'required'
         ]);
+        $val['idPKL']=session('pkl')->id;
+
         // dd($val['stokAkhir']);   
         $produk = new ProdukController();
         $idStok = $produk->findStok($val['idproduk']);
@@ -74,6 +73,8 @@ class halamanController extends Controller
     
     //doneTest
     public function DashboardPenjualan($idAccVApa){
+
+        // dd($idAccVApa);
         $split = explode("V",$idAccVApa);
         // dd($split);
         $idAcc = $split[0];
@@ -260,9 +261,9 @@ class halamanController extends Controller
             
             try{
                 if($Today[0]->TerjualKeseluruhan!="0" && $month[0]->TerjualKeseluruhan!="0" && $year[0]->TerjualKeseluruhan!="0" && $this->hitung($Produs)>0){
+                    // dd($Produs);
                  
                         return view('PKL.dashboard-penjualan',['DataToday'=>$Today[0],'DataMonth'=>$month[0],'DataYear'=>$year[0],'produs'=>$Produs,'startdate'=>$startdate,'apa'=>$apa]);
-
 
                 }
             }
@@ -307,5 +308,12 @@ class halamanController extends Controller
             $itg = $itg+1;
         }
         return $itg;
+    }
+
+    public function history($idProduk){
+        $data = $this->getrwtStok(session('pkl')->id,$idProduk);
+        $namaProduk = (new ProdukController())->getNamaProdukById($idProduk);
+        // dd($namaProduk);
+        return view('HistoryStok', compact('data','namaProduk'));
     }
 }

@@ -199,6 +199,11 @@ class PKLController extends Controller
         return ($rs[0]->id);
     }
 
+    public function getNamePklById($id){
+        $hasil = PKL::firstWhere('id', $id);
+        return $hasil->namaPKL;
+    }
+
     public function getDataPKL()
     {
 
@@ -220,12 +225,13 @@ class PKLController extends Controller
 
     public function updateLocation(Request $request)
     {
+        // dd($request);
         // Validate the request data
         $valdata = $request->validate([
-            'idAccount' => 'required|integer',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
         ]);
+        $valdata['idAccount']=session('account')->id;
         // dd($valdata);
 
         try {
