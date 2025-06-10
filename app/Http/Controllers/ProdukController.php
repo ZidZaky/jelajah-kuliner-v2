@@ -115,6 +115,12 @@ class ProdukController extends Controller
         return redirect('/PKL');
     }
 
+    public function getDataNameById($idProduk){
+        $hasil = Produk::firstWhere('id', $idProduk);
+        return $hasil;
+
+    }
+
 
     public function getProduk($id)
     {

@@ -3,6 +3,8 @@
 
 @section('css')
 <link rel="stylesheet" href="{{ auto_asset('css/dashboard-user.css') }}">
+<link rel="stylesheet" href="{{ auto_asset('css/registerNew.css') }}">
+
 <style>
     #map {
         height: calc(100vh - 90px - 20px + 3px);
@@ -43,8 +45,8 @@
                 <label class="btn btn-outline-danger px-4 rounded-start-5"
                     style="border: 2px solid #991b1b !important; color: black;" for="PKL"><strong>PKL</strong></label>
 
-                <button type="radio" onclick="toPelanggan()" class="PELANGGAN active btn-check" name="status" id="Pelanggan" value="Pelanggan" autocomplete="off"></button>
-                <label class="btn btn-outline-danger px-4 rounded-end-5"
+                <button type="radio" onclick="toPelanggan()" class="PELANGGAN btn-check" name="status" id="Pelanggan" value="Pelanggan" autocomplete="off"></button>
+                <label class="btn btn-outline-danger px-4 rounded-end-5 {{$active=='Pelanggan'?'active':null}}"
                     style="border: 2px solid #991b1b !important; color: black;" for="Pelanggan"><strong>Pelanggan</strong></label>
 
             </div>

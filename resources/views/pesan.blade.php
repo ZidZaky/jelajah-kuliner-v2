@@ -91,7 +91,9 @@
 @endsection
 
 @section('isi')
-<div class="contPesanan position-relative d-flex flex-md-row flex-column w-100 h-100 justify-content-between bg-prim-dark">
+<form action="{{ route('pesanan.store') }}" method="POST" class="contPesanan position-relative d-flex flex-md-row flex-column w-100 h-100 justify-content-between bg-prim-dark">
+    @csrf
+
     <div class="d-flex d-md-none rounded-start flex-column bg-prim-dark position-absolute justify-content-center align-items-center"
         style="width: 70px; height: 70px; right: 0;">
         <i class="bi bi-cart4 p-clear text-white fs-3"></i>
@@ -113,11 +115,11 @@
                         <div class="tambahproduk{{{$item->id}}} d-flex awal w-50" onclick="showButton(this,'{{{$item->id}}}')">
                             <p class="p-clear lh-1 poppins fw-bolder cl-prim-dark" style="font-size: 12px;">TAMBAH PRODUK</p>
                         </div>
-                        <button onclick="minus('{{{$item->id}}}')" class="minusButton{{{$item->id}}} border d-none justify-content-center align-items-center p-clear border-danger border-left-top border-right-bottom h-auto" style="width: 30px; height: 30px; max-height: 30px;">
+                        <button type="button" onclick="minus('{{{$item->id}}}')" class="minusButton{{{$item->id}}} border d-none justify-content-center align-items-center p-clear border-danger border-left-top border-right-bottom h-auto" style="width: 30px; height: 30px; max-height: 30px;">
                             <i class="p-clear fs-5 bi bi-dash-lg"></i>
                         </button>
-                        <input type="number" data-id="{{{$item->id}}}" class="inputNumber{{{$item->id}}} d-none text-center clean-number border-0 p-0" data-qty="100" data-price="{{{$item->harga}}}" value="0" style="width: 30px; height: 100%;" name="" id="qty{{{$item->id}}}">
-                        <button onclick="plus('{{{$item->id}}}','1',this)" class="plusButton{{{$item->id}}} border d-flex justify-content-center align-items-center p-clear border-danger border-left-top border-right-bottom h-auto" style="width: 30px; height: 30px; max-height: 30px;">
+                        <input type="number" data-id="{{{$item->id}}}" name="produk{{{$item->id}}}" class="inputNumber{{{$item->id}}} d-none text-center clean-number border-0 p-0" data-qty="100" data-price="{{{$item->harga}}}" value="0" style="width: 30px; height: 100%;" name="" id="qty{{{$item->id}}}">
+                        <button type="button" onclick="plus('{{{$item->id}}}','1',this)" class="plusButton{{{$item->id}}} border d-flex justify-content-center align-items-center p-clear border-danger border-left-top border-right-bottom h-auto" style="width: 30px; height: 30px; max-height: 30px;">
                             <i class="p-clear fs-5 bi bi-plus-lg"></i>
                         </button>
                     </div>
@@ -144,7 +146,7 @@
         </div>
     </div>
 
-    <form class="Pesanan d-flex h-100 p-3 cl-white flex-column flex-1" style="min-height: 100%; width: 40%;"
+    <div class="Pesanan d-flex h-100 p-3 cl-white flex-column flex-1" style="min-height: 100%; width: 40%;"
         id="offcanvasExample">
         <div class="w-100 justify-content-start gap-3 align-items-center h-100 d-flex flex-column">
             <div class="w-25">
@@ -200,136 +202,142 @@
                     <div class="d-flex flex-row gap-3 h-100 justify-content-between w-25 align-items-center">
                         <p class="labelTotalArea p-clear">Kuantitas</p>
                         <div class=" qty bg-body text-black border-left-top border-right-bottom fw-bolder d-flex justify-content-center align-items-center" style="width: 50px; max-width: fit-content; min-width: 50px; height: 35px;">
-                            <p class="qtyAll p-clear">10</p>
+                            <p class="qtyAll p-clear">0</p>
 
                         </div>
                     </div>
                     <div class="d-flex flex-row gap-3 h-100 justify-content-between align-items-center" style="width:fit-content;">
                         <p class="labelTotalArea p-clear">Total Pembelian</p>
                         <div class="total bg-body text-black p-1 border-left-top border-right-bottom fw-bolder d-flex justify-content-center align-items-center" style="width: 35px; min-width: 110px; max-width: fit-content; height: 35px;">
-                            <p class="TotalAll p-clear">Rp. 150.000,-</p>
+                            <input type="text" class="inputTotal d-none" name="totalHarga" id="" value="0">
+                            <input type="text" class="inputTotal d-none" name="idPKL" id="" value="{{{$pkl->id}}}">
+                            <p class="TotalAll p-clear">Rp. 0,-</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="w-100 d-flex flex-column justify-content-center align-items-center" style="height: 120px;">
+                <div class="w-100 d-flex flex-column justify-content-center align-items-center" style="height: 100px;">
                     <div class="w-100 h-auto d-flex flex-row gap-1">
                         <p class="p-clear text-black" style="font-size: 14px;">Keterangan Tambahan</p>
                         <p class="p-clear fw-bolder text-black" style="font-size: 14px;">(Opsional)</p>
                     </div>
                     <div class="w-100 flex-1 ">
-                        <textarea class="w-100 h-100 border-2 noOutline p-2 border-danger border-left-top border-right-bottom" name="" id=""
+                        <textarea class="w-100 h-100 border-2 noOutline p-2 border-danger border-left-top border-right-bottom" name="keterangan" id=""
                             style="min-height: 100px; font-size: 14px;"></textarea>
                     </div>
                 </div>
+                <button type="submit" class="btn btn-outline-danger mt-2">Pesan Sekarang</button>
             </div>
-    </form>
-    @endsection
+        </div>
+</form>
+@endsection
 
-    @section('js')
-    <script>
-        function plus(idProduk, wht, elemen) {
-            if (wht == '1') {
-                let inp = document.querySelectorAll('.minusButton' + idProduk + ' , .inputNumber' + idProduk)
-                inp.forEach(e => {
-                    e.classList.replace('d-none', 'd-flex')
-                })
-                elemen.setAttribute("onclick", "plus('" + idProduk + "','0',this)")
-                document.querySelector('.tambahproduk' + idProduk).classList.replace('d-flex', 'd-none')
-
-            } else {
-                let inp = document.querySelector('#qty' + idProduk)
-                let qty_awal = parseInt(inp.value)
-                let stok = parseInt(inp.getAttribute('data-qty'));
-                if (qty_awal <= (stok - 1)) {
-                    inp.value = qty_awal + 1;
-                } else {
-                    erorAlert('Stok Terbatas', 'Stok produk hanya ' + stok)
-                }
-            }
-            changeInput(idProduk, '+')
-        }
-        everyChange()
-
-        function changeInput(id, wht) {
-            let inp = document.querySelector('.produkKiri.produk' + id + ' input');
-            console.log(inp)
-            let contData = document.querySelector('.produkNota' + id)
-            let datakanan = document.querySelector('.produkNota' + id + ' .QtyProduk')
-            let totalPrice = document.querySelector('.produkNota' + id + ' .TotalHarga')
-            // console.log('datakanan', datakanan, '.produkNota'+id+' .QtyProduk')
-            let qtyAwal = parseInt(inp.value)
-            if (wht == '+') {
-                if (qtyAwal <= parseInt(inp.getAttribute('data-qty'))) {
-                    if (qtyAwal == 0) {
-                        contData.classList.replace('d-none', 'd-flex')
-                    }
-                    // let currentQty = qtyAwal += 1
-                    // inp.value = currentQty
-                    datakanan.textContent = (inp.value);
-                    totalPrice.textContent = formatRupiah(parseInt(inp.value) * parseInt(inp.getAttribute('data-price')))
-                    SumAll()
-                    
-                }
-            } else {
-                if (qtyAwal>=0) {
-                    if (qtyAwal == 0) {
-                        contData.classList.replace('d-flex', 'd-none')
-                    }
-                    // let currentQty = qtyAwal += 1
-                    // inp.value = currentQty
-                    // console.log(inp.value)
-                    datakanan.textContent = inp.value;
-                    totalPrice.textContent = formatRupiah(parseInt(inp.value) * parseInt(inp.getAttribute('data-price')))
-                    SumAll()
-                    console.log(',masul')
-                }
-            }
-        }
-
-        function SumAll(){
-            let allInp = document.querySelectorAll('.produkKiri input');
-            let qty = 0;
-            let sum = 0;
-            allInp.forEach(e=>{
-                let isi = parseInt(e.value)
-                let harga = parseInt(e.getAttribute('data-price'))
-                qty += parseInt(isi)
-                sum += (isi*harga)
-            })
-
-            document.querySelector('.qtyAll').textContent = qty
-            document.querySelector('.TotalAll').textContent = formatRupiah(sum)
-        }
-
-        function formatRupiah(angka) {
-            // Pastikan input berupa integer atau bisa diubah ke integer
-            let number = parseInt(angka);
-
-            if (isNaN(number)) return 'Rp. 0';
-
-            return 'Rp. ' + number.toLocaleString('id-ID');
-        }
-
-        function minus(idProduk) {
-            let inp = document.querySelector('#qty' + idProduk)
-            let qty_awal = parseInt(inp.value)
-            let stok = parseInt(inp.getAttribute('data-qty'));
-            if (qty_awal > 0) {
-                inp.value = qty_awal - 1;
-            } else {
-                erorAlert('Eror', 'Qty sudah 0')
-            }
-
-            changeInput(idProduk, '-')
-        }
-
-        function showButton(elemen, idProduk) {
-            elemen.classList.replace('d-flex', 'd-none')
+@section('js')
+<script>
+    function plus(idProduk, wht, elemen) {
+        if (wht == '1') {
             let inp = document.querySelectorAll('.minusButton' + idProduk + ' , .inputNumber' + idProduk)
             inp.forEach(e => {
                 e.classList.replace('d-none', 'd-flex')
             })
+            elemen.setAttribute("onclick", "plus('" + idProduk + "','0',this)")
+            document.querySelector('.tambahproduk' + idProduk).classList.replace('d-flex', 'd-none')
+
+        } else {
+            let inp = document.querySelector('#qty' + idProduk)
+            let qty_awal = parseInt(inp.value)
+            let stok = parseInt(inp.getAttribute('data-qty'));
+            if (qty_awal <= (stok - 1)) {
+                inp.value = qty_awal + 1;
+            } else {
+                erorAlert('Stok Terbatas', 'Stok produk hanya ' + stok)
+            }
         }
-    </script>
-    @endsection
+        changeInput(idProduk, '+')
+    }
+    everyChange()
+
+    function changeInput(id, wht) {
+        let inp = document.querySelector('.produkKiri.produk' + id + ' input');
+        console.log(inp)
+        let contData = document.querySelector('.produkNota' + id)
+        let datakanan = document.querySelector('.produkNota' + id + ' .QtyProduk')
+        let totalPrice = document.querySelector('.produkNota' + id + ' .TotalHarga')
+        // console.log('datakanan', datakanan, '.produkNota'+id+' .QtyProduk')
+        let qtyAwal = parseInt(inp.value)
+        if (wht == '+') {
+            if (qtyAwal <= parseInt(inp.getAttribute('data-qty'))) {
+                if (qtyAwal == 0) {
+                    contData.classList.replace('d-none', 'd-flex')
+                }
+                // let currentQty = qtyAwal += 1
+                // inp.value = currentQty
+                datakanan.textContent = (inp.value);
+                totalPrice.textContent = formatRupiah(parseInt(inp.value) * parseInt(inp.getAttribute('data-price')))
+                SumAll()
+
+            }
+        } else {
+            if (qtyAwal >= 0) {
+                if (qtyAwal == 0) {
+                    contData.classList.replace('d-flex', 'd-none')
+                }
+                // let currentQty = qtyAwal += 1
+                // inp.value = currentQty
+                // console.log(inp.value)
+                datakanan.textContent = inp.value;
+                totalPrice.textContent = formatRupiah(parseInt(inp.value) * parseInt(inp.getAttribute('data-price')))
+                SumAll()
+                console.log(',masul')
+            }
+        }
+    }
+
+    function SumAll() {
+        let allInp = document.querySelectorAll('.produkKiri input');
+        let qty = 0;
+        let sum = 0;
+        allInp.forEach(e => {
+            let isi = parseInt(e.value)
+            let harga = parseInt(e.getAttribute('data-price'))
+            qty += parseInt(isi)
+            sum += (isi * harga)
+        })
+
+        document.querySelector('.qtyAll').textContent = qty
+        document.querySelector('.TotalAll').textContent = formatRupiah(sum)
+        document.querySelector('.inputTotal').value = sum;
+
+    }
+
+    function formatRupiah(angka) {
+        // Pastikan input berupa integer atau bisa diubah ke integer
+        let number = parseInt(angka);
+
+        if (isNaN(number)) return 'Rp. 0';
+
+        return 'Rp. ' + number.toLocaleString('id-ID');
+    }
+
+    function minus(idProduk) {
+        let inp = document.querySelector('#qty' + idProduk)
+        let qty_awal = parseInt(inp.value)
+        let stok = parseInt(inp.getAttribute('data-qty'));
+        if (qty_awal > 0) {
+            inp.value = qty_awal - 1;
+        } else {
+            erorAlert('Eror', 'Qty sudah 0')
+        }
+
+        changeInput(idProduk, '-')
+    }
+
+    function showButton(elemen, idProduk) {
+        elemen.classList.replace('d-flex', 'd-none')
+        let inp = document.querySelectorAll('.minusButton' + idProduk + ' , .inputNumber' + idProduk)
+        inp.forEach(e => {
+            e.classList.replace('d-none', 'd-flex')
+        })
+    }
+</script>
+@endsection

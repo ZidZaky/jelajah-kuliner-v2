@@ -37,7 +37,7 @@ class AccountController extends Controller
             $account = Auth::user();
             if ($account->status != 'alert') {
                 session(['account' => $account]);
-                return redirect('/dashboard');
+                return redirect('/dashboard')->with('alert', ['Login Berhasil', 'Terimakasih']);
             } else {
                 // session(['account' => $account]);
                 return redirect('/login')->with('alert', 'Anda Di Ban');
@@ -75,15 +75,19 @@ class AccountController extends Controller
         ]);
     }
 
+    
+
     //create
     public function create()
     {
-        return view('register');
+        $active = 'Pelanggan';
+        return view('register', ['active' => $active]);
     }
 
     public function RegisterAsPKL()
     {
-        return view('registerPKL');
+        $active = 'Pkl';
+        return view('registerPKL', ['active' => $active]);
     }
 
 
@@ -227,6 +231,12 @@ class AccountController extends Controller
     {
         $account = Account::find($id)->first();
         return view('edit', ['account' => $account]);
+    }
+
+    public function getNameById($id){
+        $hasil = Account::firstWhere('id', $id);
+        // dd($hasil, 'haisl');
+        return $hasil->nama;
     }
 
     //update

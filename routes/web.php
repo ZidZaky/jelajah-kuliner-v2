@@ -71,7 +71,7 @@ Route::middleware(['status:PKL|Pelanggan|Admin'])->group(function () {
     Route::post('/account/{id}', [AccountController::class, 'editProfile']);
     Route::resource('/PKL', PKLController::class);
     Route::resource('/produk', ProdukController::class);
-    // Route::resource('/pesanan', PesananController::class);
+    Route::resource('/pesanan', PesananController::class);
     Route::get('/pesanan/show/{id}', [PesananController::class, 'ShowByIdUser']);
     Route::resource('/report', ReportController::class);
     Route::get('/pesanan/create/{id}', [PesananController::class, 'createWithId'])->name('pesanan.createWithId');
@@ -85,8 +85,10 @@ Route::middleware(['status:PKL'])->group(function () {
     Route::post('/update-location', [PKLController::class, 'updateLocation']);
     Route::get('/rwt/{idpklpidproduk}', [halamanController::class, 'getrwtStok']);
     Route::get('/chartTahun', [halamanController::class, 'ChartMonth']);
-    Route::get('terimaPesanan/{id}', [PesananController::class, 'terimaPesanan']);
+    Route::get('/terimaPesanan/{id}', [PesananController::class, 'terimaPesanan']);
+    Route::get('Detil/{id}', [PesananController::class, 'pesanDetail']);
     Route::get('tolakPesanan/{id}', [PesananController::class, 'tolakPesanan']);
+    Route::get('siapDiambilPesanan/{id}', [PesananController::class, 'siapDiambilPesanan']);
     Route::get('selesaiPesanan/{id}', [PesananController::class, 'selesaiPesanan']);
     Route::get('riwayatProduk/{id}', [ProdukController::class, 'riwayatProduk']);
     Route::get('/Dashboard-Penjualan/{idAccVApa}', [halamanController::class, 'DashboardPenjualan']);
@@ -274,8 +276,16 @@ Route::get('/reportList', function () {
 Route::get('/ListReport',function(){
     return view('NEW.List_Report');
 });
+
+Route::get('/ListDetilPesanan',function(){
+    return view('NEW.List_DetilPesanan');
+});
 Route::get('/ListAccount',function(){
     return view('NEW.List_Account');
+});
+
+Route::get('/List-Pesanan',function(){
+    return view('NEW.List_Pesanan');
 });
 
 Route::get('/Dashboard-PKL',function(){

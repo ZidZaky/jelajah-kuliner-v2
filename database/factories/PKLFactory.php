@@ -9,17 +9,17 @@ class PKLFactory extends Factory
 {
     public function definition(): array
     {
-        $picture=[
-            'Pentol.jpg',
-            'Seblak.png',
+        $picture = [
+            'Esse tempor ipsa vo.png',
+            'Qui autem doloribus.png',
         ];
         return [
             'idAccount' => Account::factory(),
             'namaPKL' => $this->faker->company,
             'desc' => $this->faker->paragraph,
-            'picture' => $this->faker->randomElement($picture),
-            'longitude' => $this->faker->randomFloat(8, -180, 180),
-            'latitude' => $this->faker->randomFloat(8, -90, 90),
+            'picture' => 'pkl/' . $this->faker->randomElement($picture),
+            'latitude' => $this->faker->randomFloat(8, -7.4, -7.2),
+            'longitude' => $this->faker->randomFloat(8, 112.6, 112.8),
         ];
     }
 }

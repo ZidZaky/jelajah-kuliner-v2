@@ -26,7 +26,7 @@ class PesananFactory extends Factory
             'idPKL' => \App\Models\PKL::factory(), // Misalnya PKL factory sudah ada
             'Keterangan' => $this->faker->sentence,
             'TotalBayar' => $this->faker->randomNumber(5),
-            'status' => $this->faker->randomElement(['pending', 'completed', 'cancelled']),
+            'status' => $this->faker->randomElement(['Pesanan Baru', 'Pesanan Diproses', 'pesanan selesai', 'pesanan ditolak']),
         ];
     }
 

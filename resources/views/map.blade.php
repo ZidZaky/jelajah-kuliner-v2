@@ -89,6 +89,9 @@
 <script src="https://unpkg.com/esri-leaflet-geocoder@3.1.4/dist/esri-leaflet-geocoder.js" crossorigin=""></script>
 
 <script>
+    @if(session('alert')!=null)
+        successAlert("{{session('alert')[0]}}","{{session('alert')[1]}}")
+    @endif
     // Fungsi-fungsi helper Anda
     function setViewPopupPKL(wht) {
         const popupNode = document.querySelector('.containerPopup');
