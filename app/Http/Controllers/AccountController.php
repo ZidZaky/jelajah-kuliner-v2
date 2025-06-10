@@ -37,6 +37,13 @@ class AccountController extends Controller
             $account = Auth::user();
             if ($account->status != 'alert') {
                 session(['account' => $account]);
+                if ($account->status == 'PKL') {
+                    //simpan data pkl ke session
+
+                    $pkl = PKL::where('idAccount', $account->id)->first();
+                    // dd($pkl);
+                    session(['PKL' => $pkl]);
+                }
                 return redirect('/dashboard')->with('alert', ['Login Berhasil', 'Terimakasih']);
             } else {
                 // session(['account' => $account]);
@@ -75,7 +82,7 @@ class AccountController extends Controller
         ]);
     }
 
-    
+
 
     //create
     public function create()
@@ -233,7 +240,8 @@ class AccountController extends Controller
         return view('edit', ['account' => $account]);
     }
 
-    public function getNameById($id){
+    public function getNameById($id)
+    {
         $hasil = Account::firstWhere('id', $id);
         // dd($hasil, 'haisl');
         return $hasil->nama;
@@ -248,7 +256,10 @@ class AccountController extends Controller
             'email' => 'required',
             'nohp' => 'required'
         ]);
+
         $account->update($valdata);
+        // dd($account);
+        session(['account' => $account]);
         return redirect('profile');
     }
 
