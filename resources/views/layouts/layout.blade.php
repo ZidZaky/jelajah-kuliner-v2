@@ -68,7 +68,10 @@
                 <!-- udh login -->
                 @if (Auth::check())
                 <div class="w-auto h-100 d-flex flex-row position-relative gap-2 align-items-center justify-content-center">
-                    <p class="fs-6 p-0 m-0">Hello, {{session('account')['nama']}}</p>
+                    <!-- <p class="fs-6 p-0 m-0">Hello, {{session('account')['nama']}}</p>
+                      -->
+                    <p class="fs-6 p-0 m-0">Hello, {{ explode(' ', session('account')['nama'])[0] }}</p>
+
                     <button class="btn h-100 rounded-5 p-1 m-0 w-auto border-line-red d-flex flex-row  gap-3 justify-content-center align-items-center"
                         data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="{{ asset('storage/' . Auth::user()->foto) }}" alt="" class="circle-preview">
@@ -86,7 +89,7 @@
                         </li>
                         <li><a class="dropdown-item bg-prim-dark cl-white" href="/logout">Logout</a></li>
                     </ul>
-                    
+
                 </div>
                 @endif
 
@@ -127,7 +130,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.min.js" integrity="sha384-RuyvpeZCxMJCqVUGFI0Do1mQrods/hhxYlcVfGPOfQtPJh0JCw12tUAZ/Mv10S7D" crossorigin="anonymous"></script>
 
 <script>
-    
     function erorAlert(title, msg) {
         Swal.fire({
             icon: "error",

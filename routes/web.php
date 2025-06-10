@@ -58,7 +58,7 @@ Route::get('/login', function () {
     return view('login');
 })->name('login');
 Route::resource('/account', AccountController::class);
-Route::get('/accountCreate/PKL/Create', [AccountController::class,'RegisterAsPKL']);
+Route::get('/accountCreate/PKL/Create', [AccountController::class, 'RegisterAsPKL']);
 
 Route::middleware(['status:PKL|Pelanggan|Admin'])->group(function () {
     Route::get('/profile', function () {
@@ -67,7 +67,8 @@ Route::middleware(['status:PKL|Pelanggan|Admin'])->group(function () {
     Route::get('/Profile', function () {
         return redirect('/profile');
     });
-    Route::post('/account/update-photo', [AccountController::class, 'updatePhoto']);
+    Route::post('/account/update-photo', [AccountController::class, 'updatePhoto'])->name('account.updatePhoto');
+    Route::post('/pkl/update-photo', [PKLController::class, 'updatePklPhoto'])->name('pkl.updatePhoto');
     Route::post('/account/{id}', [AccountController::class, 'editProfile']);
     Route::resource('/PKL', PKLController::class);
     Route::resource('/produk', ProdukController::class);
@@ -273,7 +274,7 @@ Route::get('/tambahproduktes', function () {
 Route::get('/reportList', function () {
     return view('report-list');
 });
-Route::get('/ListReport',function(){
+Route::get('/ListReport', function () {
     return view('NEW.List_Report');
 });
 
@@ -291,7 +292,7 @@ Route::get('/List-Pesanan',function(){
 Route::get('/Dashboard-PKL',function(){
     return view('NEW.PKL.dashboard_pkl');
 });
-Route::get('/Dashboard-Penjualan',function(){
+Route::get('/Dashboard-Penjualan', function () {
     return view('PKL.dashboard-penjualan');
 });
 Route::get('/Dashboard-Penjualan/{idAccVApa}', [halamanController::class, 'DashboardPenjualan']);

@@ -21,10 +21,11 @@
         justify-content: start !important;
     }
 
-    textarea {
+    textarea.profile-input {
         height: 100px;
         min-height: 100px;
         outline: none;
+        resize: vertical;
     }
 
     @media (max-width: 768px) {
@@ -52,79 +53,70 @@
 
 
 @endsection
-
 @section('isi')
 <div class="bg-prim-dark p-5 d-flex w-100 h-100 flex-column gap-5 justify-content-start align-items-center" style="height: 100%; min-height: 85.4vh;">
     <div class="w-100" style="height: fit-content;">
         <div class="ms-3 d-flex cl-white gap-2 pb-2 flex-row align-items-center w-full-ls">
             <h3>{{ session('account')['nama'] }}</h3>
-            <button type="button" onclick="pklRole(1,this)" class="customer-role btn d-flex greenButton btn-btn-outline-dark rounded-5 justify-content-between d-flex flex-row gap-1"
-                type="button" style="width: fit-content;">
+
+            {{-- Tombol untuk beralih ke mode PKL --}}
+            <button type="button" onclick="switchRoleView('pkl')" class="customer-role-btn btn greenButton btn-btn-outline-dark rounded-5 justify-content-between d-flex flex-row gap-1" style="width: fit-content;">
                 @if (session('account')['status'] == 'Pelanggan')
-                <p class="p-clear ">{{ session('account')['status'] }}</p>
-                @endif
-                @if (session('account')['status'] == 'PKL')
-                <p class="p-clear ">Customer</p>
+                <p class="p-clear">{{ session('account')['status'] }}</p>
+                @elseif (session('account')['status'] == 'PKL')
+                <p class="p-clear">Customer</p>
                 <i class="bi bi-toggle2-on"></i>
                 @endif
             </button>
+
+            {{-- Tombol untuk beralih kembali ke mode Customer --}}
             @if (session('account')['status'] == 'PKL')
-            <button type="button" onclick="customerRole(1,this)" class="pkl-role btn d-none greenButton btn-outline-dark justify-content-between rounded-5 d-flex flex-row gap-1"
-                type="button" style="width: 120px;">
-                <p class="p-clear ">PKL</p>
+            <button type="button" onclick="switchRoleView('customer')" class="pkl-role-btn btn d-none greenButton btn-outline-dark justify-content-between rounded-5 d-flex flex-row gap-1" style="width: 120px;">
+                <p class="p-clear">PKL</p>
                 <i class="bi bi-toggle2-off"></i>
             </button>
             @endif
-            
-
-
         </div>
     </div>
 
     <div class="d-flex flex-column cl-white gap-md-5 gap-5 flex-md-row" style="width: 100%; ">
         <div class="w-md-25 pe-3 d-flex justify-content-center flex-column align-items-center">
-            <div class="contfoto d-flex flex-column w-auto h-100">
-                <div class="edit-foto-customer w-auto h-auto d-flex justify-content-end" style="width:16px; height: 18px; max-height: 18px; min-height: 18px;">
-                    <button class="edit-photo-customer d-flex w-auto h-auto bg-transparent border-0 cl-white" onclick="editPhoto(this,'customer')"
-                        style="width:16px; height: 16px;">
-                        <i class="p-clear bi bi-pencil-square"></i>
-                    </button>
-                    <button class="save-photo-customer d-none w-auto h-auto bg-transparent border-0 cl-white" onclick="savePhoto(this,'customer')"
-                        style="width:16px; height: 16px;">
-                        <svg class="p-clear" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-floppy-fill" viewBox="0 0 16 16">
-                            <path d="M0 1.5A1.5 1.5 0 0 1 1.5 0H3v5.5A1.5 1.5 0 0 0 4.5 7h7A1.5 1.5 0 0 0 13 5.5V0h.086a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5H14v-5.5A1.5 1.5 0 0 0 12.5 9h-9A1.5 1.5 0 0 0 2 10.5V16h-.5A1.5 1.5 0 0 1 0 14.5z" />
-                            <path d="M3 16h10v-5.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5zm9-16H4v5.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5zM9 1h2v4H9z" />
-                        </svg>
-                    </button>
-                </div>
-                <div class="edit-foto-pkl w-auto h-auto d-none justify-content-end" style="width:16px; height: 18px; max-height: 18px; min-height: 18px;">
-                    <button class="edit-photo-pkl d-flex w-auto h-auto bg-transparent border-0 cl-white" onclick="editPhoto(this,'pkl')"
-                        style="width:16px; height: 16px;">
-                        <i class="p-clear bi bi-pencil-square"></i>
-                    </button>
-                    <button class="save-photo-pkl d-none w-auto h-auto bg-transparent border-0 cl-white" onclick="savePhoto(this,'pkl')"
-                        style="width:16px; height: 16px;">
-                        <svg class="p-clear" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-floppy-fill" viewBox="0 0 16 16">
-                            <path d="M0 1.5A1.5 1.5 0 0 1 1.5 0H3v5.5A1.5 1.5 0 0 0 4.5 7h7A1.5 1.5 0 0 0 13 5.5V0h.086a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5H14v-5.5A1.5 1.5 0 0 0 12.5 9h-9A1.5 1.5 0 0 0 2 10.5V16h-.5A1.5 1.5 0 0 1 0 14.5z" />
-                            <path d="M3 16h10v-5.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5zm9-16H4v5.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5zM9 1h2v4H9z" />
-                        </svg>
-                    </button>
-                </div>
-                <div class="mb-3" style="width: 300px; height:300px;">
-                    <div class="foto-customer d-flex h-100 position-relative" style="width:100%;">
-                        <button onclick="takefile('Customer')" class="w-100 h-100 cl-white circle-preview opacity-50 d-none bg-dark flex-column justify-content-center align-items-center position-absolute">
-                            <i class="cl-white bi bi-folder2-open"></i>
-                            Klik untuk ubah foto
-                        </button>
-                        <img class="circle-preview w-100 h-100" src="{{ asset('storage/' . Auth::user()->foto) }}" alt="">
+            <div class="contfoto d-flex flex-column w-auto h-100 align-items-center">
+
+                <input type="file" id="customer-photo-input" class="d-none" accept="image/*">
+                <input type="file" id="pkl-photo-input" class="d-none" accept="image/*">
+                @csrf
+
+
+                <div class="mb-3 position-relative" style="width: 300px; height: 300px;">
+
+                    <div id="customer-section" class="w-100 h-100">
+                        <div class="position-absolute top-0 end-0 p-2 z-1">
+                            <button class="edit-photo-customer btn btn-sm btn-light bg-transparent border-0" onclick="editPhoto('customer')">
+                                <i class="bi bi-pencil-square text-white"></i>
+                            </button>
+                            <button class="save-photo-customer btn btn-sm btn-success d-none" onclick="savePhoto('customer')">
+                                <i class="bi bi-floppy-fill"></i>
+                            </button>
+                        </div>
+                        <img id="customer-photo-preview" class="circle-preview w-100 h-100" src="{{ asset('storage/' . Auth::user()->foto) }}" alt="Foto Customer">
                     </div>
-                    <div class="foto-pkl d-none h-100 position-relative" style="width:100%;">
-                        <button onclick="takefile('Pkl')" class="w-100 h-100 cl-white circle-preview opacity-50 d-none bg-dark flex-column justify-content-center align-items-center position-absolute">
-                            <i class="cl-white bi bi-folder2-open"></i>
-                            Klik untuk ubah foto
-                        </button>
-                        <img class="circle-preview w-100 h-100" src="{{ auto_asset('assets/farhan.jpg') }}" alt="">
+
+                    @if (session('account')['status'] == 'PKL')
+                    <div id="pkl-section" class="w-100 h-100 d-none">
+                        <div class="position-absolute top-0 end-0 p-2 z-1">
+                            <button class="edit-photo-pkl btn btn-sm btn-light" onclick="editPhoto('pkl')">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                            <button class="save-photo-pkl btn btn-sm btn-success d-none" onclick="savePhoto('pkl')">
+                                <i class="bi bi-floppy-fill"></i>
+                            </button>
+                        </div>
+                        <img id="pkl-photo-preview" class="circle-preview w-100 h-100" src="{{ session('PKL')['picture'] ? asset('storage/' . session('PKL')['picture']) : 'https://via.placeholder.com/300' }}" alt="Foto PKL">
                     </div>
+
+                    @endif
+
                 </div>
             </div>
             <h2>{{session('account')['nama']}}</h2>
@@ -132,65 +124,66 @@
         <div class="rounded-2 p-4 border-2 border-opacity-50 btn-outline-success border h-auto" style="flex: 1 1;">
             <div class="header-profile d-flex flex-row justify-content-between align-items-center">
                 <h2>Bio & other details</h2>
-                <button class="edit-bio-right-customer d-flex w-auto h-auto bg-transparent border-0 cl-white" onclick="editBioRight(this,'customer')"
-                    style="width:16px; height: 16px;">
-                    <i class=" bi bi-pencil-square"></i>
+
+                {{-- Tombol Edit Customer --}}
+                <button class="edit-bio-right-customer d-flex w-auto h-auto bg-transparent border-0 cl-white" onclick="editBio(true)">
+                    <i class="bi bi-pencil-square"></i>
                 </button>
-                <button class="save-bio-right-customer d-none w-auto h-auto bg-transparent border-0 cl-white" onclick="saveBioRight(this,'customer')"
-                    style="width:16px; height: 16px;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-floppy-fill" viewBox="0 0 16 16">
-                        <path d="M0 1.5A1.5 1.5 0 0 1 1.5 0H3v5.5A1.5 1.5 0 0 0 4.5 7h7A1.5 1.5 0 0 0 13 5.5V0h.086a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5H14v-5.5A1.5 1.5 0 0 0 12.5 9h-9A1.5 1.5 0 0 0 2 10.5V16h-.5A1.5 1.5 0 0 1 0 14.5z" />
-                        <path d="M3 16h10v-5.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5zm9-16H4v5.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5zM9 1h2v4H9z" />
-                    </svg>
+                {{-- Tombol Save Customer --}}
+                <button type="submit" form="profileForm" class="save-bio-right-customer d-none w-auto h-auto bg-transparent border-0 cl-white">
+                    <i class="bi bi-floppy-fill"></i>
                 </button>
-                <button class="edit-bio-right-pkl d-none w-auto h-auto bg-transparent border-0 cl-white" onclick="editBioRight(this,'pkl')"
-                    style="width:16px; height: 16px;">
-                    <i class=" bi bi-pencil-square"></i>
-                </button>
-                <button class="save-bio-right-pkl d-none w-auto h-auto bg-transparent border-0 cl-white" onclick="saveBioRight(this,'pkl')"
-                    style="width:16px; height: 16px;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-floppy-fill" viewBox="0 0 16 16">
-                        <path d="M0 1.5A1.5 1.5 0 0 1 1.5 0H3v5.5A1.5 1.5 0 0 0 4.5 7h7A1.5 1.5 0 0 0 13 5.5V0h.086a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5H14v-5.5A1.5 1.5 0 0 0 12.5 9h-9A1.5 1.5 0 0 0 2 10.5V16h-.5A1.5 1.5 0 0 1 0 14.5z" />
-                        <path d="M3 16h10v-5.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5zm9-16H4v5.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5zM9 1h2v4H9z" />
-                    </svg>
-                </button>
+                
+                {{-- PERBAIKAN: Menambahkan tombol Edit & Save untuk PKL --}}
+                @if (session('account')['status'] == 'PKL')
+                    {{-- Tombol Edit PKL (Awalnya disembunyikan) --}}
+                    <button class="edit-bio-right-pkl d-none w-auto h-auto bg-transparent border-0 cl-white" onclick="editBio(false)">
+                        <i class="bi bi-pencil-square"></i>
+                    </button>
+                    {{-- Tombol Save PKL (Awalnya disembunyikan) --}}
+                    <button type="submit" form="pklForm" class="save-bio-right-pkl d-none w-auto h-auto bg-transparent border-0 cl-white">
+                       <i class="bi bi-floppy-fill"></i>
+                    </button>
+                @endif
             </div>
-            <form class="customer d-flex flex-column ps-3 ps-md-5 pt-5 gap-3">
+
+            {{-- Form untuk Customer --}}
+            <form id="profileForm" method="POST" action="/account/{{ session('account')['id'] }}" class="customer d-flex flex-column ps-3 ps-md-5 pt-5 gap-3">
+                @csrf
+                @method('PUT')
+
                 <div class="d-flex flex-column">
                     <p class="p-clear opacity-50">Nama Lengkap</p>
-                    <input type="text" class="p-clear bg-transparent border-0 cl-white" value="{{session('account')['nama']}}" style="outline: none;">
+                    <input name="nama" type="text" class="p-clear bg-transparent border-0 cl-white profile-input" value="{{ $account->nama ?? session('account')['nama'] }}" style="outline: none;" readonly>
                 </div>
                 <div class="d-flex flex-column">
                     <p class="p-clear opacity-50">Nomor Telepon</p>
-                    <input type="text" class="p-clear bg-transparent border-0 cl-white" value="{{session('account')['nohp']}}" style="outline: none;" disabled>
-                </div>
-                <div class="d-none flex-column">
-                    <p class="p-clear opacity-50">Nama PKL</p>
-                    <input type="file" accept="image/*" class="inpFotoCustomer p-clear bg-transparent border-0 cl-white" value="mamang Pentol carok madura" style="outline: none;">
+                    <input name="nohp" type="text" class="p-clear bg-transparent border-0 cl-white profile-input" value="{{ $account->nohp ?? session('account')['nohp'] }}" style="outline: none;" readonly>
                 </div>
                 <div class="d-flex flex-column">
                     <p class="p-clear opacity-50">Email</p>
-                    <input type="text" class="p-clear bg-transparent border-0 cl-white" value="{{session('account')['email']}}" style="outline: none;" disabled>
+                    <input name="email" type="email" class="p-clear bg-transparent border-0 cl-white profile-input" value="{{ $account->email ?? session('account')['email'] }}" style="outline: none;" readonly>
                 </div>
             </form>
-            <form class="pkl d-none flex-column ps-3 ps-md-5 pt-5 gap-3" style="height: fit-content; min-height: 200px;">
+
+            {{-- Form untuk PKL --}}
+            @if (session('account')['status'] == 'PKL')
+            <form id="pklForm" method="POST" action="/pkl/{{ session('PKL')['id'] ?? '' }}" class="pkl d-none flex-column ps-3 ps-md-5 pt-5 gap-3">
+                @csrf
+                @method('PUT')
+
                 <div class="d-flex flex-column">
                     <p class="p-clear opacity-50">Nama PKL</p>
-                    <input type="text" class="p-clear bg-transparent border-0 cl-white" value="mamang Pentol carok madura" style="outline: none;" disabled>
+                    <input name="namaPKL" type="text" class="p-clear bg-transparent border-0 cl-white profile-input" value="{{session('PKL')['namaPKL']}}" style="outline: none;" readonly>
                 </div>
-                <div class="d-none flex-column">
-                    <p class="p-clear opacity-50">Nama PKL</p>
-                    <input type="file" accept="{{asset('storage/' . Auth::user()->foto)}}" class="inpFotoPkl p-clear bg-transparent border-0 cl-white" value="mamang Pentol carok madura" style="outline: none;">
-                </div>
+
                 <div class="d-flex flex-column h-auto">
                     <p class="p-clear opacity-50">Deskripsi</p>
-                    <p class="d-flex desprkripsiPkl p-clear">Mamang Pentol Carok Madura</p>
-                    <!-- jika di edit -->
-                    <textarea name="" class="p-clear d-none text-start bg-transparent border-0 cl-white align " id="" style="height: fit-content;">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus ad deserunt quaerat sapiente maiores, ut voluptate rerum assumenda voluptas ea nulla nemo earum error obcaecati reiciendis quas molestiae debitis enim.
-                    </textarea>
+                    {{-- PERBAIKAN: Menggunakan textarea untuk deskripsi --}}
+                    <textarea name="desc" class="p-clear bg-transparent border-0 cl-white profile-input" style="outline: none;" readonly>{{session('PKL')['desc']}}</textarea>
                 </div>
             </form>
+            @endif
         </div>
     </div>
 </div>
@@ -199,167 +192,157 @@
 
 @section('js')
 <script>
-    function takefile(wht){
-        let inp = document.querySelector('.inpFoto'+wht)
-        console.log(inp)
-        inp.click();
-    }
-    function customerRole(what, elemen) {
-        let button = document.querySelector('.customer-role');
-        let foto = document.querySelector('.foto-customer');
-        let button_foto = document.querySelector('.edit-foto-customer')
-        let editfield = document.querySelector('.edit-bio-right-customer')
-        let toflex = [button,foto,button_foto,editfield]
-        if (what == 1) {
-            toflex.forEach(e=>{
-                e.classList.replace('d-none', 'd-flex')
-            })
+    // =================================================================
+    // KODE JAVASCRIPT YANG BERSIH DAN SUDAH DIPERBAIKI
+    // =================================================================
+
+    function switchRoleView(roleToShow) {
+        const customerPhotoSection = document.getElementById('customer-section');
+        const pklPhotoSection = document.getElementById('pkl-section');
+        const customerForm = document.querySelector('form.customer');
+        const pklForm = document.querySelector('form.pkl');
+        const customerEditBtn = document.querySelector('.edit-bio-right-customer');
+        const pklEditBtn = document.querySelector('.edit-bio-right-pkl'); // Sekarang akan ditemukan
+        const customerSaveBtn = document.querySelector('.save-bio-right-customer');
+        const pklSaveBtn = document.querySelector('.save-bio-right-pkl');
+
+        const customerRoleBtn = document.querySelector('.customer-role-btn');
+        const pklRoleBtn = document.querySelector('.pkl-role-btn');
+
+        // Reset semua ke kondisi awal sebelum menampilkan yang baru
+        customerSaveBtn.classList.add('d-none');
+        if(pklSaveBtn) pklSaveBtn.classList.add('d-none');
+        
+        if (roleToShow === 'customer') {
+            customerPhotoSection.classList.remove('d-none');
+            customerForm.classList.remove('d-none');
+            customerEditBtn.classList.remove('d-none');
+
+            if(pklPhotoSection) pklPhotoSection.classList.add('d-none');
+            if(pklForm) pklForm.classList.add('d-none');
+            if (pklEditBtn) pklEditBtn.classList.add('d-none'); 
+
+            if (pklRoleBtn) pklRoleBtn.classList.add('d-none');
+            customerRoleBtn.classList.remove('d-none');
+
+        } else if (roleToShow === 'pkl') {
+            customerPhotoSection.classList.add('d-none');
+            customerForm.classList.add('d-none');
+            customerEditBtn.classList.add('d-none');
+            
+            if(pklPhotoSection) pklPhotoSection.classList.remove('d-none');
+            if(pklForm) pklForm.classList.remove('d-none');
+            if (pklEditBtn) pklEditBtn.classList.remove('d-none'); 
+
+            if (pklRoleBtn) pklRoleBtn.classList.remove('d-none');
+            customerRoleBtn.classList.add('d-none');
         }
-        let fotoPkl = document.querySelector('.foto-pkl')
-        let button_foto2 = document.querySelector('.edit-foto-pkl')
-        let editfield2 = document.querySelector('.edit-bio-right-pkl')
-        let editfield3 = document.querySelector('.save-bio-right-pkl')
-        let toNone = [fotoPkl, elemen,button_foto2,editfield2,editfield3]
-        toNone.forEach(e=>{
-            e.classList.replace('d-flex', 'd-none')
-
-        })
-        
-        showCustomerData();
-        // pklRole(0)
     }
 
-    function pklRole(what, elemen) {
-        let button = document.querySelector('.pkl-role');
-        let foto = document.querySelector('.foto-pkl')
-        let button_foto = document.querySelector('.edit-foto-pkl')
-        let editfield = document.querySelector('.edit-bio-right-pkl')
-
-        let toflex = [button,foto,button_foto,editfield];
-        if (what == 1) {
-            toflex.forEach(e=>{
-                e.classList.replace('d-none', 'd-flex')
-
-            })
+    document.addEventListener('DOMContentLoaded', function() {
+        switchRoleView('customer');
+        // Hanya setup photo preview jika elemennya ada
+        if (document.getElementById('customer-photo-input')) {
+            setupPhotoPreview('customer');
         }
+        if (document.getElementById('pkl-photo-input')) {
+            setupPhotoPreview('pkl');
+        }
+    });
 
-        let fotoCus = document.querySelector('.foto-customer')
-        let button_foto2 = document.querySelector('.edit-foto-customer')
-        let editfield2 = document.querySelector('.edit-bio-right-customer')
-        let savefield3 = document.querySelector('.save-bio-right-customer')
+    function editBio(isCustomer) {
+        const formSelector = isCustomer ? '#profileForm' : '#pklForm'; 
+        const inputs = document.querySelectorAll(formSelector + ' .profile-input');
 
-        let toNone = [fotoCus, elemen,button_foto2,editfield2,savefield3];
+        inputs.forEach(input => {
+            input.readOnly = false;
+        });
+
+        if (inputs.length > 0) { inputs[0].focus(); }
+
+        const editButtonSelector = isCustomer ? '.edit-bio-right-customer' : '.edit-bio-right-pkl';
+        const saveButtonSelector = isCustomer ? '.save-bio-right-customer' : '.save-bio-right-pkl';
         
-        toNone.forEach(e=>{
-            e.classList.replace('d-flex', 'd-none')
-        })
-
-        showPklData()
-        // customerRole(0)
+        document.querySelector(editButtonSelector).classList.add('d-none');
+        document.querySelector(saveButtonSelector).classList.remove('d-none');
     }
 
-    function showPklData() {
-        let pklData = document.querySelector('.pkl')
-        pklData.classList.replace('d-none', 'd-flex')
-        let custData = document.querySelector('.customer')
-        custData.classList.replace('d-flex', 'd-none')
+    function editPhoto(type) {
+        document.getElementById(type + '-photo-input').click();
     }
 
-    function showCustomerData() {
-        let custData = document.querySelector('.customer')
-        custData.classList.replace('d-none', 'd-flex')
-        let pklData = document.querySelector('.pkl')
-        pklData.classList.replace('d-flex', 'd-none')
-    }
+    function setupPhotoPreview(type) {
+        const fileInput = document.getElementById(type + '-photo-input');
+        const previewImage = document.getElementById(type + '-photo-preview');
+        const editButton = document.querySelector('.edit-photo-' + type);
+        const saveButton = document.querySelector('.save-photo-' + type);
 
-    function editPhoto(elemen,wht) {
-        console.log(wht)
-        elemen.classList.replace('d-flex', 'd-none')
-        
-        
-        let edit = document.querySelector('.save-photo-'+wht)
-        let button_edit = document.querySelector('.foto-'+wht+' button')
-        let toflex= [edit,button_edit]
-        toflex.forEach(e=>{
-            e.classList.replace('d-none', 'd-flex')
-        })
+        fileInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImage.src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+                editButton.classList.add('d-none');
+                saveButton.classList.remove('d-none');
+            }
+        });
     }
     
-    function savePhoto(elemen,wht) {
-        console.log(wht)
-        let button_edit = document.querySelector('.foto-'+wht+' button')
-        let toflex= [elemen,button_edit]
-        toflex.forEach(e=>{
-            e.classList.replace('d-flex', 'd-none')
-            // e.classList.replace('d-flex', 'd-none')
-        })
-        
-        
-        let edit = document.querySelector('.edit-photo-'+wht)
-        edit.classList.replace('d-none', 'd-flex')
-    }
+    // Versi perbaikan dengan error handling yang lebih baik
+    async function savePhoto(type) {
+        const fileInput = document.getElementById(type + '-photo-input');
+        const file = fileInput.files[0];
+        const token = document.querySelector('input[name="_token"]').value;
 
-    function editBioRight(elemen,wht) {
-        elemen.classList.replace('d-flex', 'd-none')
-        let edit = document.querySelector('.save-bio-right-'+wht)
-        edit.classList.replace('d-none', 'd-flex')
-
-        let form = document.querySelector('.'+wht);
-        let all_inp = form.querySelectorAll('input')
-        if(wht=='pkl'){
-            let txtarea = document.querySelector('textarea')
-            txtarea.classList.replace('d-none','d-flex')
-            let desk = document.querySelector('.desprkripsiPkl')
-            desk.classList.replace('d-flex','d-none')
+        if (!file) {
+            alert('Silakan pilih foto terlebih dahulu.');
+            return;
         }
-        console.log(all_inp)
-        all_inp.forEach(e=>{
-            e.disabled = false;
-        })
-    }
 
-    function saveBioRight(elemen,wht) {
-        elemen.classList.replace('d-flex', 'd-none')
-        let edit = document.querySelector('.edit-bio-right-'+wht)
-        edit.classList.replace('d-none', 'd-flex')
-
-
-
-        let form = document.querySelector('.'+wht);
-        let all_inp = form.querySelectorAll('input')
-        all_inp.forEach(e=>{
-            e.disabled = true;
-        })
-        if(wht=='pkl'){
-            let txtarea = document.querySelector('textarea')
-            txtarea.classList.replace('d-flex','d-none')
-            let desk = document.querySelector('.desprkripsiPkl')
-            desk.classList.replace('d-none','d-flex')
+        let url = '';
+        if (type === 'customer') {
+            url = "{{ route('account.updatePhoto') }}";
+        } else if (type === 'pkl') {
+            url = "{{ route('pkl.updatePhoto') }}";
         }
-    }
 
+        const formData = new FormData();
+        formData.append('picture', file);
 
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': token,
+                    'Accept': 'application/json' 
+                },
+                body: formData
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status} ${response.statusText}`);
+            }
 
-    triggerFoto('Customer')
-    triggerFoto('Pkl')
-    function triggerFoto(wht){
-        
-        document.querySelector('.inpFoto'+wht).addEventListener('change',function(event){
-            const file = event.target.files[0]
-            console.log(file)
-            if(wht=='Customer'){
-                wht='customer'
+            const result = await response.json();
+
+            if (result.success) {
+                alert(result.message);
+                document.getElementById(type + '-photo-preview').src = result.new_photo_url;
+            } else {
+                alert(result.message || 'Gagal mengupdate foto.');
             }
-            else{
-                wht='pkl'
-            }
-    
-            if(file && file.type.startsWith('image/')){
-                let imgurl = URL.createObjectURL(file);
-                let img = document.querySelector('.foto-'+wht+' img')
-                img.src = imgurl
-            }
-        })
+
+        } catch (error) {
+            console.error('Terjadi kesalahan saat upload:', error);
+            alert('Terjadi sebuah kesalahan. Cek console browser (F12) untuk detail.');
+        } finally {
+            document.querySelector('.edit-photo-' + type).classList.remove('d-none');
+            document.querySelector('.save-photo-' + type).classList.add('d-none');
+            fileInput.value = '';
+        }
     }
 </script>
 @endsection
