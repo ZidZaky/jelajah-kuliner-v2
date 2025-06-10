@@ -32,7 +32,9 @@ class ReportController extends Controller
         $berhasil = $report->save();
 
         if ($berhasil) {
-            return redirect('/dashboard');
+            (new PesananController())->reportPesanan($report->idPesanan);
+            (new PesananController())->tolakPesanan($report->idPesanan);
+            return redirect()->back()->with('alert', ['Laporan Berhasil', 'Pesanan ini berhasil di laporkan']);
         }
     }
 

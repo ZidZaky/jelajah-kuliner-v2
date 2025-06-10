@@ -325,6 +325,13 @@ class PesananController extends Controller
         return redirect('Detil/' . $id);
     }
 
+    public function reportPesanan($id)
+    {
+        $pesan = Pesanan::find($id);
+        $pesan->Dilaporkan = 'Ya';
+        $pesan->save();
+    }
+
     public function siapDiambilPesanan($id)
     {
         // Find the Pesanan by its ID

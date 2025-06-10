@@ -57,9 +57,9 @@
             <div class="tbl-content pending">
                 <table cellpadding="0" cellspacing="0" border="0">
                     <tbody>
-                        @foreach($dataPesanan as $data)
-                        @if($data->status=='pesanan baru')
                         <tr>
+                            @foreach($dataPesanan as $data)
+                            @if($data->status=='Pesanan Siap Diambil')
                             <td>{{{$data->id}}}</td>
                             <td>{{{$data->namaPemesan}}} </td>
                             <td>{{{$data->Keterangan}}}</td>
@@ -87,9 +87,11 @@
                             <td>
                                 <a href="/Detil/{{{$data->id}}}" class="text-decoration-none text-black"> Detail</a>
                             </td>
+                            @endif
+                            @endforeach
                         </tr>
-                        @endif
-                        @endforeach
+                        <p class="w-100 d-flex justify-content-center">Tidak ada pesanan lagi</p>
+
                     </tbody>
 
                 </table>

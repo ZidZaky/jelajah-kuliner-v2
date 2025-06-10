@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('Keterangan');
             $table->string('TotalBayar');
             $table->string('status');
+            $table->string('Dilaporkan')->nullable()->default('Tidak');
             $table->timestamps();
         });
     }
