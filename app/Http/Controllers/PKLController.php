@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PKLController extends Controller
 {
@@ -238,5 +240,47 @@ class PKLController extends Controller
             // Optionally, return the error details to the user
             return redirect('dashboard')->with('error', 'Update Lokasi Gagal: ' . $e->getMessage());
         }
+    }
+
+    public function updatePklPhoto(Request $request)
+    {
+        // 1. Validasi request: pastikan file yang diupload adalah gambar
+        dd($request->all());
+        $request->validate([
+            'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5120', // Maks 5MB
+        ]);
+
+        
+        // 2. Dapatkan data PKL berdasarkan user yang sedang login
+        $user = Auth::user();
+        $pkl = PKL::where('idAccount', $user->id)->first();
+
+        // Tambahan: Handle jika user belum punya profil PKL
+        if (!$pkl) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Profil PKL tidak ditemukan.',
+            ], 404); // 404 Not Found
+        }
+
+        // 3. Hapus foto lama jika ada untuk menghemat ruang penyimpanan
+        //    Gunakan kolom 'picture' sesuai model PKL
+        if ($pkl->picture && Storage::disk('public')->exists($pkl->picture)) {
+            Storage::disk('public')->delete($pkl->picture);
+        }
+
+        // 4. Simpan file baru di folder 'pkl' dan dapatkan path-nya
+        $filePath = $request->file('foto')->store('pkl', 'public');
+
+        // 5. Update kolom 'picture' di database untuk PKL tersebut
+        $pkl->picture = $filePath;
+        $pkl->save();
+
+        // 6. Kembalikan response JSON yang menandakan sukses
+        return response()->json([
+            'success'       => true,
+            'message'       => 'Foto PKL berhasil diperbarui.',
+            'new_photo_url' => Storage::url($filePath) // Kirim URL foto baru ke frontend
+        ]);
     }
 }

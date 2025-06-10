@@ -37,6 +37,13 @@ class AccountController extends Controller
             $account = Auth::user();
             if ($account->status != 'alert') {
                 session(['account' => $account]);
+                if ($account->status == 'PKL') {
+                    //simpan data pkl ke session
+                    
+                    $pkl = PKL::where('idAccount', $account->id)->first();
+                    // dd($pkl);
+                    session(['PKL' => $pkl]);
+                }
                 return redirect('/dashboard');
             } else {
                 // session(['account' => $account]);
@@ -238,7 +245,10 @@ class AccountController extends Controller
             'email' => 'required',
             'nohp' => 'required'
         ]);
+
         $account->update($valdata);
+        // dd($account);
+        session(['account' => $account]);
         return redirect('profile');
     }
 

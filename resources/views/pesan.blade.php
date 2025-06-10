@@ -121,7 +121,7 @@
                             <i class="p-clear fs-5 bi bi-plus-lg"></i>
                         </button>
                     </div>
-                    <img class="circle-preview position-absolute z-1 shadow" src="{{ auto_asset('storage/'.$item->foto) }}" alt="" style="height: 75%; width: fit-content; left: 0;">
+                    <img class="circle-preview position-absolute z-1 shadow" src="{{ asset('storage/'.$item->foto) }}" alt="" style="height: 75%; width: fit-content; left: 0;">
                     <div class="position-absolute shadow z-0 py-2 pe-2 d-flex flex-column gap-1 justify-content-between align-items-end bg-prim-dark border-left-top border-right-bottom" style="right: 0; width:87%; height:95%; max-height: 95%; min-height: 95%;  ">
 
                         <div class="contisi d-flex flex-column first-cl justify-content-end align-items-end w-50">
