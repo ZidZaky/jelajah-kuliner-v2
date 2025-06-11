@@ -58,16 +58,19 @@
     <div class="w-100" style="height: fit-content;">
         <div class="ms-3 d-flex cl-white gap-2 pb-2 flex-row align-items-center w-full-ls">
             <h3>{{ session('account')['nama'] }}</h3>
-
-            {{-- Tombol untuk beralih ke mode PKL --}}
-            <button type="button" onclick="switchRoleView('pkl')" class="customer-role-btn btn greenButton btn-btn-outline-dark rounded-5 justify-content-between d-flex flex-row gap-1" style="width: fit-content;">
-                @if (session('account')['status'] == 'Pelanggan')
+            @if (session('account')['status'] == 'Pelanggan')
+            <button type="button" class="customer-role-btn btn greenButton btn-btn-outline-dark rounded-5 justify-content-between d-flex flex-row gap-1" style="width: fit-content;">
                 <p class="p-clear">{{ session('account')['status'] }}</p>
-                @elseif (session('account')['status'] == 'PKL')
+            </button>
+            @endif
+            {{-- Tombol untuk beralih ke mode PKL --}}
+            @if (session('account')['status'] == 'PKL')
+            <button type="button" onclick="switchRoleView('pkl')" class="customer-role-btn btn greenButton btn-btn-outline-dark rounded-5 justify-content-between d-flex flex-row gap-1" style="width: fit-content;">
                 <p class="p-clear">Customer</p>
                 <i class="bi bi-toggle2-on"></i>
-                @endif
             </button>
+            @endif
+
 
             {{-- Tombol untuk beralih kembali ke mode Customer --}}
             @if (session('account')['status'] == 'PKL')
@@ -95,8 +98,8 @@
                             <button class="edit-photo-customer btn btn-sm btn-light bg-transparent border-0" onclick="editPhoto('customer')">
                                 <i class="bi bi-pencil-square text-white"></i>
                             </button>
-                            <button class="save-photo-customer btn btn-sm btn-success d-none" onclick="savePhoto('customer')">
-                                <i class="bi bi-floppy-fill"></i>
+                            <button class="save-photo-customer btn btn-sm btn-light bg-transparent d-none" onclick="savePhoto('customer')">
+                                <i class="bi bi-floppy-fill text-white"></i>
                             </button>
                         </div>
                         <img id="customer-photo-preview" class="circle-preview w-100 h-100" src="{{ asset('storage/' . Auth::user()->foto) }}" alt="Foto Customer">
@@ -105,11 +108,11 @@
                     @if (session('account')['status'] == 'PKL')
                     <div id="pkl-section" class="w-100 h-100 d-none">
                         <div class="position-absolute top-0 end-0 p-2 z-1">
-                            <button class="edit-photo-pkl btn btn-sm btn-light" onclick="editPhoto('pkl')">
+                            <button class="edit-photo-pkl btn btn-sm btn-light bg-transparent" onclick="editPhoto('pkl')">
                                 <i class="bi bi-pencil-square"></i>
                             </button>
-                            <button class="save-photo-pkl btn btn-sm btn-success d-none" onclick="savePhoto('pkl')">
-                                <i class="bi bi-floppy-fill"></i>
+                            <button class="save-photo-pkl btn btn-sm btn-light bg-transparent d-none" onclick="savePhoto('pkl')">
+                                <i class="bi bi-floppy-fill text-white"></i>
                             </button>
                         </div>
                         <img id="pkl-photo-preview" class="circle-preview w-100 h-100" src="{{ session('PKL')['picture'] ? asset('storage/' . session('PKL')['picture']) : 'https://via.placeholder.com/300' }}" alt="Foto PKL">
@@ -133,17 +136,17 @@
                 <button type="submit" form="profileForm" class="save-bio-right-customer d-none w-auto h-auto bg-transparent border-0 cl-white">
                     <i class="bi bi-floppy-fill"></i>
                 </button>
-                
+
                 {{-- PERBAIKAN: Menambahkan tombol Edit & Save untuk PKL --}}
                 @if (session('account')['status'] == 'PKL')
-                    {{-- Tombol Edit PKL (Awalnya disembunyikan) --}}
-                    <button class="edit-bio-right-pkl d-none w-auto h-auto bg-transparent border-0 cl-white" onclick="editBio(false)">
-                        <i class="bi bi-pencil-square"></i>
-                    </button>
-                    {{-- Tombol Save PKL (Awalnya disembunyikan) --}}
-                    <button type="submit" form="pklForm" class="save-bio-right-pkl d-none w-auto h-auto bg-transparent border-0 cl-white">
-                       <i class="bi bi-floppy-fill"></i>
-                    </button>
+                {{-- Tombol Edit PKL (Awalnya disembunyikan) --}}
+                <button class="edit-bio-right-pkl d-none w-auto h-auto bg-transparent border-0 cl-white" onclick="editBio(false)">
+                    <i class="bi bi-pencil-square"></i>
+                </button>
+                {{-- Tombol Save PKL (Awalnya disembunyikan) --}}
+                <button type="submit" form="pklForm" class="save-bio-right-pkl d-none w-auto h-auto bg-transparent border-0 cl-white">
+                    <i class="bi bi-floppy-fill"></i>
+                </button>
                 @endif
             </div>
 
@@ -192,6 +195,13 @@
 
 @section('js')
 <script>
+    const APP_ROUTES = {
+        customerPhoto: "{{ route('account.updatePhoto') }}",
+        // Gunakan kondisi Blade untuk mencegah error jika user bukan PKL
+        pklPhoto: "{{ route('pkl.updatePhoto') }}",
+    };
+</script>
+<script>
     // =================================================================
     // KODE JAVASCRIPT YANG BERSIH DAN SUDAH DIPERBAIKI
     // =================================================================
@@ -211,16 +221,16 @@
 
         // Reset semua ke kondisi awal sebelum menampilkan yang baru
         customerSaveBtn.classList.add('d-none');
-        if(pklSaveBtn) pklSaveBtn.classList.add('d-none');
-        
+        if (pklSaveBtn) pklSaveBtn.classList.add('d-none');
+
         if (roleToShow === 'customer') {
             customerPhotoSection.classList.remove('d-none');
             customerForm.classList.remove('d-none');
             customerEditBtn.classList.remove('d-none');
 
-            if(pklPhotoSection) pklPhotoSection.classList.add('d-none');
-            if(pklForm) pklForm.classList.add('d-none');
-            if (pklEditBtn) pklEditBtn.classList.add('d-none'); 
+            if (pklPhotoSection) pklPhotoSection.classList.add('d-none');
+            if (pklForm) pklForm.classList.add('d-none');
+            if (pklEditBtn) pklEditBtn.classList.add('d-none');
 
             if (pklRoleBtn) pklRoleBtn.classList.add('d-none');
             customerRoleBtn.classList.remove('d-none');
@@ -229,10 +239,10 @@
             customerPhotoSection.classList.add('d-none');
             customerForm.classList.add('d-none');
             customerEditBtn.classList.add('d-none');
-            
-            if(pklPhotoSection) pklPhotoSection.classList.remove('d-none');
-            if(pklForm) pklForm.classList.remove('d-none');
-            if (pklEditBtn) pklEditBtn.classList.remove('d-none'); 
+
+            if (pklPhotoSection) pklPhotoSection.classList.remove('d-none');
+            if (pklForm) pklForm.classList.remove('d-none');
+            if (pklEditBtn) pklEditBtn.classList.remove('d-none');
 
             if (pklRoleBtn) pklRoleBtn.classList.remove('d-none');
             customerRoleBtn.classList.add('d-none');
@@ -251,18 +261,20 @@
     });
 
     function editBio(isCustomer) {
-        const formSelector = isCustomer ? '#profileForm' : '#pklForm'; 
+        const formSelector = isCustomer ? '#profileForm' : '#pklForm';
         const inputs = document.querySelectorAll(formSelector + ' .profile-input');
 
         inputs.forEach(input => {
             input.readOnly = false;
         });
 
-        if (inputs.length > 0) { inputs[0].focus(); }
+        if (inputs.length > 0) {
+            inputs[0].focus();
+        }
 
         const editButtonSelector = isCustomer ? '.edit-bio-right-customer' : '.edit-bio-right-pkl';
         const saveButtonSelector = isCustomer ? '.save-bio-right-customer' : '.save-bio-right-pkl';
-        
+
         document.querySelector(editButtonSelector).classList.add('d-none');
         document.querySelector(saveButtonSelector).classList.remove('d-none');
     }
@@ -290,8 +302,7 @@
             }
         });
     }
-    
-    // Versi perbaikan dengan error handling yang lebih baik
+
     async function savePhoto(type) {
         const fileInput = document.getElementById(type + '-photo-input');
         const file = fileInput.files[0];
@@ -302,29 +313,46 @@
             return;
         }
 
-        let url = '';
-        if (type === 'customer') {
-            url = "{{ route('account.updatePhoto') }}";
-        } else if (type === 'pkl') {
-            url = "{{ route('pkl.updatePhoto') }}";
+        // Mengambil URL dari objek global (metode yang sudah benar)
+        let url = (type === 'customer') ? APP_ROUTES.customerPhoto : APP_ROUTES.pklPhoto;
+
+        if (!url) {
+            console.error('URL endpoint tidak ditemukan untuk tipe:', type);
+            alert('Terjadi kesalahan konfigurasi. URL tidak ditemukan.');
+            return;
         }
 
         const formData = new FormData();
-        formData.append('picture', file);
+        formData.append('foto', file);
 
         try {
             const response = await fetch(url, {
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': token,
-                    'Accept': 'application/json' 
+                    'Accept': 'application/json'
                 },
                 body: formData
             });
-            
+
+            // ==========================================================
+            // PERUBAHAN UTAMA UNTUK MENANGKAP ERROR VALIDASI (422)
+            // ==========================================================
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status} ${response.statusText}`);
+                // Coba baca body response sebagai JSON untuk mendapatkan detail error
+                const errorData = await response.json();
+
+                // Laravel mengirim error dalam format { message: "...", errors: { field: ["message"] } }
+                // Kita akan gabungkan semua pesan error menjadi satu string.
+                if (errorData.errors) {
+                    const errorMessages = Object.values(errorData.errors).flat().join('\n');
+                    throw new Error(errorMessages);
+                }
+
+                // Jika formatnya tidak seperti di atas, lempar error HTTP biasa
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
+            // ==========================================================
 
             const result = await response.json();
 
@@ -337,7 +365,8 @@
 
         } catch (error) {
             console.error('Terjadi kesalahan saat upload:', error);
-            alert('Terjadi sebuah kesalahan. Cek console browser (F12) untuk detail.');
+            // Sekarang alert akan menampilkan pesan error yang spesifik dari Laravel
+            alert('Gagal mengupload foto:\n' + error.message);
         } finally {
             document.querySelector('.edit-photo-' + type).classList.remove('d-none');
             document.querySelector('.save-photo-' + type).classList.add('d-none');

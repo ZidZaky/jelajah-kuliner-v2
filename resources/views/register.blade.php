@@ -21,7 +21,7 @@
 <div class="position-fixed fullSetengah"
     style="height: 100%; right: 0; background-color: white; margin-top: -15px; padding: 1% 0;">
     <div class="position-fixed empatSetengah d-flex flex-column justify-content-center align-items-center"
-        style="border: 1px solid black;  height: 80%; right: 5%">
+        style="  height: 80%; right: 5%">
         <img src="{{ auto_asset('assets/logoJelajahKuliner.svg') }}" alt="newLogoApp" class="mt-2" style="width: 40%;">
 
         <h5 class="mt-1 mb-3" style="text-align: center; width: 100%;"><strong>

@@ -258,7 +258,7 @@ class PKLController extends Controller
     public function updatePklPhoto(Request $request)
     {
         // 1. Validasi request: pastikan file yang diupload adalah gambar
-        dd($request->all());
+        // dd($request->all());
         $request->validate([
             'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5120', // Maks 5MB
         ]);

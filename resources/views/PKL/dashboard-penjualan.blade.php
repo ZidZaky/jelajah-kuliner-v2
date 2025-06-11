@@ -1,4 +1,4 @@
-@extends('NEW.EVI.base-page')
+@extends('layouts.layout')
 
 @section('css')
 <!-- <link rel="stylesheet" href="{{ auto_asset('css/?.css') }}"> -->
