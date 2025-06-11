@@ -130,7 +130,7 @@
                             <th class="text-center align-middle">Total Transaksi</th>
                             <th class="text-center align-middle"></th>
                             <th class="text-center align-middle"></th>
-                            <th class="currency text-center align-middle">100000</th>
+                            <th class="TotalCurrency text-center align-middle">0</th>
                         </tr>
                     </thead>
                 </table>
@@ -185,10 +185,14 @@
 
     function Makeup() {
         let items = document.querySelectorAll('.currency')
+        let sum = 0;
         items.forEach(e => {
+            sum+=parseInt(e.textContent)
             e.textContent = formatRupiah(parseInt(e.textContent))
             console.log(e.textContent)
         })
+
+        document.querySelector('.TotalCurrency').textContent=formatRupiah(sum);
     }
 </script>
 

@@ -30,48 +30,48 @@
 @section('unrelative')
 <form action="/MakeStokAwal" method="POST" class="modal fade AddNewStock" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     @csrf
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Stok Awal</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="form-floating mb-3">
-  <input type="number" maxlength="50" name="stokAwal" class="form-control" id="floatingInput" placeholder="50">
-  <input type="text"  name="idproduk" class="form-control inputIdproduct d-none" id="floatingInput" placeholder="50">
-  <label for="floatingInput">Stok Awal Penjualan</label>
-</div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Save changes</button>
-      </div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Stok Awal</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-floating mb-3">
+                    <input type="number" maxlength="50" name="stokAwal" class="form-control" id="floatingInput" placeholder="50">
+                    <input type="text" name="idproduk" class="form-control inputIdproduct d-none" id="floatingInput" placeholder="50">
+                    <label for="floatingInput">Stok Awal Penjualan</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
     </div>
-  </div>
 </form>
 
 <form action="/updateStokAkhir" method="POST" class="modal fade AddEndStock" id="endStok" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     @csrf
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Stok Akhir</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="form-floating mb-3">
-  <input type="number" maxlength="50" name="stokAkhir" class="form-control" id="floatingInput" placeholder="50">
-  <input type="text"  name="idproduk" class="form-control d-none inputIdproduct" id="floatingInput" placeholder="50">
-  <label for="floatingInput">Stok Akhir Penjualan</label>
-</div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Save changes</button>
-      </div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Stok Akhir</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-floating mb-3">
+                    <input type="number" maxlength="50" name="stokAkhir" class="form-control" id="floatingInput" placeholder="50">
+                    <input type="text" name="idproduk" class="form-control d-none inputIdproduct" id="floatingInput" placeholder="50">
+                    <label for="floatingInput">Stok Akhir Penjualan</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
     </div>
-  </div>
 </form>
 
 @endsection
@@ -123,12 +123,12 @@
                         </div>
                         <div class="buttonsArea bg-body d-flex flex-column justify-content-evenly align-items-center" style="min-width: 35px;max-width: 35px; height: 100%;">
                             <button type="button" class="d-flex cl-prim-dark justify-content-center align-items-center bg-transparent"
-                                data-bs-toggle="popover" onclick="BuatStokAwal('{{{$item->id}}}')" data-bs-trigger="hover" data-bs-title="Set Stok Awal" data-bs-content="Gunakan tombol ini untuk menetapkan jumlah stok awal barang sebelum jualan harian dimulai."><i class="bi bi-file-earmark-plus-fill"  data-bs-toggle="modal" data-bs-target="#exampleModal"></i></button>
+                                data-bs-toggle="popover" onclick="BuatStokAwal('{{{$item->id}}}')" data-bs-trigger="hover" data-bs-title="Set Stok Awal" data-bs-content="Gunakan tombol ini untuk menetapkan jumlah stok awal barang sebelum jualan harian dimulai."><i class="bi bi-file-earmark-plus-fill" data-bs-toggle="modal" data-bs-target="#exampleModal"></i></button>
                             <button type="button" onclick="BuatStokAkhir('{{{$item->id}}}')" class="d-flex cl-prim-dark justify-content-center align-items-center bg-transparent"
                                 data-bs-toggle="popover" data-bs-trigger="hover" data-bs-title="Set Stok Akhir" data-bs-content="Gunakan tombol ini untuk menyesuaikan stok berdasarkan hasil akhir masa jualan harian."> <i class="bi bi-file-earmark-minus-fill" data-bs-toggle="modal" data-bs-target="#endStok"></i></button>
                             <button type="button" onclick="window.location.href='/History-Stok/{{{$item->id}}}'" class="d-flex cl-prim-dark justify-content-center align-items-center bg-transparent"
                                 data-bs-toggle="popover" data-bs-trigger="hover" data-bs-title="Riwayat Stok" data-bs-content="Lihat riwayat lengkap pergerakan stok masuk dan keluar di sini."> <i class="bi bi-clock-history"></i></button>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -205,6 +205,13 @@
     @section('js')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        @if(session('alert') != null)
+        successAlert("{{session('alert')[0]}}", "{{session('alert')[1]}}")
+        @endif
+        @if(session('erorAlert') != null)
+        erorAlert("{{session('erorAlert')[0]}}", "{{session('erorAlert')[1]}}")
+        @endif
+
         function plus(idProduk, wht, elemen) {
             if (wht == '1') {
                 let inp = document.querySelectorAll('.minusButton' + idProduk + ' , .inputNumber' + idProduk)

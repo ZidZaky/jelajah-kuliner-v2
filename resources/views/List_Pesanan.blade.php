@@ -64,6 +64,9 @@
             <li class="nav-item text-black">
                 <a class="nav-link {{{$wht=='Pesanan Ditolak'?'active':''}}} text-black text-decoration-none" href="/pesanan/show/?id={{session('account')['id']}}&wht={{{'Pesanan Ditolak'}}}">Pesanan Ditolak</a>
             </li>
+            <li class="nav-item text-black">
+                <a class="nav-link {{{$wht=='Pesanan Dibatalkan'?'active':''}}} text-black text-decoration-none" href="/pesanan/show/?id={{session('account')['id']}}&wht={{{'Pesanan Dibatalkan'}}}">Pesanan Dibatalkan</a>
+            </li>
         </ul>
     </div>
     <div>
@@ -390,11 +393,11 @@
                     </tbody>
                     @endif
 
-                    @if($wht=='Pesanan Ditolak')
+                    @if($wht=='Pesana Dibatalkan')
                     <tbody class="PesananDitolak">
-                        @if(collect($dataPesanan)->where('status', 'Pesanan Ditolak')->count()>0)
+                        @if(collect($dataPesanan)->where('status', 'Pesana Dibatalkan')->count()>0)
                         @foreach($dataPesanan as $data)
-                        @if($data->status=='Pesanan Ditolak')
+                        @if($data->status=='Pesana Dibatalkan')
                         <tr>
                             <td class="text-center align-middle d-none d-md-table-cell">{{{$data->id}}}</td>
                             <td class="text-center align-middle">{{{$data->namaPemesan}}} </td>
@@ -493,6 +496,9 @@
             </li>
             <li class="nav-item text-black">
                 <a class="nav-link {{{$wht=='Pesanan Ditolak'?'active':''}}} text-black text-decoration-none" href="/pesanan/show/?id={{session('account')['id']}}&wht={{{'Pesanan Ditolak'}}}">Pesanan Ditolak</a>
+            </li>
+            <li class="nav-item text-black">
+                <a class="nav-link {{{$wht=='Pesanan Dibatalkan'?'active':''}}} text-black text-decoration-none" href="/pesanan/show/?id={{session('account')['id']}}&wht={{{'Pesanan Dibatalkan'}}}">Pesanan Dibatalkan</a>
             </li>
         </ul>
     </div>
@@ -655,6 +661,39 @@
                         @if(collect($dataPesanan)->where('status', 'Pesanan Ditolak')->count()>0)
                         @foreach($dataPesanan as $data)
                         @if($data->status=='Pesanan Ditolak')
+                        <tr>
+                            <td class="text-center align-middle d-none d-md-table-cell">{{{$data->id}}}</td>
+                            <td class="text-center align-middle">{{{$data->namaPKL}}} </td>
+                            <td class="d-none d-md-table-cell">{{{$data->Keterangan}}}</td>
+
+                            
+                            <td class="TotalBayar text-center align-middle">{{{$data->TotalBayar}}}</td>
+
+
+                            <td class="actionButton text-center align-middle d-none d-md-table-cell d-flex flex-row gap-2">
+                                {{{$data->created_at}}}
+                            </td>
+
+
+
+                            <td class="actionButton text-center align-middle">
+                                <a href="/Detil/{{{$data->id}}}" class="text-decoration-none text-black"> Detail</a>
+                            </td>
+                        </tr>
+                        @endif
+                        @endforeach
+                        @else
+
+                        <p class="w-100 d-flex justify-content-center">Tidak ada pesanan lagi</p>
+                        @endif
+
+                    </tbody>
+                    @endif
+                    @if($wht=='Pesana Dibatalkan')
+                    <tbody class="PesananDitolak">
+                        @if(collect($dataPesanan)->where('status', 'Pesana Dibatalkan')->count()>0)
+                        @foreach($dataPesanan as $data)
+                        @if($data->status=='Pesana Dibatalkan')
                         <tr>
                             <td class="text-center align-middle d-none d-md-table-cell">{{{$data->id}}}</td>
                             <td class="text-center align-middle">{{{$data->namaPKL}}} </td>

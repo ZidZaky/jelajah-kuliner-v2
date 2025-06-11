@@ -259,7 +259,6 @@
         }
         changeInput(idProduk, '+')
     }
-    everyChange()
 
     function changeInput(id, wht) {
         let inp = document.querySelector('.produkKiri.produk' + id + ' input');
@@ -271,7 +270,8 @@
         let qtyAwal = parseInt(inp.value)
         if (wht == '+') {
             if (qtyAwal <= parseInt(inp.getAttribute('data-qty'))) {
-                if (qtyAwal == 0) {
+                console.log(qtyAwal,'awal');
+                if (qtyAwal == 1) {
                     contData.classList.replace('d-none', 'd-flex')
                 }
                 // let currentQty = qtyAwal += 1
