@@ -246,9 +246,7 @@ Route::get('/getIDPkl/{id}', [PKLController::class, 'getIdPKL']);
 //     return view('NEW.loginPage');
 // });
 
-Route::get('/aboutus', function () {
-    return view('NEW.aboutus');
-});
+
 
 Route::get('/404', function () {
     return view('new.pagenotfound');
