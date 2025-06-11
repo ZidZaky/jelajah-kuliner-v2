@@ -108,8 +108,8 @@
                     @if (session('account')['status'] == 'PKL')
                     <div id="pkl-section" class="w-100 h-100 d-none">
                         <div class="position-absolute top-0 end-0 p-2 z-1">
-                            <button class="edit-photo-pkl btn btn-sm btn-light bg-transparent" onclick="editPhoto('pkl')">
-                                <i class="bi bi-pencil-square"></i>
+                            <button class="edit-photo-pkl btn btn-sm btn-light bg-transparent border-0" onclick="editPhoto('pkl')">
+                                <i class="bi bi-pencil-square text-white"></i>
                             </button>
                             <button class="save-photo-pkl btn btn-sm btn-light bg-transparent d-none" onclick="savePhoto('pkl')">
                                 <i class="bi bi-floppy-fill text-white"></i>
@@ -129,23 +129,23 @@
                 <h2>Bio & other details</h2>
 
                 {{-- Tombol Edit Customer --}}
-                <button class="edit-bio-right-customer d-flex w-auto h-auto bg-transparent border-0 cl-white" onclick="editBio(true)">
-                    <i class="bi bi-pencil-square"></i>
+                <button class="edit-bio-right-customer d-flex w-auto h-auto bg-transparent border-0" onclick="editBio(true)">
+                    <i class="bi bi-pencil-square text-white"></i> {{-- ✅ Diberi warna putih --}}
                 </button>
                 {{-- Tombol Save Customer --}}
-                <button type="submit" form="profileForm" class="save-bio-right-customer d-none w-auto h-auto bg-transparent border-0 cl-white">
-                    <i class="bi bi-floppy-fill"></i>
+                <button type="submit" form="profileForm" class="save-bio-right-customer d-none w-auto h-auto bg-transparent border-0">
+                    <i class="bi bi-floppy-fill text-white">Simpan Perubahan</i> {{-- ✅ Diberi warna putih --}}
                 </button>
 
                 {{-- PERBAIKAN: Menambahkan tombol Edit & Save untuk PKL --}}
                 @if (session('account')['status'] == 'PKL')
                 {{-- Tombol Edit PKL (Awalnya disembunyikan) --}}
-                <button class="edit-bio-right-pkl d-none w-auto h-auto bg-transparent border-0 cl-white" onclick="editBio(false)">
-                    <i class="bi bi-pencil-square"></i>
+                <button class="edit-bio-right-pkl d-none w-auto h-auto bg-transparent border-0" onclick="editBio(false)">
+                    <i class="bi bi-pencil-square text-white"></i> {{-- ✅ Diberi warna putih --}}
                 </button>
                 {{-- Tombol Save PKL (Awalnya disembunyikan) --}}
-                <button type="submit" form="pklForm" class="save-bio-right-pkl d-none w-auto h-auto bg-transparent border-0 cl-white">
-                    <i class="bi bi-floppy-fill"></i>
+                <button type="submit" form="pklForm" class="save-bio-right-pkl d-none w-auto h-auto bg-transparent border-0">
+                    <i class="bi bi-floppy-fill text-white">Simpan Perubahan</i> {{-- ✅ Diberi warna putih --}}
                 </button>
                 @endif
             </div>
@@ -171,10 +171,12 @@
 
             {{-- Form untuk PKL --}}
             @if (session('account')['status'] == 'PKL')
-            <form id="pklForm" method="POST" action="/pkl/{{ session('PKL')['id'] ?? '' }}" class="pkl d-none flex-column ps-3 ps-md-5 pt-5 gap-3">
+            <form id="pklForm" method="POST" action="/PKL/{{ session('PKL')['id'] ?? '' }}" class="pkl d-none flex-column ps-3 ps-md-5 pt-5 gap-3">
                 @csrf
                 @method('PUT')
-
+                    <input name="idAccount" type="text" class="p-clear bg-transparent border-0 cl-white profile-input" value="{{session('account')['id']}}" style="outline: none;" hidden>
+                    <input name="idPKL" type="text" class="p-clear bg-transparent border-0 cl-white profile-input" value="{{session('PKL')['id']}}" style="outline: none;" hidden>
+                
                 <div class="d-flex flex-column">
                     <p class="p-clear opacity-50">Nama PKL</p>
                     <input name="namaPKL" type="text" class="p-clear bg-transparent border-0 cl-white profile-input" value="{{session('PKL')['namaPKL']}}" style="outline: none;" readonly>
@@ -194,6 +196,11 @@
 @endsection
 
 @section('js')
+<script>
+    @if(session('alert') != null)
+    successAlert("{{session('alert')[0]}}", "{{session('alert')[1]}}")
+    @endif
+</script>
 <script>
     const APP_ROUTES = {
         customerPhoto: "{{ route('account.updatePhoto') }}",
@@ -261,6 +268,11 @@
     });
 
     function editBio(isCustomer) {
+        // --- MULAI BLOK DEBUGGING ---
+        console.log("========================================");
+        console.log("Fungsi editBio() dipanggil. Mode Customer:", isCustomer);
+        // --- AKHIR BLOK DEBUGGING ---
+
         const formSelector = isCustomer ? '#profileForm' : '#pklForm';
         const inputs = document.querySelectorAll(formSelector + ' .profile-input');
 
@@ -275,8 +287,33 @@
         const editButtonSelector = isCustomer ? '.edit-bio-right-customer' : '.edit-bio-right-pkl';
         const saveButtonSelector = isCustomer ? '.save-bio-right-customer' : '.save-bio-right-pkl';
 
-        document.querySelector(editButtonSelector).classList.add('d-none');
-        document.querySelector(saveButtonSelector).classList.remove('d-none');
+        // --- MULAI BLOK DEBUGGING ---
+        console.log("Selector tombol Edit:", editButtonSelector);
+        console.log("Selector tombol Simpan:", saveButtonSelector);
+
+        const editButton = document.querySelector(editButtonSelector);
+        const saveButton = document.querySelector(saveButtonSelector);
+
+        // Cek apakah tombolnya ditemukan di halaman
+        console.log("Elemen Tombol Edit ditemukan?", editButton);
+        console.log("Elemen Tombol Simpan ditemukan?", saveButton);
+
+        // Jika salah satu tombol tidak ada, kita akan tahu di sini
+        if (!editButton || !saveButton) {
+            console.error("GAGAL: Salah satu tombol (Edit atau Simpan) tidak dapat ditemukan di HTML!");
+            return; // Hentikan fungsi jika ada yang error
+        }
+        // --- AKHIR BLOK DEBUGGING ---
+
+        // Logika Inti
+        editButton.classList.add('d-none');
+        saveButton.classList.remove('d-none');
+
+        // --- MULAI BLOK DEBUGGING ---
+        console.log("SUKSES: Tombol Edit disembunyikan, Tombol Simpan ditampilkan.");
+        console.log("Class pada Tombol Simpan sekarang:", saveButton.className);
+        console.log("========================================");
+        // --- AKHIR BLOK DEBUGGING ---
     }
 
     function editPhoto(type) {

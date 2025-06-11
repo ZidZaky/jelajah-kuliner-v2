@@ -262,7 +262,7 @@ class AccountController extends Controller
         $account->update($valdata);
         // dd($account);
         session(['account' => $account]);
-        return redirect('profile');
+        return redirect('profile')->with('alert', ['Terimakasih', 'Data PKL berhasil diperbarui.']);
     }
 
     //delete
