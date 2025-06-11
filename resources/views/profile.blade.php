@@ -209,10 +209,12 @@
     };
 </script>
 <script>
-    // =================================================================
-    // KODE JAVASCRIPT YANG BERSIH DAN SUDAH DIPERBAIKI
-    // =================================================================
-
+    @if(session('alert') != null)
+    successAlert("{{session('alert')[0]}}", "{{session('alert')[1]}}")
+    @endif
+    @if(session('erorAlert') != null)
+    erorAlert("{{session('erorAlert')[0]}}", "{{session('erorAlert')[1]}}")
+    @endif
     function switchRoleView(roleToShow) {
         const customerPhotoSection = document.getElementById('customer-section');
         const pklPhotoSection = document.getElementById('pkl-section');

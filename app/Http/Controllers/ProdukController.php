@@ -66,7 +66,7 @@ class ProdukController extends Controller
         $cek = $this->updateStokAktif($id,$idStok);
         if($cek){
             $pkl = PKL::findOrFail($valdata['idPKL']);
-            return redirect('/dataPKL/'.$pkl->idAccount);
+            return redirect('/dataPKL/'.$pkl->idAccount)->with('alert',['Berhasil','Produk '.$produk->namaProduk.' berhasil ditambahkan']);
             // return redirect('/dataPKL/'+);
         }
 

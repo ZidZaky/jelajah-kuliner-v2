@@ -10,8 +10,10 @@ class ProdukFactory extends Factory
     public function definition(): array
     {
         $foto = [
-            'evi.jpg',
-            'dika.png',
+            'pentol.jpg',
+            'food.jpg',
+            'yhu.jpg',
+
         ];
         return [
             'namaProduk' => $this->faker->word,
@@ -19,7 +21,7 @@ class ProdukFactory extends Factory
             'harga' => $this->faker->numberBetween(10000, 50000),
             'stokAktif' => null,
             'jenisProduk' => $this->faker->randomElement(['makanan', 'minuman']),
-            'fotoProduk' =>  $this->faker->randomElement($foto),
+            'fotoProduk' =>  'product/'.$this->faker->randomElement($foto),
             'idPKL' => \App\Models\PKL::factory(), // Hubungkan dengan factory PKL
         ];
     }

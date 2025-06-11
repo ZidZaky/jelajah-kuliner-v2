@@ -78,7 +78,7 @@ class AccountController extends Controller
             session()->flush();
             // Remove the 'account' key from the session
         }
-        return redirect('/'); // Redirect to the homepage or any other desired location
+        return redirect('/dashboard')->with('alert',['Logout Berhasil','Sesi anda berhasil diselesaikan']); // Redirect to the homepage or any other desired location
     }
 
 
@@ -245,6 +245,7 @@ class AccountController extends Controller
     //edit
     public function editProfile($id)
     {
+        
         $account = Account::find($id)->first();
         return view('edit', ['account' => $account]);
     }
@@ -265,11 +266,15 @@ class AccountController extends Controller
             'email' => 'required',
             'nohp' => 'required'
         ]);
+        if(is_numeric($request->nohp)){
+            $account->update($valdata);
+            // dd($account);
+            session(['account' => $account]);
+            return redirect('profile')->with('alert', ['Terimakasih', 'Data Akun berhasil diperbarui.']);
+        }else{
+            return redirect()->back()->with('erorAlert', ['Gagal Memperbarui', 'Nomor Telepon belum sesuai (only number).']);
 
-        $account->update($valdata);
-        // dd($account);
-        session(['account' => $account]);
-        return redirect('profile')->with('alert', ['Terimakasih', 'Data PKL berhasil diperbarui.']);
+        }
     }
 
     //delete
