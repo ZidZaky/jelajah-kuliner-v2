@@ -9,8 +9,65 @@ use Illuminate\Support\Facades\Hash;
 
 class AccountControllerTest extends TestCase
 {
-    // use RefreshDatabase; // Ini akan me-reset database Anda secara otomatis setelah setiap tes
+      use RefreshDatabase;
 
+    /** @test */
+    public function berhasil_update_database_tetap()
+    {
+        // Arrange: Buat user dummy
+        $user = Account::factory()->create([
+            'nama' => 'Nama Lama',
+            'email' => 'joko@tes.com',
+            'nohp' => '08123456789',
+        ]);
+
+        // Act: Kirim update request ke route yang sesuai
+        $response = $this->put("/account/{$user->id}", [
+            'nama' => 'Nama Sudah Diupdate',
+            'email' => $user->email,
+            'nohp' => $user->nohp,
+        ]);
+
+        // Assert: Pastikan redirect dan nama diubah di DB
+        $response->assertRedirect('profile');
+
+        $this->assertDatabaseHas('accounts', [
+            'id' => $user->id,
+            'nama' => 'Nama Sudah Diupdate',
+        ]);
+    }
+
+    /** @test */
+    public function gagal_update_nohp_dinotif()
+    {
+        // Arrange: Buat akun awal
+        $user = Account::factory()->create([
+            'nama' => 'Nama Awal',
+            'email' => 'joko@awal.com',
+            'nohp' => '08123456789',
+        ]);
+
+        // Act: Kirim request update dengan nohp tidak valid
+        $response = $this->from('/profile') // penting agar bisa redirectBack
+                         ->put("/account/{$user->id}", [
+                             'nama' => 'Nama Baru',
+                             'email' => 'joko@awal.com',
+                             'nohp' => 'invalid_nohp',
+                         ]);
+
+        // Assert: Redirect kembali
+        $response->assertRedirect('/profile');
+
+        // Assert: Session punya pesan error
+        $response->assertSessionHas('erorAlert');
+
+        // Assert: Data di database tidak berubah
+        $this->assertDatabaseHas('accounts', [
+            'id' => $user->id,
+            'nama' => 'Nama Awal',
+            'nohp' => '08123456789',
+        ]);
+    }
     /**
      * Tes untuk skenario login yang berhasil.
      */
@@ -143,14 +200,15 @@ class AccountControllerTest extends TestCase
     // {
     //     // 1. Persiapan: Buat user dan loginkan
     //     $user = Account::factory()->create();
-        
+
     //     // 2. Aksi: Kirim request DELETE sebagai user tersebut
     //     $response = $this->actingAs($user)->delete('/account/' . $user->id);
-        
+
     //     // 3. Pengecekan:
     //     $response->assertRedirect('account-list'); // Memastikan redirect ke list akun
     //     $this->assertDatabaseMissing('accounts', [
     //         'id' => $user->id, // Memastikan data user sudah tidak ada di database
     //     ]);
     // }
+
 }
