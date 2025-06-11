@@ -36,10 +36,11 @@ class ProdukController extends Controller
             'stok'=>'required',
             'idPKL'=>'required'
         ]);
+        
 
 
 
-        // dd($valdata);
+        dd($valdata);
 
         if ($request->hasFile('fotoProduk')) {
             $file = $request->file('fotoProduk');
@@ -64,8 +65,10 @@ class ProdukController extends Controller
         $stok = new HistoryStokController();
         $idStok = $stok->store($id,$valdata['stok'],$valdata['idPKL']);
         $cek = $this->updateStokAktif($id,$idStok);
+        dd($cek);
         if($cek){
             $pkl = PKL::findOrFail($valdata['idPKL']);
+            dd($pkl);
             return redirect('/dataPKL/'.$pkl->idAccount)->with('alert',['Berhasil','Produk '.$produk->namaProduk.' berhasil ditambahkan']);
             // return redirect('/dataPKL/'+);
         }

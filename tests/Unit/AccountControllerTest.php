@@ -27,7 +27,7 @@ class AccountControllerTest extends TestCase
             'password' => 'passwordPKL123',
             'passwordkonf' => 'passwordPKL123',
             'status' => 'PKL', // PENTING: statusnya harus 'PKL'
-            'foto' => 'path/to/default/user_profile.jpg', // Dummy string untuk foto profil akun
+            'foto' => 'misal.jpg', // Dummy string untuk foto profil akun
 
             // Data PKL (Dari bagian 'Data PKL' di form)
             'namaPKL' => 'Toko Nasi Goreng Mantap',

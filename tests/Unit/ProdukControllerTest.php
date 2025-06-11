@@ -9,21 +9,103 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
+use App\Http\Controllers\ProdukController;
 
 class ProdukControllerTest extends TestCase
 {
-    // use RefreshDatabase;
+    use RefreshDatabase;
 
-//     public function test_buat_product()
+    public function setUp(): void
+{
+    parent::setUp();
+
+    // Buat dummy PKL
+    $this->pkl = PKL::factory()->create();
+
+    // Mock HistoryStokController
+    $mock = \Mockery::mock(HistoryStokController::class);
+    $mock->shouldReceive('store')
+        ->andReturn(999); // ID stok palsu
+
+    $this->app->instance(HistoryStokController::class, $mock);
+}
+
+public function test_store_produk_berhasil()
+{
+    
+
+    $response = $this->post('/produk', [
+        'namaProduk' => 'Nasi Goreng',
+        'jenisProduk' => 'Makanan',
+        'desc' => 'Lezat dan bergizi',
+        'harga' => 15000,
+        'stok' => 10,
+        'fotoProduk' => UploadedFile::fake()->image('produk.jpg'),
+        'idPKL' => $this->pkl->id,
+    ]);
+
+    $response->assertStatus(302);//ini
+
+    $this->assertDatabaseHas('produks', [
+        'namaProduk' => 'Nasi Goreng',
+        'jenisProduk' => 'Makanan',
+        'desc' => 'Lezat dan bergizi',
+        'harga' => 15000,
+        'idPKL' => $this->pkl->id,
+    ]);
+}
+
+public function tearDown(): void
+{
+    \Mockery::close();
+    parent::tearDown();
+}
+
+//     public function test_store_produk_berhasil()
+// {
+//     // Simulasi storage agar tidak menyimpan file asli
+//     Storage::fake('public');
+
+//     // Arrange: Buat PKL dummy
+//     $pkl = PKL::factory()->create();
+
+//     // Data produk valid
+//     $data = [
+//         'namaProduk' => 'Nasi Goreng',
+//         'jenisProduk' => 'Makanan',
+//         'desc' => 'Lezat dan bergizi',
+//         'harga' => 15000,
+//         'stok' => 10,
+//         'fotoProduk' => UploadedFile::fake()->image('produk.jpg'),
+//         'idPKL' => $pkl->id,
+//     ];
+
+//     // Act: Kirim request simpan produk
+//     $response = $this->post('/produk', $data); // sesuaikan jika route-nya berbeda
+
+//     // Assert: Harus redirect (302)
+//     $response->assertStatus(302);
+
+//     // Assert: Produk berhasil disimpan di database
+//     $this->assertDatabaseHas('produks', [
+//         'namaProduk' => 'Nasi Goreng',
+//         'jenisProduk' => 'Makanan',
+//         'desc' => 'Lezat dan bergizi',
+//         'harga' => 15000,
+//         'idPKL' => $pkl->id,
+//     ]);
+// }
+
+    //     public function test_buat_product()
 //     {
 //         Storage::fake('public');
 
-//         $account = Account::factory()->create();
+    //         $account = Account::factory()->create();
 //         $pkl = PKL::factory()->create(['idAccount' => $account->id]);
 
-//         $this->withSession(['pkl' => ['id' => $pkl->id]]);
+    //         $this->withSession(['pkl' => ['id' => $pkl->id]]);
 
-//         $data = [
+    //         $data = [
 //             'namaProduk' => 'Nasi Goreng',
 //             'jenisProduk' => 'Makanan',
 //             'desc' => 'Lezat dan bergizi',
@@ -34,25 +116,25 @@ class ProdukControllerTest extends TestCase
 //             'idAccount' => $pkl->idAccount,
 //         ];
 
-//         $response = $this->post('/produk', $data);
+    //         $response = $this->post('/produk', $data);
 //         $response->assertStatus(302);
 
-//         $this->assertDatabaseHas('produks', [
+    //         $this->assertDatabaseHas('produks', [
 //             'namaProduk' => 'Nasi Goreng',
 //             'jenisProduk' => 'Makanan',
 //             'harga' => 15000,
 //         ]);
 //     }
 
-//    public function test_store_history_stok()
+    //    public function test_store_history_stok()
 // {
 //     $produk = \App\Models\Produk::factory()->create();
 //     $pkl = \App\Models\PKL::factory()->create();
 
-//     $controller = new \App\Http\Controllers\HistoryStokController();
+    //     $controller = new \App\Http\Controllers\HistoryStokController();
 //     $stokId = $controller->store($produk->id, 20, $pkl->id);
 
-//     $this->assertDatabaseHas('history_stoks', [
+    //     $this->assertDatabaseHas('history_stoks', [
 //         'id' => $stokId,
 //         'idProduk' => $produk->id,
 //         'idPKL' => $pkl->id,
@@ -60,12 +142,12 @@ class ProdukControllerTest extends TestCase
 //     ]);
 // }
 
-// public function test_update_stok_online_and_stok_akhir()
+    // public function test_update_stok_online_and_stok_akhir()
 // {
 //     $pkl = \App\Models\PKL::factory()->create();
 //     $produk = \App\Models\Produk::factory()->create(['idPKL' => $pkl->id]);
 
-//     $stok = \App\Models\historyStok::create([
+    //     $stok = \App\Models\historyStok::create([
 //         'idProduk' => $produk->id,
 //         'idPKL' => $pkl->id,
 //         'stokAwal' => 20,
@@ -74,10 +156,10 @@ class ProdukControllerTest extends TestCase
 //         'statusIsi' => 1,
 //     ]);
 
-//     $controller = new \App\Http\Controllers\HistoryStokController();
+    //     $controller = new \App\Http\Controllers\HistoryStokController();
 //     $controller->UpdatestokOnline(5, $stok->id);
 
-//     $this->assertDatabaseHas('history_stoks', [
+    //     $this->assertDatabaseHas('history_stoks', [
 //         'id' => $stok->id,
 //         'TerjualOnline' => 5,
 //         'stokAkhir' => 15,
@@ -88,33 +170,33 @@ class ProdukControllerTest extends TestCase
 //     {
 //         $produk = Produk::factory()->create();
 
-//         $response = $this->post('/buatHistory', [
+    //         $response = $this->post('/buatHistory', [
 //             'idProduk' => $produk->id,
 //             'stokAwal' => 10,
 //             'stokAkhir' => 5,
 //         ]);
 
-//         $response->assertStatus(302); // Atau 200, tergantung redirect atau view
+    //         $response->assertStatus(302); // Atau 200, tergantung redirect atau view
 //     }
 
-//     public function test_update_history_post()
+    //     public function test_update_history_post()
 //     {
 //         $produk = Produk::factory()->create();
 
-//         $response = $this->post('/updateHistory', [
+    //         $response = $this->post('/updateHistory', [
 //             'idProduk' => $produk->id,
 //             'stokAkhir' => 15,
 //         ]);
 
-//         $response->assertStatus(302); // Atau 200
+    //         $response->assertStatus(302); // Atau 200
 //     }
 
-//     public function test_get_produk_by_id_pkl()
+    //     public function test_get_produk_by_id_pkl()
 //     {
 //         $pkl = PKL::factory()->create();
 //         Produk::factory()->count(2)->create(['idPKL' => $pkl->id]);
 
-//         $response = $this->get("/getProduk/{$pkl->id}");
+    //         $response = $this->get("/getProduk/{$pkl->id}");
 //         $response->assertStatus(200);
 //     }
 }

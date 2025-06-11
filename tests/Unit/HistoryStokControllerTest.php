@@ -45,26 +45,115 @@ class HistoryStokControllerTest extends TestCase
     //     $tu::assertTrue($cek);
     // }
 
-    // public function prepared(){
-    //     $akun = Account::factory()->count(1)->create([
-    //         'status'=>'PKL',
-    //     ]);
+    public function prepared(){
+        $akun = Account::factory()->count(1)->create([
+            'status'=>'PKL',
+        ]);
+        $pkl = PKL::factory()->create([
+            'idAccount'=>$akun[0]->id,
+        ]);
+        // dd($akun);
+        // dd(;
+        $res=$this->post('/loginAccount',[
+            'email' => $akun[0]->email,
+            'password' => 'pwCuy',
+        ]);
+        // dd($akun);
 
-    //     //buat akun pkl
-    //     $pkl = PKL::factory()->create([
-    //         'idAccount'=>$akun[0]->id,
-    //     ]);
-    //     //buat 1 product
-    //     $product = Produk::factory()->create([
-    //         'idPKL'=>$pkl->id,
-    //         'created_at' => \Carbon\Carbon::now(),
-    //     ]);
+        //buat akun pkl
+        
+        // dd(session('PKL'));
 
-    //     $res=$this->post('/loginAccount',[
-    //         'email' => $akun[0]->email,
-    //         'password' => 'pwCuy',
-    //     ]);
+        //buat 1 product
+        $product = Produk::factory()->create([
+            'idPKL'=>session('PKL')->id,
+            'created_at' => \Carbon\Carbon::now(),
+        ]);
 
-    //     return [$akun[0],$pkl,$product];
-    // }
+        
+
+        return [$akun[0],$pkl,$product];
+    }
+    // $this->prepared();
+    public function test_Buat_Stok_Awal_Success()
+    {
+        $prep = $this->prepared();
+        $produk = $prep[2];
+        $stokAwal = 40;
+        $response = $this->post('/MakeStokAwal', [
+            'stokAwal'=>$stokAwal,
+            'idproduk'=>$produk->id,
+        ]);
+        // dd($response);
+
+        //cek apakah mmengembalikan redirect
+        $response->assertStatus(302);
+
+        $response->assertSessionHas('alert', ['Berhasil', 'Tambah Stok Awal Berhasil']);
+    }
+
+    public function test_Buat_Stok_Awal_Failed()
+    {
+        $prep = $this->prepared();
+        $produk = $prep[2];
+        $stokAwal = 'kj';
+        $response = $this->post('/MakeStokAwal', [
+            'stokAwal'=>$stokAwal,
+            'idproduk'=>$produk->id,
+        ]);
+        // dd($response);
+
+        //cek apakah mmengembalikan redirect
+        $response->assertStatus(302);
+        $response->assertSessionHas('erorAlert');
+        $response->assertSessionHas('erorAlert', ['Gagal', 'Tambah Stok Awal Gagal']);
+    }
+
+    public function test_Buat_Stok_Akhir_Success()
+    {
+        $prep = $this->prepared();
+        // dd($prep);
+        $produk = $prep[2];
+        $stokAkhir = 40;
+        $stokAwal = 20;
+        $preparedStokAwal = $this->post('/MakeStokAwal', [
+            'stokAwal'=>$stokAwal,
+            'idproduk'=>$produk->id,
+        ]);
+
+        $response = $this->post('/updateStokAkhir', [
+            'stokAkhir'=>$stokAkhir,
+            'idproduk'=>$produk->id,
+        ]);
+        // dd($response);
+
+        //cek apakah mmengembalikan redirect
+        $response->assertStatus(302);
+
+        $response->assertSessionHas('alert', ['Berhasil', 'Ubah Stok Akhir Berhasil']);
+    }
+
+    public function test_Buat_Stok_Akhir_Failed()
+    {
+        $prep = $this->prepared();
+        // dd($prep);
+        $produk = $prep[2];
+        $stokAkhir = 'ju';
+        $stokAwal = 20;
+        $preparedStokAwal = $this->post('/MakeStokAwal', [
+            'stokAwal'=>$stokAwal,
+            'idproduk'=>$produk->id,
+        ]);
+
+        $response = $this->post('/updateStokAkhir', [
+            'stokAkhir'=>$stokAkhir,
+            'idproduk'=>$produk->id,
+        ]);
+        // dd($response);
+
+        //cek apakah mmengembalikan redirect
+        $response->assertStatus(302);
+
+        $response->assertSessionHas('erorAlert', ['Gagal Update Stok Akhir', 'field Stok Akhir tidak berupa nomor']);
+    }
 }
