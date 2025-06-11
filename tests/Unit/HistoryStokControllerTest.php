@@ -114,8 +114,8 @@ class HistoryStokControllerTest extends TestCase
         $prep = $this->prepared();
         // dd($prep);
         $produk = $prep[2];
-        $stokAkhir = 40;
-        $stokAwal = 20;
+        $stokAkhir = 20;
+        $stokAwal = 40;
         $preparedStokAwal = $this->post('/MakeStokAwal', [
             'stokAwal'=>$stokAwal,
             'idproduk'=>$produk->id,
@@ -129,6 +129,7 @@ class HistoryStokControllerTest extends TestCase
 
         //cek apakah mmengembalikan redirect
         $response->assertStatus(302);
+        
 
         $response->assertSessionHas('alert', ['Berhasil', 'Ubah Stok Akhir Berhasil']);
     }
@@ -139,7 +140,7 @@ class HistoryStokControllerTest extends TestCase
         // dd($prep);
         $produk = $prep[2];
         $stokAkhir = 'ju';
-        $stokAwal = 20;
+        $stokAwal = 40;
         $preparedStokAwal = $this->post('/MakeStokAwal', [
             'stokAwal'=>$stokAwal,
             'idproduk'=>$produk->id,
@@ -153,7 +154,6 @@ class HistoryStokControllerTest extends TestCase
 
         //cek apakah mmengembalikan redirect
         $response->assertStatus(302);
-
         $response->assertSessionHas('erorAlert', ['Gagal Update Stok Akhir', 'field Stok Akhir tidak berupa nomor']);
     }
 }
