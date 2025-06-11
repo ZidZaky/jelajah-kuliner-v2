@@ -9,19 +9,21 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+// use Illuminate\Support\Facades\Hash;
 
 class AccountController extends Controller
 {
     //
     public static function index()
     {
-        return view('account-list', [
+        return view('listAccount', [
             'account' => Account::all()
         ]);
     }
-    //login
+    //login]=
     public function login(Request $request)
     {
+        // 1. Validasi input seperti biasa
         $validated = $request->validate([
             'email' => 'required|email',
             'password' => 'required',
@@ -29,32 +31,37 @@ class AccountController extends Controller
             'email.required' => 'Email wajib diisi.',
             'password.required' => 'Password wajib diisi.',
         ]);
-        $credentials = $request->only('email', 'password');
-        // dd(Auth::attempt($credentials));
-        if (Auth::attempt($credentials)) {
-            // dd('Login successful!'); // Debugging line, remove in production
-            // Authentication was successful
-            $account = Auth::user();
-            if ($account->status != 'alert') {
-                session(['account' => $account]);
-                if ($account->status == 'PKL') {
-                    //simpan data pkl ke session
 
-                    $pkl = PKL::where('idAccount', $account->id)->first();
-                    // dd($pkl);
-                    session(['PKL' => $pkl]);
-                }
-                return redirect('/dashboard')->with('alert', ['Login Berhasil', 'Terimakasih']);
-            } else {
-                // session(['account' => $account]);
-                return redirect('/login')->with('erorAlert', 'Anda Di Ban');
+        // 2. Cari akun berdasarkan email yang diinput
+        $account = \App\Models\Account::where('email', $validated['email'])->first();
+
+        // 3. Jika akun ada DAN password-nya cocok
+        if ($account && Hash::check($validated['password'], $account->password)) {
+
+            // 4. Periksa status akun (setelah password dipastikan benar)
+            if ($account->status == 'alert') {
+                // Jika status 'alert', kembalikan ke login dengan pesan di-ban.
+                // Pengguna TIDAK AKAN terautentikasi.
+                return redirect('/login')->with('erorAlert', ['Anda Di Ban', 'Akun Anda telah dibanned. Silakan hubungi admin untuk informasi lebih lanjut.']);
             }
 
-            // Redirect to the intended URL after successful login
+            // 5. Jika semua lolos, loginkan pengguna secara manual
+            Auth::login($account);
+            $request->session()->regenerate(); // Regenerate session untuk keamanan
+
+            // Simpan data ke session seperti biasa
+            session(['account' => $account]);
+            if ($account->status == 'PKL') {
+                $pkl = PKL::where('idAccount', $account->id)->first();
+                session(['PKL' => $pkl]);
+            }
+
+            // Arahkan ke dashboard
+            return redirect('/dashboard')->with('alert', ['Login Berhasil', 'Terimakasih']);
         }
 
-        // Authentication failed
-        return redirect('/login')->with('erorAlert', ['Login Gagal', 'email atau password salah!']); // Redirect back to the login page if authentication fails
+        // Jika akun tidak ditemukan ATAU password salah
+        return back()->with('erorAlert', ['Login Gagal', 'email atau password salah!']);
     }
 
     public function loginAccount(Request $request)

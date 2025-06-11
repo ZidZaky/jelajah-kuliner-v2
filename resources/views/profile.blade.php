@@ -130,22 +130,22 @@
 
                 {{-- Tombol Edit Customer --}}
                 <button class="edit-bio-right-customer d-flex w-auto h-auto bg-transparent border-0" onclick="editBio(true)">
-                    <i class="bi bi-pencil-square text-white"></i> {{-- ✅ Diberi warna putih --}}
+                    <i class="bi bi-pencil-square text-white"></i> 
                 </button>
                 {{-- Tombol Save Customer --}}
                 <button type="submit" form="profileForm" class="save-bio-right-customer d-none w-auto h-auto bg-transparent border-0">
-                    <i class="bi bi-floppy-fill text-white">Simpan Perubahan</i> {{-- ✅ Diberi warna putih --}}
+                    <i class="bi bi-floppy-fill text-white">Simpan Perubahan</i> 
                 </button>
 
                 {{-- PERBAIKAN: Menambahkan tombol Edit & Save untuk PKL --}}
                 @if (session('account')['status'] == 'PKL')
                 {{-- Tombol Edit PKL (Awalnya disembunyikan) --}}
                 <button class="edit-bio-right-pkl d-none w-auto h-auto bg-transparent border-0" onclick="editBio(false)">
-                    <i class="bi bi-pencil-square text-white"></i> {{-- ✅ Diberi warna putih --}}
+                    <i class="bi bi-pencil-square text-white"></i> 
                 </button>
                 {{-- Tombol Save PKL (Awalnya disembunyikan) --}}
                 <button type="submit" form="pklForm" class="save-bio-right-pkl d-none w-auto h-auto bg-transparent border-0">
-                    <i class="bi bi-floppy-fill text-white">Simpan Perubahan</i> {{-- ✅ Diberi warna putih --}}
+                    <i class="bi bi-floppy-fill text-white">Simpan Perubahan</i> 
                 </button>
                 @endif
             </div>

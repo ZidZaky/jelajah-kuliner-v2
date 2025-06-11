@@ -150,7 +150,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body d-flex justify-content-center align-items-center">
-            <form action="{{ route('report.store') }}" method="POST" class="w-100 d-flex flex-column h-50 gap-3 justify-content-center align-items-center">
+            <form action="/report" method="POST" class="w-100 d-flex flex-column h-50 gap-3 justify-content-center align-items-center">
                 @csrf
                 <div class="form-floating">
                     <textarea class="form-control" name="alasan" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
