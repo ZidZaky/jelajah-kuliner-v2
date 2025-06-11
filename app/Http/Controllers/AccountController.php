@@ -136,7 +136,7 @@ class AccountController extends Controller
                 'password' => 'required',
                 'passwordkonf' => 'required|same:password',
                 'status' => 'required',
-                'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
+                'foto' => 'nullable',
             ], [
                 'nama.required' => 'Nama wajib diisi.',
                 'email.required' => 'Email wajib diisi.',
@@ -145,7 +145,7 @@ class AccountController extends Controller
                 'password.required' => 'Password wajib diisi.',
                 'passwordkonf.required' => 'Konfirmasi password wajib diisi.',
                 'passwordkonf.same' => 'Konfirmasi password tidak sama dengan password.',
-                'foto.mimes' => 'Format gambar harus jpeg, png, jpg, gif, atau svg.',
+                // 'foto.mimes' => 'Format gambar harus jpeg, png, jpg, gif, atau svg.',
                 'foto.max' => 'Ukuran maksimal hanya boleh 5 MB'
             ]);
 
@@ -156,7 +156,7 @@ class AccountController extends Controller
 
                 $valdata['foto'] = $filePath;
             } else {
-                $valdata['foto'] = null;
+                $valdata['foto'] = "misal.jpg";
             }
 
             $cekEmail = Account::firstWhere('email', $valdata['email']);
