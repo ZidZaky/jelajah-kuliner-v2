@@ -138,6 +138,10 @@
                 <p class="show-font">User Guide</p>
                 <p class="tiny-font">User Guide</p>
             </a>
+            <a href="/aboutus" class="d-flex justify-content-center align-items-center flex-row gap-3">
+                <p class="show-font">About Us</p>
+                <p class="tiny-font">About Us</p>
+            </a>
             <!-- <a href="" class="d-flex justify-content-center align-items-center flex-row gap-3">
                 <p class="show-font">Help</p>
                 <p class="tiny-font">Help</p>
