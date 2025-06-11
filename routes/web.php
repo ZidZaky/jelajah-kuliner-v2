@@ -29,6 +29,9 @@ use app\Models\PKL;
 
 
 //NON TESTING
+Route::get('/cek',function(){
+    return view('cek');
+});
 Route::get('/', function () {
     return redirect('/dashboard');
 });
@@ -96,8 +99,8 @@ Route::middleware(['status:PKL'])->group(function () {
     Route::get('/Dashboard-Penjualan/{idAccVApa}', [halamanController::class, 'DashboardPenjualan']);
     Route::post('/MakeStokAwal', [halamanController::class, 'UpdateStatusStok'])->name('MakeStokAwal');
     Route::post('/updateStokAkhir', [halamanController::class, 'UpdateStokAkhir'])->name('updateStokAkhir');
-    Route::get('/buatStokAkhir/{id}', [ProdukController::class, 'buatStokAkhir']);
-    Route::get('/buatStokAwal/{id}', [ProdukController::class, 'buatStokAwal']);
+    // Route::get('/buatStokAkhir/{id}', [ProdukController::class, 'buatStokAkhir']);
+    // Route::get('/buatStokAwal/{id}', [ProdukController::class, 'buatStokAwal']);
     Route::post('/buatHistory', [ProdukController::class, 'buatHistory']);
     Route::post('/updateHistory', [ProdukController::class, 'updateHistory']);
     Route::post('/update-location', [PKLController::class, 'updateLocation']);

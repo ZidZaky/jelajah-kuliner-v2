@@ -6,6 +6,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use App\Models\Pesanan;
+use App\Models\Account;
 use App\Models\ProdukDipesan;
 use App\Models\PKL;
 use App\Models\Produk;
@@ -17,6 +18,240 @@ use App\Http\Controllers\HistoryStokController;
 class PesananControllerTest extends TestCase
 {
     // use RefreshDatabase;
+
+
+    public function testStorePesanan()
+    {
+        // 1. Arrange: Buat data dummy
+        $account = \App\Models\Account::factory()->create();
+        $pkl = \App\Models\Pkl::factory()->create();
+        $produk = \App\Models\Produk::factory()->create(['idPKL' => $pkl->id]);
+
+        $postData = [
+            'idPKL' => $pkl->id,
+            'totalHarga' => 20000,
+            'keterangan' => 'Tidak pedas ya mas!',
+            'produk' . $produk->id => 2,
+        ];
+
+        // 2. Act: Kirim request
+        $response = $this->actingAs($account)
+            ->withSession(['account' => $account])
+            ->post('/pesanan', $postData);
+
+        // 3. Assert: Verifikasi
+        $response->assertStatus(302);
+
+        // Verifikasi pesanan utama
+        $this->assertDatabaseHas('pesanans', [
+            'idAccount' => $account->id,
+            'idPKL' => $pkl->id,
+            'TotalBayar' => 20000,
+            'Keterangan' => 'Tidak pedas ya mas!',
+        ]);
+
+        // =====================================================================
+        // BAGIAN YANG DIPERBAIKI: Jangan pakai latest()
+        // Cari pesanan yang baru dibuat secara spesifik berdasarkan data unik dari test ini.
+        $createdPesanan = \App\Models\Pesanan::where('idAccount', $account->id)
+            ->where('idPKL', $pkl->id)
+            ->orderBy('id', 'desc')
+            ->first();
+
+        // Pastikan kita benar-benar menemukan pesanannya
+        $this->assertNotNull($createdPesanan, "Pesanan yang seharusnya dibuat tidak ditemukan.");
+
+        // Gunakan ID yang spesifik dari pesanan yang kita temukan.
+        $this->assertDatabaseHas('produk_dipesan', [
+            'idPesanan' => $createdPesanan->id,
+            'idProduk' => $produk->id,
+            'JumlahProduk' => 2,
+        ]);
+        // =====================================================================
+    }
+
+    public function testStorePesananFailsWhenCartIsEmpty()
+    {
+        // 1. Setup: Buat akun dan loginkan seperti biasa.
+        // Controller Anda tetap butuh session('account') bahkan untuk validasi.
+        $account = \App\Models\Account::factory()->create();
+        $randomPkl = \App\Models\Pkl::factory()->create();
+
+        // 2. Siapkan data yang TIDAK VALID
+        // Di sini kita sengaja mengatur 'totalHarga' menjadi 0 untuk membuat validasi gagal.
+        $invalidPostData = [
+            'idPKL' => $randomPkl->id,
+            'totalHarga' => 0, // <-- Ini poin kuncinya
+            'keterangan' => 'Coba-coba checkout kosong',
+        ];
+
+        // 3. Kirim request dengan data tidak valid
+        $response = $this->withSession(['account' => $account])
+            ->post('/pesanan', $invalidPostData);
+
+        // 4. Assertions (Verifikasi) untuk kondisi GAGAL
+
+        // Memastikan tetap terjadi redirect (ke halaman sebelumnya).
+        $response->assertStatus(302);
+
+        // Memastikan session memiliki flash message 'alert' dengan isi yang benar.
+        // Ini membuktikan bahwa blok `if ($validate->fails())` dieksekusi.
+        $response->assertSessionHas('alert', 'Belum ada barang yang dicheckout');
+
+        // INI YANG PALING PENTING:
+        // Memastikan TIDAK ADA data baru yang masuk ke tabel 'pesanans'.
+        // Kita gunakan assertDatabaseMissing.
+        $this->assertDatabaseMissing('pesanans', [
+            'idAccount' => $account->id,
+            'idPKL' => $randomPkl->id,
+            'TotalBayar' => 0,
+        ]);
+    }
+
+    public function test_hanya_pkl_terkait_yang_bisa_menerima_pesanan()
+    {
+        // 1. ARRANGE: Ambil data PKL yang sudah ada dari seeder.
+        // Ini adalah cara paling andal jika tidak menggunakan RefreshDatabase.
+        $pklAccount = Account::where('status', 'PKL')->first();
+        $this->assertNotNull($pklAccount, "Tidak ada Akun dengan status PKL ditemukan di database. Pastikan seeder sudah berjalan.");
+
+        $pklData = Pkl::where('idAccount', $pklAccount->id)->first();
+        $this->assertNotNull($pklData, "Tidak ada data PKL yang terhubung dengan Akun PKL yang ditemukan.");
+
+        // Buat pesanan BARU yang secara spesifik ditujukan untuk PKL ini.
+        $pesanan = Pesanan::factory()->create([
+            'idPKL' => $pklData->id,
+            'status' => 'Pesanan Baru'
+        ]);
+
+        // 2. PRA-VERIFIKASI: Pastikan pesanan yang baru kita buat benar-benar ada dalam kondisi awal.
+        $this->assertDatabaseHas('pesanans', [
+            'id' => $pesanan->id,
+            'idPKL' => $pklData->id,
+            'status' => 'Pesanan Baru'
+        ]);
+
+        // 3. ACT: Lakukan aksi sebagai PKL yang sudah login.
+        // Kita simulasikan login dan session yang sesuai dengan aplikasi Anda.
+        $response = $this->actingAs($pklAccount)
+            ->withSession([
+                'account' => $pklAccount,
+                'PKL' => $pklData
+            ])
+            ->get('/terimaPesanan?id=' . $pesanan->id . '&wht=PKL');
+
+        // 4. PASCA-VERIFIKASI: Pastikan hasilnya 100% benar.
+        // Cek apakah status di database telah berhasil diperbarui.
+        $this->assertDatabaseHas('pesanans', [
+            'id' => $pesanan->id,
+            'status' => 'Pesanan Diproses'
+        ]);
+
+        // Cek apakah status lama sudah tidak ada lagi (membuktikan adanya UPDATE, bukan INSERT baru).
+        $this->assertDatabaseMissing('pesanans', [
+            'id' => $pesanan->id,
+            'status' => 'Pesanan Baru'
+        ]);
+
+        // Terakhir, pastikan redirect berjalan sesuai harapan controller.
+        $response->assertRedirect('Detil/' . $pesanan->id);
+    }
+
+    /**
+     * Test alur di mana HANYA PKL yang login dan terkait dengan pesanan
+     * yang dapat mengubah status pesanan menjadi "Pesanan Ditolak".
+     *
+     * @return void
+     */
+    public function test_hanya_pkl_terkait_yang_bisa_menolak_pesanan()
+    {
+        // 1. ARRANGE: Ambil data PKL yang sudah ada.
+        $pklAccount = Account::where('status', 'PKL')->first();
+        $this->assertNotNull($pklAccount, "Tidak ada Akun PKL ditemukan.");
+
+        $pklData = Pkl::where('idAccount', $pklAccount->id)->first();
+        $this->assertNotNull($pklData, "Tidak ada data PKL terhubung.");
+
+        // Buat pesanan baru untuk PKL ini.
+        $pesanan = Pesanan::factory()->create([
+            'idPKL' => $pklData->id,
+            'status' => 'Pesanan Baru'
+        ]);
+
+        // 2. PRA-VERIFIKASI: Pastikan kondisi awal benar.
+        $this->assertDatabaseHas('pesanans', [
+            'id' => $pesanan->id,
+            'status' => 'Pesanan Baru'
+        ]);
+
+        // 3. ACT: Lakukan aksi sebagai PKL yang benar.
+        $response = $this->actingAs($pklAccount)
+            ->withSession([
+                'account' => $pklAccount,
+                'PKL' => $pklData
+            ])
+            ->get('/tolakPesanan?id=' . $pesanan->id . '&wht=PKL');
+
+        // 4. PASCA-VERIFIKASI: Pastikan status berhasil diubah.
+        $this->assertDatabaseHas('pesanans', [
+            'id' => $pesanan->id,
+            'status' => 'Pesanan Ditolak'
+        ]);
+        $this->assertDatabaseMissing('pesanans', [
+            'id' => $pesanan->id,
+            'status' => 'Pesanan Baru'
+        ]);
+
+        $response->assertRedirect('Detil/' . $pesanan->id);
+    }
+
+    /**
+     * Test alur di mana HANYA PKL yang login dan terkait dengan pesanan
+     * yang dapat mengubah status pesanan menjadi "Pesanan Selesai".
+     *
+     * @return void
+     */
+    public function test_hanya_pkl_terkait_yang_bisa_menyelesaikan_pesanan()
+    {
+        // 1. ARRANGE: Ambil data PKL yang sudah ada.
+        $pklAccount = Account::where('status', 'PKL')->first();
+        $this->assertNotNull($pklAccount, "Tidak ada Akun PKL ditemukan.");
+
+        $pklData = Pkl::where('idAccount', $pklAccount->id)->first();
+        $this->assertNotNull($pklData, "Tidak ada data PKL terhubung.");
+
+        // Buat pesanan yang sudah dalam status "Pesanan Diproses" untuk PKL ini.
+        $pesanan = Pesanan::factory()->create([
+            'idPKL' => $pklData->id,
+            'status' => 'Pesanan Diproses'
+        ]);
+
+        // 2. PRA-VERIFIKASI: Pastikan kondisi awal benar.
+        $this->assertDatabaseHas('pesanans', [
+            'id' => $pesanan->id,
+            'status' => 'Pesanan Diproses'
+        ]);
+
+        // 3. ACT: Lakukan aksi sebagai PKL yang benar.
+        $response = $this->actingAs($pklAccount)
+            ->withSession([
+                'account' => $pklAccount,
+                'PKL' => $pklData
+            ])
+            ->get('/selesaiPesanan?id=' . $pesanan->id . '&wht=Detail');
+
+        // 4. PASCA-VERIFIKASI: Pastikan status berhasil diubah.
+        $this->assertDatabaseHas('pesanans', [
+            'id' => $pesanan->id,
+            'status' => 'Pesanan Selesai'
+        ]);
+        $this->assertDatabaseMissing('pesanans', [
+            'id' => $pesanan->id,
+            'status' => 'Pesanan Diproses'
+        ]);
+
+        $response->assertRedirect('Detil/' . $pesanan->id);
+    }
 
     // public function testCreateView()
     // {
@@ -336,4 +571,5 @@ class PesananControllerTest extends TestCase
     //     $response->assertStatus(200);
     //     $this->assertEquals('Pesanan Selesai', $pesanan->fresh()->status);
     // }
+
 }
