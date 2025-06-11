@@ -40,7 +40,7 @@ class ProdukController extends Controller
 
 
 
-        dd($valdata);
+        // dd($valdata);
 
         if ($request->hasFile('fotoProduk')) {
             $file = $request->file('fotoProduk');

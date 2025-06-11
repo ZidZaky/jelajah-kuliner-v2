@@ -15,6 +15,27 @@ class ProdukControllerTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function test_store_produk_dengan_data_tidak_valid()
+    {
+        $this->withoutMiddleware(); // Hilangkan auth/csrf dll kalau perlu
+
+        $response = $this->post('/produk', [
+            'namaProduk' => '', // Kosong = tidak valid
+            'jenisProduk' => '',
+            'desc' => '',
+            'harga' => '',
+            'stok' => '',
+            'fotoProduk' => UploadedFile::fake()->image('produk.jpg'),
+            'idPKL' => '', // Kosong = invalid
+        ]);
+
+        // Validasi gagal = redirect kembali (HTTP 302)
+        $response->assertStatus(302);
+
+        // Pastikan ada redirect (default Laravel behavior jika validasi gagal)
+        $response->assertRedirect();
+    }
+
     public function setUp(): void
 {
     parent::setUp();
@@ -33,7 +54,7 @@ class ProdukControllerTest extends TestCase
 public function test_store_produk_berhasil()
 {
     
-
+// dd($this->pkl->id,);
     $response = $this->post('/produk', [
         'namaProduk' => 'Nasi Goreng',
         'jenisProduk' => 'Makanan',
@@ -41,7 +62,9 @@ public function test_store_produk_berhasil()
         'harga' => 15000,
         'stok' => 10,
         'fotoProduk' => UploadedFile::fake()->image('produk.jpg'),
+        
         'idPKL' => $this->pkl->id,
+
     ]);
 
     $response->assertStatus(302);//ini
@@ -60,6 +83,8 @@ public function tearDown(): void
     \Mockery::close();
     parent::tearDown();
 }
+
+
 
 //     public function test_store_produk_berhasil()
 // {
