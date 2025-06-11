@@ -161,7 +161,7 @@
                 </div>
                 <div class="d-flex flex-column">
                     <p class="p-clear opacity-50">Nomor Telepon</p>
-                    <input name="nohp" type="text" class="p-clear bg-transparent border-0 cl-white profile-input" value="{{ $account->nohp ?? session('account')['nohp'] }}" style="outline: none;" readonly>
+                    <input name="nohp" type="tel" class="p-clear bg-transparent border-0 cl-white profile-input" value="{{ $account->nohp ?? session('account')['nohp'] }}" style="outline: none;" readonly>
                 </div>
                 <div class="d-flex flex-column">
                     <p class="p-clear opacity-50">Email</p>
