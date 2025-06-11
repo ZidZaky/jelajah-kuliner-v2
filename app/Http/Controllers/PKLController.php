@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Session;
 
 class PKLController extends Controller
 {
@@ -98,15 +99,36 @@ class PKLController extends Controller
     //update
     public function update(Request $request, PKL $pkl)
     {
+        // 1. Validasi hanya data yang dikirim dari form
         $valdata = $request->validate([
+            'idPKL' => 'required',
             'namaPKL' => 'required',
             'desc' => 'required',
-            'idAccount' => 'required'
         ]);
+        // dd($pkl);
 
-        $pkl->update($valdata);
+        try {
+            // 2. CARI data PKL dari database berdasarkan ID yang divalidasi
+            // findOrFail akan error jika ID tidak ditemukan, jadi lebih aman.
+            $pkl = PKL::findOrFail($valdata['idPKL']);
 
-        return redirect('/PKL');
+            // 3. UPDATE properti model dengan data baru
+            $pkl->namaPKL = $valdata['namaPKL'];
+            $pkl->desc = $valdata['desc'];
+
+            // 4. SIMPAN perubahan ke database
+            $pkl->save();
+
+            // 5. Perbarui data di session dengan data terbaru
+            session(['PKL' => $pkl]);
+
+
+            // 6. Redirect kembali dengan pesan sukses
+            return redirect('/profile')->with('alert', ['Terimakasih', 'Data PKL berhasil diperbarui.']);
+        } catch (\Exception $e) {
+            // Jika terjadi error (misal: pkl tidak ditemukan), redirect dengan pesan error
+            return back()->with('erorAlert', ['Gagal memperbarui data.', $e->getMessage()]);
+        }
     }
 
     //delete
@@ -199,7 +221,8 @@ class PKLController extends Controller
         return ($rs[0]->id);
     }
 
-    public function getNamePklById($id){
+    public function getNamePklById($id)
+    {
         $hasil = PKL::firstWhere('id', $id);
         return $hasil->namaPKL;
     }
@@ -216,11 +239,11 @@ class PKLController extends Controller
         return $results;
     }
 
-    public function getDataPklbyId($id){    
+    public function getDataPklbyId($id)
+    {
         $hasil = PKL::firstWhere('idAccount', $id);
         // dd($hasil, 'hasi;',session('account')->id);
         return $hasil;
-        
     }
 
     public function updateLocation(Request $request)
@@ -231,7 +254,7 @@ class PKLController extends Controller
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
         ]);
-        $valdata['idAccount']=session('account')->id;
+        $valdata['idAccount'] = session('account')->id;
         // dd($valdata);
 
         try {
@@ -263,7 +286,7 @@ class PKLController extends Controller
             'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5120', // Maks 5MB
         ]);
 
-        
+
         // 2. Dapatkan data PKL berdasarkan user yang sedang login
         $user = Auth::user();
         $pkl = PKL::where('idAccount', $user->id)->first();

@@ -16,26 +16,17 @@ class ReportController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request);
         $valdata = $request->validate([
             'idPengguna' => 'required',
             'idPelapor' => 'required',
             'idPesanan' => 'required',
-            'alasan' => 'required'
+            'alasan' => 'required' // Dibuat nullable karena di form Anda "optional"
         ]);
 
-        $report = new Report();
-        $report->idPengguna = $valdata['idPengguna'];
-        $report->idPelapor = $valdata['idPelapor'];
-        $report->idPesanan = $valdata['idPesanan'];
-        $report->alasan = $valdata['alasan'];
-        $berhasil = $report->save();
+        Report::create($valdata);
 
-        if ($berhasil) {
-            (new PesananController())->reportPesanan($report->idPesanan);
-            (new PesananController())->tolakPesanan($report->idPesanan);
-            return redirect()->back()->with('alert', ['Laporan Berhasil', 'Pesanan ini berhasil di laporkan']);
-        }
+        return redirect('/tolakPesanan?id=' . $valdata['idPesanan'])
+            ->with('alert', 'Pengguna berhasil dilaporkan dan pesanan ditolak.');
     }
 
     public function banUser($id)

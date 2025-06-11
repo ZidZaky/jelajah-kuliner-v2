@@ -26,7 +26,7 @@
 
 <body class="first-bg d-flex flex-column justify-content-center min-vh-100">
 
-    @yield('unrelative')
+    @yield('unrelative')    
     <nav class="navbar w-full d-flex justify-content-center align-items-center" style="height: 80px; max-height:fit-content;">
         <div class="second-bg d-flex justify-content-between flex-row px-2 px-md-5 rounded-3 h-auto" style="padding: 10px 2px; width: 98%;">
             <div class="containerLeftNavbar d-flex flex-row justify-content-sm-between">
@@ -56,6 +56,10 @@
                         <li><a class="dropdown-item cl-white hover-red-dark" href="/Dashboard-Penjualan/{{{session('account')->id}}}VToday" style="background-color: #a73636;">Data Penjualan</a></li>
                         <li><a class="dropdown-item cl-white hover-red-dark" href="/dataPKL/{{session('account')['id']}}" style="background-color: #a73636;">Data PKL</a></li>
                         <li><a class="dropdown-item cl-white hover-red-dark" href="/pesanan/show/?id={{session('account')['id']}}&wht={{{'Pesanan Baru'}}}" style="background-color: #a73636;">List Pesanan</a></li>
+                        @endif
+                        @if(session('account')->status=='Admin')
+                        <li><a class="dropdown-item cl-white hover-red-dark" href="/account" style="background-color: #a73636;">List Account</a></li>
+                        <li><a class="dropdown-item cl-white hover-red-dark" href="/report" style="background-color: #a73636;">List Reports</a></li>
                         @endif
                         <li><a class="dropdown-item cl-white hover-red-dark" href="/profile" style="background-color: #a73636;">My Profile</a></li>
                         <li><a class="dropdown-item btn-prm hover-red-dark" href="/pesanan/show/?id={{{session('account')->id}}}&wht=Pesanan Baru">List Pesanan</a></li>
@@ -96,6 +100,10 @@
                         @if (session('account')['status'] == 'PKL')
                         <li><a class="dropdown-item" href="/dataPKL/{{session('account')['id']}}">Data PKL</a></li>
                         <li><a class="dropdown-item" href="/Dashboard-Penjualan/{{{session('account')->id}}}VToday">Data Penjualan</a></li>
+                        @endif
+                        @if(session('account')->status=='Admin')
+                        <li><a class="dropdown-item" href="/account">List Account</a></li>
+                        <li><a class="dropdown-item" href="/report">List Reports</a></li>
                         @endif
                         <li><a class="dropdown-item" href="/pesanan/show/?id={{session('account')['id']}}&wht={{{'Pesanan Baru'}}}">List Pesanan</a></li>
                         <li><a class="dropdown-item" href="/profile">My Profile</a></li>
