@@ -119,6 +119,7 @@ class AccountController extends Controller
                 ],
                 'nohp' => [
                     'required',
+                    'numeric',
                     function ($attribute, $value, $fail) {
                         if (!$this->isNohpExist($value)) {
                             $fail('Nomor sudah terdaftar');
@@ -132,6 +133,7 @@ class AccountController extends Controller
             ], [
                 'nama.required' => 'Nama wajib diisi.',
                 'email.required' => 'Email wajib diisi.',
+                'nohp.numeric' => 'Nomor telepon belum berbentuk hanya Angka .',
                 'nohp.required' => 'Nomor HP wajib diisi.',
                 'password.required' => 'Password wajib diisi.',
                 'passwordkonf.required' => 'Konfirmasi password wajib diisi.',

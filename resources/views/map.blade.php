@@ -307,7 +307,7 @@
                             const imageUrl = `${STORAGE_BASE_URL}/${product.foto}`;
                             const productHTML = `
                     <div class="produk popup PopupProduk${product.id} align-items-center position-relative d-flex flex-row justify-content-end align-items-end" style="height:110px; min-height: 110px;">
-                        <img class="circle-preview position-absolute z-1 shadow" src="${imageUrl}" alt="${product.nama}" style="height: 75%; width: fit-content; left: 0; top: 50%; transform: translateY(-50%); object-fit: cover; border-radius: 8px;">
+                        <img class="circle-preview position-absolute z-1 shadow" src="${imageUrl}" alt="${product.nama}" style="height: 75%; width: 82.5px; min-width: 82.5px; max-width: 82.5px; left: 0; top: 50%; transform: translateY(-50%); object-fit: cover; border-radius: 8px;">
                         <div class="position-absolute z-0 py-2 pe-2 d-flex flex-column gap-1 justify-content-between align-items-end bg-prim-dark border-left-top border-right-bottom" style="right: 0; width:87%; height:95%; max-height: 95%; min-height: 95%;">
                             <div class="contisi d-flex flex-column first-cl justify-content-end align-items-end w-50">
                                 <p class="fw-bolder" style="font-size: 10px; text-align: right; width:100%;">${product.nama}</p>
