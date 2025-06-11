@@ -148,6 +148,7 @@ class PKLController extends Controller
     {
         // dd($idAccount);
         $pklData = PKL::where('idAccount', $idAccount)->first();
+        // dd(session('PKL'),$pklData, session('account'));
         // dd($pklData);
         // $produk = Produk::where('idPKL', $pklData->id)->get();
         $produk = DB::table('produks as p')
