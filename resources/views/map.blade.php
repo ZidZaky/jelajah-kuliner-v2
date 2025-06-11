@@ -8,11 +8,22 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
 <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@3.1.4/dist/esri-leaflet-geocoder.css" crossorigin="">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.css" crossorigin="" />
+<style>
+    .containerPopup{
+         top: 90px !important;
+    }
+    @media (max-width: 768px) {
+     .containerPopup{
+         top: 0 !important;
+    }   
+    }
+
+</style>
 @endsection
 
 @section('AddOn')
 <!-- <div class="containerPopup bg-success d-flex flex-column justify-content-between width-full-xs position-fixed z-3" style="width: 350px; height: 80vh; right:0;"> -->
-<div class="d-none containerPopup bg-success d-flex flex-column justify-content-between width-full-xs position-fixed z-3" style="width: 350px; height: 84.8vh; right:0; top: 90px; /* Atur 'top' sesuai tinggi navbar Anda jika popup tertutup */">
+<div class="d-none containerPopup bg-success d-flex flex-column justify-content-between width-full-xs position-fixed z-3" style="width: 350px; height: 90vh; max-height: 90vh; min-height: 90vh; right:0; /* Atur 'top' sesuai tinggi navbar Anda jika popup tertutup */">
     {{-- Header Popup --}}
     <div class="container d-flex justify-content-between align-items-center" style="height: 30px; font-size: 12px; background-color: #2B1010 !important; color: white;">
         <div class="d-flex flex-row gap-2 justify-content-start align-items-center">

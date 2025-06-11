@@ -52,7 +52,7 @@
                         <li><a class="dropdown-item btn-prm hover-red-dark" href="/account/create">Register</a></li>
                         @endif
                         @if (Auth::check())
-                        @if(session('account')->status=='pkl')
+                        @if(session('account')->status=='PKL')
                         <li><a class="dropdown-item cl-white hover-red-dark" href="/Dashboard-Penjualan/{{{session('account')->id}}}VToday" style="background-color: #a73636;">Data Penjualan</a></li>
                         <li><a class="dropdown-item cl-white hover-red-dark" href="/dataPKL/{{session('account')['id']}}" style="background-color: #a73636;">Data PKL</a></li>
                         <li><a class="dropdown-item cl-white hover-red-dark" href="/pesanan/show/?id={{session('account')['id']}}&wht={{{'Pesanan Baru'}}}" style="background-color: #a73636;">List Pesanan</a></li>
