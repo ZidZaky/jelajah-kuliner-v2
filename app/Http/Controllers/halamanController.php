@@ -31,7 +31,7 @@ class halamanController extends Controller
         if($produk->updateStokAktif($val['idproduk'],$idStok)){
             $pkl = PKL::findOrFail($val['idPKL']);
             // dd($pkl);
-            return redirect('/dataPKL/'.$pkl->idAccount);
+            return redirect('/dataPKL/'.$pkl->idAccount)->with('alert',['Berhasil','Tambah Stok Awal Berhasil']);
         }
 
     }
@@ -66,7 +66,7 @@ class halamanController extends Controller
         if($stok->UpdateStokAkhir($val['stokAkhir'],$idStok)){
             $pkl = PKL::findOrFail($val['idPKL']);
             // dd($pkl);
-            return redirect('/dataPKL/'.$pkl->idAccount);
+            return redirect('/dataPKL/'.$pkl->idAccount)->with('alert',['Berhasil','Ubah Stok Akhir Berhasil']);
         }
 
     }

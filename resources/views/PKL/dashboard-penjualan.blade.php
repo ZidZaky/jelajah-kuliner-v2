@@ -1,7 +1,6 @@
 @extends('layouts.layout')
 
 @section('css')
-<!-- <link rel="stylesheet" href="{{ auto_asset('css/?.css') }}"> -->
 <style>
 
 
@@ -15,9 +14,9 @@
 @endsection
 
 @section('isi')
-<div class="w-100" style="padding: 1%; padding-top: 10px;">
+<div class="w-100 h-100" style="padding: 1%; padding-top: 10px;">
     <div class="back">
-        <p>Selamat Pagi, {{session('pkl')->namaPKL}}</p>
+        <p>Selamat Pagi, {{session('PKL')->namaPKL}}</p>
         <p id="ket">Dashboard ini di siapkan agar kamu lebih mudah melihat rangkuman penjualanmu</p>
     </div>
     <div class="content">
@@ -70,7 +69,7 @@
             </div>
             <hr>
             <div class="product">
-                <p>Analytics Product</p>
+                <p class="cl-white">Analytics Product</p>
                 <div>
                     @if($produs!=null)
                     <div class="Bagan">
@@ -91,6 +90,7 @@
 @endsection
 
 @section('js')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     filter('Today')
 
@@ -428,9 +428,6 @@
         font-size: xx-large;
     }
 
-    .subisi:hover {
-        font-size: 40px;
-    }
 
     .product {
         width: 38%;
