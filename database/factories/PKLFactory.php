@@ -10,8 +10,8 @@ class PKLFactory extends Factory
     public function definition(): array
     {
         $picture = [
-            'Esse tempor ipsa vo.png',
-            'Qui autem doloribus.png',
+            '943eef047095917b7e4ee41f2d4aba19.jpg',
+            'c14aa7263951b3f5ec8007380bcd81c0.jpg',
         ];
         return [
             'idAccount' => Account::factory(),
