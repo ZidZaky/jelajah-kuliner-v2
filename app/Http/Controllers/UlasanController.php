@@ -54,7 +54,7 @@ class UlasanController extends Controller
 
 
         if ($berhasil) {
-            return redirect('/dashboard');
+            return redirect('/dashboard')->with('alert',['Terimakasih', 'Ulasan anda berhasil disimpan']);
         } else {
             return redirect('/Ulasan/create')->with('error', 'Password berbeda');
         }

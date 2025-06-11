@@ -9,8 +9,6 @@
         height: calc(100vh - 90px - 20px + 3px);
         filter: grayscale(100%);
     }
-
-    
 </style>
 
 @endsection
@@ -26,6 +24,9 @@
         <h5 class="mt-1 mb-3" style="text-align: center; width: 100%;"><strong>
                 Buat Akun, dan Mulailah Menjelajah!
             </strong></h5>
+            @if ($errors->any())
+        <p class="text-danger">{{ implode(', ', $errors->all()) }}</p>
+        @endif
 
         <p class="mb-1"><strong>
                 Anda Akan Membuat Akun Sebagai?
@@ -159,6 +160,9 @@
 <script src="{{ auto_asset('js/loginregis.js') }}"></script>
 
 <script>
+    @if((session('alert') != null))
+    erorAlert('Registrasi Gagal', "{{session('alert')}}")
+    @endif
     document.getElementById("PKL").addEventListener("change", function() {
         if (this.checked) {
             window.location.href = "/accountCreate/PKL/Create";
