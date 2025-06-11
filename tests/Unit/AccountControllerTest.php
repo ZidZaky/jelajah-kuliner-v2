@@ -4,11 +4,41 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use App\Models\Account;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Foundation\Testing\RefreshDatabase; // Wajib ada untuk membersihkan database setiap kali tes dijalankan
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class AccountControllerTest extends TestCase
 {
+    use RefreshDatabase;
+
+    /**
+     * Test registrasi berhasil.
+     */
+    
+
+    /**
+     * Test registrasi gagal karena email sudah ada.
+     */
+    public function test_register_duplicate_email(): void
+    {
+        Account::factory()->create([
+            'email' => 'sudahada@example.com',
+        ]);
+
+        $response = $this->post('/account', [
+            'nama' => 'User Duplikat',
+            'email' => 'sudahada@example.com',
+            'nohp' => '089876543210',
+            'password' => 'password123',
+            'passwordkonf' => 'password123',
+            'status' => 'Pelanggan',
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertSessionHasErrors('email');
+    }
     // use RefreshDatabase; // Ini akan me-reset database Anda secara otomatis setelah setiap tes
 
     /**
@@ -61,28 +91,28 @@ class AccountControllerTest extends TestCase
     // /**
     //  * Tes untuk registrasi pengguna baru yang berhasil.
     //  */
-    // public function test_register_success(): void
-    // {
-    //     // 1. Persiapan: Siapkan data untuk pengguna baru
-    //     $userData = [
-    //         'nama' => 'User Baru',
-    //         'email' => 'userbaru@example.com',
-    //         'nohp' => '081234567890',
-    //         'password' => 'password123',
-    //         'passwordkonf' => 'password123',
-    //         'status' => 'Pelanggan',
-    //     ];
+    public function test_register_success(): void
+    {
+        // 1. Persiapan: Siapkan data untuk pengguna baru
+        $userData = [
+            'nama' => 'User Baru',
+            'email' => 'userbaru@example.com',
+            'nohp' => '081234567890',
+            'password' => 'password123',
+            'passwordkonf' => 'password123',
+            'status' => 'Pelanggan',
+        ];
 
-    //     // 2. Aksi: Kirim request POST ke route resource 'account' (yaitu '/account')
-    //     $response = $this->post('/account', $userData);
+        // 2. Aksi: Kirim request POST ke route resource 'account' (yaitu '/account')
+        $response = $this->post('/account', $userData);
 
-    //     // 3. Pengecekan:
-    //     $response->assertRedirect('/login'); // Controller mengarahkan ke /login setelah sukses
-    //     $this->assertDatabaseHas('accounts', [
-    //         'email' => 'userbaru@example.com',
-    //         'nama' => 'User Baru',
-    //     ]);
-    // }
+        // 3. Pengecekan:
+        $response->assertRedirect('/login'); // Controller mengarahkan ke /login setelah sukses
+        $this->assertDatabaseHas('accounts', [
+            'email' => 'userbaru@example.com',
+            'nama' => 'User Baru',
+        ]);
+    }
 
     // /**
     //  * Tes untuk registrasi dengan email yang sudah ada.
