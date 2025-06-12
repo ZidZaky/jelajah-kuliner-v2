@@ -10,12 +10,72 @@ use App\Models\ProdukDipesan;
 use App\Models\PKL;
 use App\Models\Produk;
 use App\Http\Controllers\HistoryStokController;
+use App\Http\Requests\PesananRequest;
+use App\Http\Requests\PesananUpdateRequest;
+use App\Http\Resources\PesananResource;
+use App\Http\Resources\PesananCollection;
+use App\Http\Controllers\PesananController;
+use Illuminate\Foundation\Testing\WithFaker;
+use App\Models\Account;
+use Illuminate\Support\Facades\Session;
 
 
 
 
 class PesananControllerTest extends TestCase
 {
+    public function test_batalPesanan_successful_if_status_is_new_order(): void
+    {
+        // 1. Persiapan:
+        $account = Account::factory()->create([
+            'status' => 'Pelanggan',
+            'email' => 'pelanggan@test.com',
+            'nohp' => '081234567890',
+            'foto' => 'dummy/foto.jpg',
+        ]);
+        Session::put('account', $account);
+
+        $pkl = PKL::factory()->create([
+            'namaPKL' => 'Test PKL',
+            'desc' => 'Test Deskripsi',
+            'latitude' => -7.2,
+            'longitude' => 112.7,
+            'picture' => 'dummy/picture.jpg',
+            'idAccount' => Account::factory()->create(['status' => 'PKL'])->id,
+        ]);
+
+        $pesanan = Pesanan::factory()->create([
+            'idAccount' => $account->id,
+            'idPKL' => $pkl->id,
+            'status' => 'Pesanan Baru', // PENTING: Status awal harus 'Pesanan Baru'
+            'TotalBayar' => 50000,
+            'Keterangan' => 'Test Keterangan',
+        ]);
+
+        // 2. Aksi: Kirim request GET ke route 'batalPesanan' dengan query parameter id dan wht
+        $response = $this->get('/batalPesanan?id=' . $pesanan->id . '&wht=Pesanan');
+
+        // Debug: Cek status pesanan setelah request
+        $pesananAfterRequest = Pesanan::find($pesanan->id);
+        echo "\nStatus pesanan setelah request: " . $pesananAfterRequest->status;
+
+        // 3. Assertions: Verifikasi hasil
+        // Memastikan status 302 (redirect)
+        $response->assertStatus(302);
+
+        // Memastikan redirect ke URL yang benar
+        $response->assertRedirect('/pesanan/show/?id=' . $account->id . '&wht=Pesanan Baru');
+
+        // Memastikan session flash message sukses ada
+        $response->assertSessionHas('alert', ['Berhasil', 'Pesanan Berhasil Dibatalkan']);
+
+        // Memastikan status pesanan di database telah berubah menjadi 'Pesanan Dibatalkan'
+        $this->assertDatabaseHas('pesanans', [
+            'id' => $pesanan->id,
+            'status' => 'Pesanan Dibatalkan',
+        ]);
+    }
+
     // use RefreshDatabase;
 
     // public function testCreateView()

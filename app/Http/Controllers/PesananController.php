@@ -447,6 +447,5 @@ class PesananController extends Controller
         $pesanans = Pesanan::where('idPKL', 1)
             ->where('status', 'Pesanan Selesai')
             ->get();
-        dd($pesanans);
     }
 }
