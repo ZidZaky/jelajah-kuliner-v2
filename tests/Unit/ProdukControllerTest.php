@@ -52,31 +52,49 @@ class ProdukControllerTest extends TestCase
         $this->app->instance(HistoryStokController::class, $mock);
     }
 
-    public function test_store_produk_berhasil()
+    public function test_hanya_pkl_yang_bisa_menambah_produk()
     {
+        // 1. ARRANGE: Siapkan lingkungan
+        Storage::fake('public'); // Gunakan storage palsu untuk testing file upload
 
-        // dd($this->pkl->id,);
-        $response = $this->post('/produk', [
-            'namaProduk' => 'Nasi Goreng',
+        // Ambil data Akun dan PKL pertama yang ada dari seeder.
+        $pklAccount = Account::where('status', 'PKL')->first();
+        $this->assertNotNull($pklAccount, "Tidak ada Akun dengan status PKL ditemukan. Pastikan seeder sudah berjalan.");
+
+        $pklData = Pkl::where('idAccount', $pklAccount->id)->first();
+        $this->assertNotNull($pklData, "Tidak ada data PKL yang terhubung dengan Akun PKL yang ditemukan.");
+
+        // Siapkan data produk yang akan dikirim.
+        $productData = [
+            'namaProduk' => 'Nasi Goreng Spesial',
             'jenisProduk' => 'Makanan',
-            'desc' => 'Lezat dan bergizi',
+            'desc' => 'Lezat dan bergizi tinggi',
             'harga' => 15000,
             'stok' => 10,
-            'fotoProduk' => UploadedFile::fake()->image('produk.jpg'),
+            'fotoProduk' => UploadedFile::fake()->image('nasgor.jpg'),
+            'idPKL' => $pklData->id,
+        ];
 
-            'idPKL' => $this->pkl->id,
+        // 2. ACT: Kirim request POST sebagai PKL yang sudah login.
+        // Catatan: Pastikan tidak ada `dd()` di dalam controller Anda agar tes bisa berjalan.
+        $response = $this->actingAs($pklAccount)
+            ->withSession(['account' => $pklAccount])
+            ->post('/produk', $productData);
 
-        ]);
+        // 3. ASSERT: Pastikan produk berhasil dibuat.
+        // Controller seharusnya redirect setelah berhasil.
+        $response->assertStatus(302);
+        $response->assertRedirect('/dataPKL/' . $pklAccount->id);
 
-        $response->assertStatus(302); //ini
-
+        // Pastikan data produk baru ada di dalam database.
         $this->assertDatabaseHas('produks', [
-            'namaProduk' => 'Nasi Goreng',
-            'jenisProduk' => 'Makanan',
-            'desc' => 'Lezat dan bergizi',
+            'namaProduk' => 'Nasi Goreng Spesial',
             'harga' => 15000,
-            'idPKL' => $this->pkl->id,
+            'idPKL' => $pklData->id,
         ]);
+
+        // Pastikan file foto produk berhasil diunggah ke storage.
+        Storage::disk('public')->assertExists('product/Nasi Goreng Spesial.jpg');
     }
 
     public function tearDown(): void

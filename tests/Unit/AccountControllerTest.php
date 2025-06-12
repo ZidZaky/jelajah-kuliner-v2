@@ -12,7 +12,7 @@ use Faker\Factory as FakerFactory;
 
 class AccountControllerTest extends TestCase
 {
-    // use RefreshDatabase;
+    use RefreshDatabase;
 
     /**
      * Test registrasi berhasil.
@@ -95,13 +95,10 @@ class AccountControllerTest extends TestCase
     public function test_register_success(): void
     {
         // 1. Persiapan: Siapkan data untuk pengguna baru
-        $faker = FakerFactory::create('id_ID'); // Menggunakan lokal Indonesia untuk format no. HP
-        $email = $faker->unique()->safeEmail;
-        $noHp = $faker->unique()->phoneNumber;
         $userData = [
-            'nama' => 'User Baru Faker',
-            'email' => $email,
-            'nohp' => $noHp,
+            'nama' => 'User Baru',
+            'email' => 'userbaru@example.com',
+            'nohp' => '081234567890',
             'password' => 'password123',
             'passwordkonf' => 'password123',
             'status' => 'Pelanggan',
@@ -111,12 +108,10 @@ class AccountControllerTest extends TestCase
         $response = $this->post('/account', $userData);
 
         // 3. Pengecekan:
-        // $response->assertRedirect('/login'); // Controller mengarahkan ke /login setelah sukses
-
-        // Pastikan data pengguna baru tersimpan di database dengan email yang benar
+        $response->assertRedirect('/login'); // Controller mengarahkan ke /login setelah sukses
         $this->assertDatabaseHas('accounts', [
-            'email' => $email,
-            'nama' => 'User Baru Faker',
+            'email' => 'userbaru@example.com',
+            'nama' => 'User Baru',
         ]);
     }
 
