@@ -26,15 +26,15 @@ class ProdukControllerTest extends TestCase
             'desc' => '',
             'harga' => '',
             'stok' => '',
-            'fotoProduk' => UploadedFile::fake()->image('produk.jpg'),
+            'fotoProduk' => UploadedFile::fake()->image('produk.jpg'), // Foto harus ada, tapi bisa fake
             'idPKL' => '', // Kosong = invalid
         ]);
 
         // Validasi gagal = redirect kembali (HTTP 302)
         $response->assertStatus(302);
+        $response->assertRedirect(); // Redirect ke halaman sebelumnya (form)
 
-        // Pastikan ada redirect (default Laravel behavior jika validasi gagal)
-        $response->assertRedirect();
+        $response->assertSessionHas('errors');//cek errorr iki
     }
 
     public function setUp(): void
