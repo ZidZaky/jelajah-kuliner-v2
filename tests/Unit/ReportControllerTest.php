@@ -12,7 +12,7 @@ use App\Models\Report;
 class ReportControllerTest extends TestCase
 {
 
-    public function testStoreReport()
+    public function test_buat_report_success()
     {
         // $this->withoutExceptionHandling(); // Tambahan untuk debugging kalau gagal
 
@@ -41,7 +41,7 @@ class ReportControllerTest extends TestCase
         ]);
     }
 
-    public function test_store_report_fails_when_reason_is_empty()
+    public function test_buat_report_gagal()
     {
         $pesanan = \App\Models\Pesanan::inRandomOrder()->first();
         // dd($pesanan);

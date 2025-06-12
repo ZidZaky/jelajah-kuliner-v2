@@ -191,24 +191,21 @@ class AccountControllerTest extends TestCase
 
     public function test_login_success(): void
     {
-        // 1. Persiapan: Buat user palsu di database
         $password = 'password123';
         $user = Account::factory()->create([
             'email' => 'test@example.com',
             'password' => Hash::make($password),
-            'status' => 'Pelanggan', // Pastikan status bukan 'alert'
+            'status' => 'Pelanggan',
         ]);
 
-        // 2. Aksi: Kirim request POST ke route login dengan data yang benar
         $response = $this->post('/loginAccount', [
             'email' => 'test@example.com',
             'password' => $password,
         ]);
 
-        // 3. Pengecekan (Assertion):
-        $response->assertStatus(302); // Memastikan terjadi redirect
-        $response->assertRedirect('/dashboard'); // Memastikan redirect ke halaman dashboard
-        $this->assertAuthenticated(); // Memastikan pengguna berhasil terautentikasi
+        $response->assertStatus(302);
+        $response->assertRedirect('/dashboard');
+        $this->assertAuthenticated();
     }
 
     // /**
@@ -216,21 +213,18 @@ class AccountControllerTest extends TestCase
     //  */
     public function test_login_failed_wrong_password(): void
     {
-        // 1. Persiapan: Buat user
         $user = Account::factory()->create([
             'email' => 'test@example.com',
         ]);
 
-        //     // 2. Aksi: Kirim request POST dengan password yang salah
         $response = $this->post('/loginAccount', [
             'email' => 'test@example.com',
             'password' => 'password-salah',
         ]);
 
-        //     // 3. Pengecekan:
-        $response->assertStatus(302); // Redirect kembali ke halaman sebelumnya
-        $response->assertSessionHas('erorAlert'); // Memastikan ada pesan error di session
-        $this->assertGuest(); // Memastikan pengguna tidak terautentikasi
+        $response->assertStatus(302);
+        $response->assertSessionHas('erorAlert');
+        $this->assertGuest();
     }
 
 

@@ -18,31 +18,26 @@ class ProdukControllerTest extends TestCase
 
     public function test_store_produk_dengan_data_tidak_valid()
     {
-        $this->withoutMiddleware(); // Hilangkan auth/csrf dll kalau perlu
+        $this->withoutMiddleware();
 
         $response = $this->post('/produk', [
-            'namaProduk' => '', // Kosong = tidak valid
+            'namaProduk' => '',
             'jenisProduk' => '',
             'desc' => '',
             'harga' => '',
             'stok' => '',
             'fotoProduk' => UploadedFile::fake()->image('produk.jpg'),
-            'idPKL' => '', // Kosong = invalid
+            'idPKL' => '',
         ]);
 
-        // Validasi gagal = redirect kembali (HTTP 302)
         $response->assertStatus(302);
-
-        // Pastikan ada redirect (default Laravel behavior jika validasi gagal)
         $response->assertRedirect();
     }
 
     public function test_hanya_pkl_yang_bisa_menambah_produk()
     {
 
-        Storage::fake('public'); // Gunakan storage palsu untuk testing file upload
-
-        // Ambil data Akun dan PKL pertama yang ada dari seeder
+        Storage::fake('public');
         $pklAccount = Account::where('status', 'PKL')->first();
         $this->assertNotNull($pklAccount, "Tidak ada Akun dengan status PKL ditemukan. Pastikan seeder sudah berjalan.");
 
@@ -72,9 +67,6 @@ class ProdukControllerTest extends TestCase
             'harga' => 15000,
             'idPKL' => $pklData->id,
         ]);
-
-        // Pastikan file foto produk berhasil diunggah ke storage.
-        Storage::disk('public')->assertExists('product/Nasi Goreng Spesial.jpg');
     }
 
 

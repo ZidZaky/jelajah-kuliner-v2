@@ -18,7 +18,6 @@ class PKLControllerTest extends TestCase
         $pkl = Pkl::where('idAccount', $account->id)->first();
         $this->assertNotNull($pkl, "Tidak ada data PKL yang terhubung dengan Akun PKL. Pastikan seeder sudah berjalan.");
 
-        // Simulasikan permintaan POST untuk memperbarui lokasi
         $response = $this->actingAs($account)
             ->withSession(['account' => $account])->post('/update-location', [
                 'idAccount' => $pkl->idAccount,  // Gunakan ID yang acak
@@ -26,10 +25,8 @@ class PKLControllerTest extends TestCase
                 'longitude' => 106.8,
             ]);
 
-        // Periksa apakah berhasil mengarahkan ke dashboard
         $response->assertRedirect('dashboard');
 
-        // Verifikasi perubahan data dalam database
         $this->assertDatabaseHas('p_k_l_s', [
             'idAccount' => $pkl->idAccount,  // Gunakan ID yang acak
             'latitude' => -6.2,
@@ -39,36 +36,32 @@ class PKLControllerTest extends TestCase
 
     public function test_update_location_fails_with_invalid_coordinates_on_existing_pkl()
     {
-        // 1. ARRANGE: Ambil PKL pertama yang ada dan Akun yang terhubung.
         $account = Account::where('status', 'PKL')->first();
         $this->assertNotNull($account, "Tidak ada Akun dengan status PKL ditemukan. Pastikan seeder sudah berjalan.");
 
         $pkl = Pkl::where('idAccount', $account->id)->first();
         $this->assertNotNull($pkl, "Tidak ada data PKL yang terhubung dengan Akun PKL. Pastikan seeder sudah berjalan.");
 
-        // Simpan data asli untuk dibandingkan nanti.
         $originalLatitude = $pkl->latitude;
 
-        // Siapkan data pembaruan yang tidak valid (koordinat kosong).
         $invalidData = [
             'latitude' => '',
             'longitude' => '',
         ];
 
-        // 2. ACT: Kirim request POST sebagai PKL yang login dengan data tidak valid.
         $response = $this->actingAs($account)
             ->withSession(['account' => $account])
             ->post('/update-location', $invalidData);
 
-        // 3. ASSERT: Pastikan update gagal dan data tidak berubah.
-        $response->assertStatus(302); // Redirect kembali karena validasi gagal
+        $response->assertStatus(302); 
         $response->assertSessionHasErrors(['latitude', 'longitude']);
 
-        // SANGAT PENTING: Periksa ulang database untuk memastikan data tidak berubah.
-        // Kita ambil data terbaru langsung dari DB untuk perbandingan paling akurat.
         $pklAfterRequest = Pkl::find($pkl->id);
         $this->assertEquals($originalLatitude, $pklAfterRequest->latitude, "Latitude seharusnya tidak berubah setelah update gagal.");
     }
+
+
+
     //berhasil
     // public function testCreateView()
     // {
