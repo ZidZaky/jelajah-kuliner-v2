@@ -54,7 +54,7 @@ class AccountControllerTest extends TestCase
         ]);
     }
 
-    public function test_berhasil_update_dataPKL()
+    public function test_berhasil_update_data_account()
     {
 
         $user = Account::factory()->create([
@@ -78,7 +78,7 @@ class AccountControllerTest extends TestCase
     }
 
 
-    public function test_gagal_update_dataPKL_nohp_invalidf()
+    public function test_gagal_update_account_nohp_invalid()
     {
 
         $user = Account::factory()->create([
