@@ -29,7 +29,7 @@ class PesananControllerTest extends TestCase
     // use RefreshDatabase;
 
 
-    public function test_buat_Pesanann()
+    public function test_buat_Pesanan()
     {
         $account = \App\Models\Account::factory()->create();
         $pkl = \App\Models\Pkl::factory()->create();

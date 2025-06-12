@@ -94,8 +94,8 @@ class AccountControllerTest extends TestCase
                 'nohp' => 'invalid_nohp',
             ]);
 
-        $response->assertRedirect('/profile');
 
+        $response->assertRedirect('/profile');
         $response->assertSessionHas('erorAlert');
 
         $this->assertDatabaseHas('accounts', [

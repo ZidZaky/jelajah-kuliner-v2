@@ -11,35 +11,34 @@ use App\Http\Controllers\HistoryStokController;
 
 class HistoryStokControllerTest extends TestCase
 {
-    public function prepared()
-    {
+    public function prepared(){
         $akun = Account::factory()->count(1)->create([
-            'status' => 'PKL',
+            'status'=>'PKL',
         ]);
         $pkl = PKL::factory()->create([
-            'idAccount' => $akun[0]->id,
+            'idAccount'=>$akun[0]->id,
         ]);
         // dd($akun);
         // dd(;
-        $res = $this->post('/loginAccount', [
+        $res=$this->post('/loginAccount',[
             'email' => $akun[0]->email,
             'password' => 'pwCuy',
         ]);
         // dd($akun);
 
         //buat akun pkl
-
+        
         // dd(session('PKL'));
 
         //buat 1 product
         $product = Produk::factory()->create([
-            'idPKL' => session('PKL')->id,
+            'idPKL'=>session('PKL')->id,
             'created_at' => \Carbon\Carbon::now(),
         ]);
 
+        
 
-
-        return [$akun[0], $pkl, $product];
+        return [$akun[0],$pkl,$product];
     }
     // $this->prepared();
     public function test_Buat_Stok_Awal_Success()
@@ -48,8 +47,8 @@ class HistoryStokControllerTest extends TestCase
         $produk = $prep[2];
         $stokAwal = 40;
         $response = $this->post('/MakeStokAwal', [
-            'stokAwal' => $stokAwal,
-            'idproduk' => $produk->id,
+            'stokAwal'=>$stokAwal,
+            'idproduk'=>$produk->id,
         ]);
         // dd($response);
 
@@ -65,8 +64,8 @@ class HistoryStokControllerTest extends TestCase
         $produk = $prep[2];
         $stokAwal = 'kj';
         $response = $this->post('/MakeStokAwal', [
-            'stokAwal' => $stokAwal,
-            'idproduk' => $produk->id,
+            'stokAwal'=>$stokAwal,
+            'idproduk'=>$produk->id,
         ]);
         // dd($response);
 
@@ -81,16 +80,16 @@ class HistoryStokControllerTest extends TestCase
         $prep = $this->prepared();
         // dd($prep);
         $produk = $prep[2];
-        $stokAkhir = 40;
+        $stokAkhir = '20';
         $stokAwal = 20;
         $preparedStokAwal = $this->post('/MakeStokAwal', [
-            'stokAwal' => $stokAwal,
-            'idproduk' => $produk->id,
+            'stokAwal'=>$stokAwal,
+            'idproduk'=>$produk->id,
         ]);
 
         $response = $this->post('/updateStokAkhir', [
-            'stokAkhir' => $stokAkhir,
-            'idproduk' => $produk->id,
+            'stokAkhir'=>$stokAkhir,
+            'idproduk'=>$produk->id,
         ]);
         // dd($response);
 
@@ -105,16 +104,16 @@ class HistoryStokControllerTest extends TestCase
         $prep = $this->prepared();
         // dd($prep);
         $produk = $prep[2];
-        $stokAkhir = 'ju';
+        $stokAkhir = 'lo';
         $stokAwal = 20;
         $preparedStokAwal = $this->post('/MakeStokAwal', [
-            'stokAwal' => $stokAwal,
-            'idproduk' => $produk->id,
+            'stokAwal'=>$stokAwal,
+            'idproduk'=>$produk->id,
         ]);
 
         $response = $this->post('/updateStokAkhir', [
-            'stokAkhir' => $stokAkhir,
-            'idproduk' => $produk->id,
+            'stokAkhir'=>$stokAkhir,
+            'idproduk'=>$produk->id,
         ]);
         // dd($response);
 
@@ -158,5 +157,5 @@ class HistoryStokControllerTest extends TestCase
     //     $tu::assertTrue($cek);
     // }
 
-
+    
 }
