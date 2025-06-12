@@ -39,6 +39,7 @@ class HistoryStokController extends Controller
         $stok = historyStok::findOrFail($idStok);
         $stok->stokAkhir = $jumlah;
         $stok->statusIsi = 1;
+        // dd($stok);
         return ($stok->save());
     }
     public function go()
