@@ -37,34 +37,19 @@ class ProdukControllerTest extends TestCase
         $response->assertRedirect();
     }
 
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        // Buat dummy PKL
-        $this->pkl = PKL::factory()->create();
-
-        // Mock HistoryStokController
-        $mock = \Mockery::mock(HistoryStokController::class);
-        $mock->shouldReceive('store')
-            ->andReturn(999); // ID stok palsu
-
-        $this->app->instance(HistoryStokController::class, $mock);
-    }
-
     public function test_hanya_pkl_yang_bisa_menambah_produk()
     {
-        // 1. ARRANGE: Siapkan lingkungan
+
         Storage::fake('public'); // Gunakan storage palsu untuk testing file upload
 
-        // Ambil data Akun dan PKL pertama yang ada dari seeder.
+        // Ambil data Akun dan PKL pertama yang ada dari seeder
         $pklAccount = Account::where('status', 'PKL')->first();
         $this->assertNotNull($pklAccount, "Tidak ada Akun dengan status PKL ditemukan. Pastikan seeder sudah berjalan.");
 
         $pklData = Pkl::where('idAccount', $pklAccount->id)->first();
         $this->assertNotNull($pklData, "Tidak ada data PKL yang terhubung dengan Akun PKL yang ditemukan.");
 
-        // Siapkan data produk yang akan dikirim.
+
         $productData = [
             'namaProduk' => 'Nasi Goreng Spesial',
             'jenisProduk' => 'Makanan',
@@ -75,18 +60,13 @@ class ProdukControllerTest extends TestCase
             'idPKL' => $pklData->id,
         ];
 
-        // 2. ACT: Kirim request POST sebagai PKL yang sudah login.
-        // Catatan: Pastikan tidak ada `dd()` di dalam controller Anda agar tes bisa berjalan.
         $response = $this->actingAs($pklAccount)
             ->withSession(['account' => $pklAccount])
             ->post('/produk', $productData);
 
-        // 3. ASSERT: Pastikan produk berhasil dibuat.
-        // Controller seharusnya redirect setelah berhasil.
         $response->assertStatus(302);
         $response->assertRedirect('/dataPKL/' . $pklAccount->id);
 
-        // Pastikan data produk baru ada di dalam database.
         $this->assertDatabaseHas('produks', [
             'namaProduk' => 'Nasi Goreng Spesial',
             'harga' => 15000,
@@ -97,11 +77,6 @@ class ProdukControllerTest extends TestCase
         Storage::disk('public')->assertExists('product/Nasi Goreng Spesial.jpg');
     }
 
-    public function tearDown(): void
-    {
-        \Mockery::close();
-        parent::tearDown();
-    }
 
 
 
