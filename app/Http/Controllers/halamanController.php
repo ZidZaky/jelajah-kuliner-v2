@@ -32,7 +32,7 @@ class halamanController extends Controller
             // dd($id);
             $produk = new ProdukController();
             if ($produk->updateStokAktif($val['idproduk'], $idStok)) {
-                // dd($pkl);
+                // dd($produk);
                 return redirect('/dataPKL/' . $pkl->idAccoun)->with('alert', ['Berhasil', 'Tambah Stok Awal Berhasil']);
             }
         } else {

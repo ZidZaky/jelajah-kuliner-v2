@@ -9,6 +9,53 @@ use App\Models\User;
 
 class UlasanControllerTest extends TestCase
 {
+    /** @test */
+    public function it_can_store_ulasan()
+    {
+        // Buat akun dan pkl secara dinamis menggunakan factory
+        $account = \App\Models\Account::factory()->create();
+        $pkl = \App\Models\PKL::factory()->create();
+
+        $data = [
+            'ulasan' => 'Pelayanan bagus',
+            'rating' => rand(1, 5), // rating acak 1-5
+            'idAccount' => $account->id,
+            'idPKL' => $pkl->id,
+        ];
+
+        $response = $this->post('/ulasan', $data);
+
+        $response->assertRedirect('/dashboard');
+        $this->assertDatabaseHas('ulasans', [
+            'ulasan' => 'Pelayanan bagus',
+            'rating' => $data['rating'],
+            'idAccount' => $data['idAccount'],
+            'idPKL' => $data['idPKL'],
+        ]);
+    }
+
+    /** @test */
+    public function test_fails_to_store_ulasan_with_missing_fields()
+    {
+        // Buat akun dan pkl secara dinamis menggunakan factory
+        $account = \App\Models\Account::factory()->create();
+        $pkl = \App\Models\PKL::factory()->create();
+
+        $data = [
+            'ulasan' => '',
+            'rating' => rand(1, 5), // rating acak 1-5
+            'idAccount' => $account->id,
+            'idPKL' => $pkl->id,
+        ];
+
+        $response = $this->post('/ulasan', $data);
+
+        // $response->assertRedirect('/dashboard');
+        $response->assertSessionHasErrors('ulasan');
+    }
+
+
+
     // // use RefreshDatabase;
 
     // // /** @test */

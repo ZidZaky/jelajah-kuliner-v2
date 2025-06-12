@@ -4,31 +4,71 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use App\Models\Account;
+use App\Models\PKL;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Foundation\Testing\RefreshDatabase; // Wajib ada untuk membersihkan database setiap kali tes dijalankan
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Faker\Factory as FakerFactory;
 
 class AccountControllerTest extends TestCase
 {
-      use RefreshDatabase;
+    use RefreshDatabase;
 
-    /** @test */
-    public function berhasil_update_database_tetap()
+    public function test_register_failed_duplicate_email(): void
     {
-        // Arrange: Buat user dummy
+        Account::factory()->create([
+            'email' => 'sudahada@example.com',
+        ]);
+
+        $response = $this->post('/account', [
+            'nama' => 'User Duplikat',
+            'email' => 'sudahada@example.com',
+            'nohp' => '089876543210',
+            'password' => 'password123',
+            'passwordkonf' => 'password123',
+            'status' => 'Pelanggan',
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertSessionHasErrors('email');
+    }
+
+    public function test_register_success(): void
+    {
+        $userData = [
+            'nama' => 'User Baru',
+            'email' => 'userbaru@example.com',
+            'nohp' => '081234567890',
+            'password' => 'password123',
+            'passwordkonf' => 'password123',
+            'status' => 'Pelanggan',
+        ];
+
+        $response = $this->post('/account', $userData);
+
+        $response->assertRedirect('/login');
+        $this->assertDatabaseHas('accounts', [
+            'email' => 'userbaru@example.com',
+            'nama' => 'User Baru',
+        ]);
+    }
+
+    public function test_berhasil_update_data_account()
+    {
+
         $user = Account::factory()->create([
             'nama' => 'Nama Lama',
             'email' => 'joko@tes.com',
             'nohp' => '08123456789',
         ]);
 
-        // Act: Kirim update request ke route yang sesuai
         $response = $this->put("/account/{$user->id}", [
             'nama' => 'Nama Sudah Diupdate',
             'email' => $user->email,
             'nohp' => $user->nohp,
         ]);
 
-        // Assert: Pastikan redirect dan nama diubah di DB
         $response->assertRedirect('profile');
 
         $this->assertDatabaseHas('accounts', [
@@ -37,37 +77,161 @@ class AccountControllerTest extends TestCase
         ]);
     }
 
-    /** @test */
-    public function gagal_update_nohp_dinotif()
+
+    public function test_gagal_update_account_nohp_invalid()
     {
-        // Arrange: Buat akun awal
+
         $user = Account::factory()->create([
             'nama' => 'Nama Awal',
             'email' => 'joko@awal.com',
             'nohp' => '08123456789',
         ]);
 
-        // Act: Kirim request update dengan nohp tidak valid
-        $response = $this->from('/profile') // penting agar bisa redirectBack
-                         ->put("/account/{$user->id}", [
-                             'nama' => 'Nama Baru',
-                             'email' => 'joko@awal.com',
-                             'nohp' => 'invalid_nohp',
-                         ]);
+        $response = $this->from('/profile')
+            ->put("/account/{$user->id}", [
+                'nama' => 'Nama Baru',
+                'email' => 'joko@awal.com',
+                'nohp' => 'invalid_nohp',
+            ]);
 
-        // Assert: Redirect kembali
+
         $response->assertRedirect('/profile');
-
-        // Assert: Session punya pesan error
         $response->assertSessionHas('erorAlert');
 
-        // Assert: Data di database tidak berubah
         $this->assertDatabaseHas('accounts', [
             'id' => $user->id,
             'nama' => 'Nama Awal',
             'nohp' => '08123456789',
         ]);
     }
+
+    public function test_dataPKL_successful(): void
+    {
+
+        $pklData = [
+
+            'nama' => 'Nama Pemilik PKL Baru',
+            'email' => 'pemilik.pkl@example.com',
+            'nohp' => '081234567891',
+            'password' => 'passwordPKL123',
+            'passwordkonf' => 'passwordPKL123',
+            'status' => 'PKL',
+            'foto' => 'path/to/default/user_profile.jpg',
+
+            'namaPKL' => 'Toko Nasi Goreng Mantap',
+            'desc' => 'Menyediakan nasi goreng spesial dengan banyak topping.',
+            'latitude' => -6.208763,
+            'longitude' => 106.845599,
+            'picture' => 'misal.jpg',
+        ];
+
+        $response = $this->post('/account', $pklData);
+
+        $response->assertStatus(302);
+        $this->assertDatabaseHas('accounts', [
+            'email' => 'pemilik.pkl@example.com',
+            'nama' => 'Nama Pemilik PKL Baru',
+            'nohp' => '081234567891',
+            'status' => 'PKL',
+            'foto' => 'misal.jpg',
+        ]);
+
+        $account = Account::where('email', 'pemilik.pkl@example.com')->first();
+        $this->assertNotNull($account, "Akun PKL harusnya ditemukan setelah registrasi.");
+
+        $this->assertDatabaseHas('p_k_l_s', [
+            'idAccount' => $account->id,
+            'namaPKL' => 'Toko Nasi Goreng Mantap',
+            'desc' => 'Menyediakan nasi goreng spesial dengan banyak topping.',
+            'latitude' => -6.208763,
+            'longitude' => 106.845599,
+        ]);
+    }
+
+    public function test_dataPKL_fails_email_already_exists(): void
+    {
+        Account::factory()->create([
+            'email' => 'existing.pkl.email@example.com',
+            'nohp' => '081234567899',
+            'status' => 'Pelanggan',
+            'foto' => 'path/to/existing/foto.jpg',
+        ]);
+
+        $invalidPklData = [
+            'nama' => 'User PKL Duplikat Email',
+            'email' => 'existing.pkl.email@example.com',
+            'nohp' => '081234567800',
+            'password' => 'password123',
+            'passwordkonf' => 'password123',
+            'status' => 'PKL',
+            'foto' => 'path/to/new/foto.jpg',
+            'namaPKL' => 'Toko Duplikat Email',
+            'desc' => 'Deskripsi toko duplikat email.',
+            'latitude' => -6.208700,
+            'longitude' => 106.845000,
+            'picture' => 'path/to/new/picture.jpg',
+        ];
+
+        $response = $this->post('/account', $invalidPklData);
+
+        $response->assertStatus(302);
+        $response->assertRedirect();
+
+        $response->assertSessionHasErrors('email');
+
+        $this->assertDatabaseMissing('accounts', [
+            'nama' => 'User PKL Duplikat Email',
+            'email' => 'existing.pkl.email@example.com',
+            'status' => 'PKL',
+        ]);
+        $this->assertEquals(1, Account::count());
+
+        $this->assertEquals(0, PKL::count());
+    }
+
+    public function test_login_success(): void
+    {
+        $password = 'password123';
+        $user = Account::factory()->create([
+            'email' => 'test@example.com',
+            'password' => Hash::make($password),
+            'status' => 'Pelanggan',
+        ]);
+
+        $response = $this->post('/loginAccount', [
+            'email' => 'test@example.com',
+            'password' => $password,
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertRedirect('/dashboard');
+        $this->assertAuthenticated();
+    }
+
+    // /**
+    //  * Tes untuk skenario login yang gagal karena password salah.
+    //  */
+    public function test_login_failed_wrong_password(): void
+    {
+        $user = Account::factory()->create([
+            'email' => 'test@example.com',
+        ]);
+
+        $response = $this->post('/loginAccount', [
+            'email' => 'test@example.com',
+            'password' => 'password-salah',
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertSessionHas('erorAlert');
+        $this->assertGuest();
+    }
+
+
+
+
+    // use RefreshDatabase;
+
     /**
      * Tes untuk skenario login yang berhasil.
      */
@@ -78,7 +242,7 @@ class AccountControllerTest extends TestCase
     //     $user = Account::factory()->create([
     //         'email' => 'test@example.com',
     //         'password' => Hash::make($password),
-    //         'status' => 'Pelanggan', // Pastikan status bukan 'alert'
+    //         'status' => 'Pelanggan',
     //     ]);
 
     //     // 2. Aksi: Kirim request POST ke route login dengan data yang benar
@@ -88,14 +252,12 @@ class AccountControllerTest extends TestCase
     //     ]);
 
     //     // 3. Pengecekan (Assertion):
-    //     $response->assertStatus(302); // Memastikan terjadi redirect
-    //     $response->assertRedirect('/dashboard'); // Memastikan redirect ke halaman dashboard
-    //     $this->assertAuthenticated(); // Memastikan pengguna berhasil terautentikasi
+    //     $response->assertStatus(302); 
+    //     $response->assertRedirect('/dashboard'); 
+    //     $this->assertAuthenticated(); 
     // }
 
-    // /**
-    //  * Tes untuk skenario login yang gagal karena password salah.
-    //  */
+
     // public function test_login_failed_wrong_password(): void
     // {
     //     // 1. Persiapan: Buat user
@@ -110,36 +272,12 @@ class AccountControllerTest extends TestCase
     //     ]);
 
     //     // 3. Pengecekan:
-    //     $response->assertStatus(302); // Redirect kembali ke halaman sebelumnya
-    //     $response->assertSessionHas('erorAlert'); // Memastikan ada pesan error di session
-    //     $this->assertGuest(); // Memastikan pengguna tidak terautentikasi
+    //     $response->assertStatus(302); 
+    //     $response->assertSessionHas('erorAlert'); 
+    //     $this->assertGuest(); 
     // }
 
-    // /**
-    //  * Tes untuk registrasi pengguna baru yang berhasil.
-    //  */
-    // public function test_register_success(): void
-    // {
-    //     // 1. Persiapan: Siapkan data untuk pengguna baru
-    //     $userData = [
-    //         'nama' => 'User Baru',
-    //         'email' => 'userbaru@example.com',
-    //         'nohp' => '081234567890',
-    //         'password' => 'password123',
-    //         'passwordkonf' => 'password123',
-    //         'status' => 'Pelanggan',
-    //     ];
 
-    //     // 2. Aksi: Kirim request POST ke route resource 'account' (yaitu '/account')
-    //     $response = $this->post('/account', $userData);
-
-    //     // 3. Pengecekan:
-    //     $response->assertRedirect('/login'); // Controller mengarahkan ke /login setelah sukses
-    //     $this->assertDatabaseHas('accounts', [
-    //         'email' => 'userbaru@example.com',
-    //         'nama' => 'User Baru',
-    //     ]);
-    // }
 
     // /**
     //  * Tes untuk registrasi dengan email yang sudah ada.
@@ -210,5 +348,4 @@ class AccountControllerTest extends TestCase
     //         'id' => $user->id, // Memastikan data user sudah tidak ada di database
     //     ]);
     // }
-
 }

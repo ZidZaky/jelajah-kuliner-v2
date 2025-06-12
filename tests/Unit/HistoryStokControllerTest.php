@@ -6,45 +6,12 @@ use Tests\TestCase;
 use PHPUnit\Framework\Assert as TestUnit;
 use App\Models\Account;
 use App\Models\PKL;
+use App\Models\historyStok;
 use App\Models\Produk;
 use App\Http\Controllers\HistoryStokController;
 
 class HistoryStokControllerTest extends TestCase
 {
-    /**
-     * A basic unit test example.
-     *
-     * @return void
-     */
-    // public function test_add_New_History( )
-    // {
-    //     $hsc = new HistoryStokController();
-    //     $tu = TestUnit::class; 
-    //     $prep = $this->prepared();
-    //     $store = $hsc->store($prep[2]->id,30,$prep[1]->id);
-    //     $tu::assertNotNull($store);
-    //     $tu::assertIsInt($store);
-    //     return $store;
-    // }
-
-    // public function test_Update_Stok_Online()
-    // {
-    //     $hsc = new HistoryStokController();
-    //     $tu = TestUnit::class;
-    //     $idStok = $this->test_add_New_History();
-    //     $cek = $hsc->UpdatestokOnline(50,$idStok);
-    //     $tu::assertTrue($cek);
-    // }
-
-    // public function test_Update_Stok_Akhir()
-    // {
-    //     $hsc = new HistoryStokController();
-    //     $tu = TestUnit::class;
-    //     $idStok = $this->test_add_New_History();
-    //     $cek = $hsc->UpdatestokAkhir(1,$idStok);
-    //     $tu::assertTrue($cek);
-    // }
-
     public function prepared(){
         $akun = Account::factory()->count(1)->create([
             'status'=>'PKL',
@@ -80,16 +47,33 @@ class HistoryStokControllerTest extends TestCase
         $prep = $this->prepared();
         $produk = $prep[2];
         $stokAwal = 40;
+        // $produk1 = $produk;
         $response = $this->post('/MakeStokAwal', [
             'stokAwal'=>$stokAwal,
             'idproduk'=>$produk->id,
         ]);
+        // dd($produk1, $produk);
+        // $idStokAktif = $produk->stokAktif;
+        // dd($produk)
+        $produkUpdate = Produk::find($produk->id);
+        // $idStokAktif = historyStok::where('idProduk', $produk->id)->where('statusIsi','1')->first();
+        // dd($idStokAktif, $produk->id);
+        // dd($produkUpdate);
+
         // dd($response);
 
         //cek apakah mmengembalikan redirect
         $response->assertStatus(302);
 
         $response->assertSessionHas('alert', ['Berhasil', 'Tambah Stok Awal Berhasil']);
+
+        $this->assertDatabaseHas('history_stoks', [
+            'id' => $produkUpdate->stokAktif,
+            'idProduk' => $produk->id,
+            'idPKL' => $prep[1]->id,
+            'stokAwal' => $stokAwal,
+            // 'TerjualOnline' => 0,
+        ]);
     }
 
     public function test_Buat_Stok_Awal_Failed()
@@ -101,12 +85,21 @@ class HistoryStokControllerTest extends TestCase
             'stokAwal'=>$stokAwal,
             'idproduk'=>$produk->id,
         ]);
+        $produkUpdate = Produk::find($produk->id);
+
         // dd($response);
 
         //cek apakah mmengembalikan redirect
         $response->assertStatus(302);
         $response->assertSessionHas('erorAlert');
         $response->assertSessionHas('erorAlert', ['Gagal', 'Tambah Stok Awal Gagal']);
+        $this->assertDatabaseMissing('history_stoks', [
+            'id' => $produkUpdate->stokAktif,
+            'idProduk' => $produk->id,
+            'idPKL' => $prep[1]->id,
+            'stokAwal' => $stokAwal,
+            // 'TerjualOnline' => 0,
+        ]);
     }
 
     public function test_Buat_Stok_Akhir_Success()
@@ -114,12 +107,17 @@ class HistoryStokControllerTest extends TestCase
         $prep = $this->prepared();
         // dd($prep);
         $produk = $prep[2];
-        $stokAkhir = 20;
-        $stokAwal = 40;
+        $stokAkhir = '20';
+        $stokAwal = 20;
         $preparedStokAwal = $this->post('/MakeStokAwal', [
             'stokAwal'=>$stokAwal,
             'idproduk'=>$produk->id,
         ]);
+
+
+        $produkUpdate = Produk::find($produk->id);
+
+        // dd(historyStok::where('id', $produk->stokAktif)->get());
 
         $response = $this->post('/updateStokAkhir', [
             'stokAkhir'=>$stokAkhir,
@@ -130,6 +128,14 @@ class HistoryStokControllerTest extends TestCase
         //cek apakah mmengembalikan redirect
         $response->assertStatus(302);
         $response->assertSessionHas('alert', ['Berhasil', 'Ubah Stok Akhir Berhasil']);
+        $this->assertDatabaseHas('history_stoks', [
+            'id' => $produkUpdate->stokAktif,
+            'idProduk' => $produk->id,
+            'idPKL' => $prep[1]->id,
+            'stokAwal' => $stokAwal,
+            'stokAkhir' => $stokAkhir,
+            // 'TerjualOnline' => 0,
+        ]);
     }
 
     public function test_Buat_Stok_Akhir_Failed()
@@ -137,12 +143,15 @@ class HistoryStokControllerTest extends TestCase
         $prep = $this->prepared();
         // dd($prep);
         $produk = $prep[2];
-        $stokAkhir = 'ju';
-        $stokAwal = 40;
+        $stokAkhir = 'lo';
+        $stokAwal = 20;
         $preparedStokAwal = $this->post('/MakeStokAwal', [
             'stokAwal'=>$stokAwal,
             'idproduk'=>$produk->id,
         ]);
+
+        $produkUpdate = Produk::find($produk->id);
+
 
         $response = $this->post('/updateStokAkhir', [
             'stokAkhir'=>$stokAkhir,
@@ -153,5 +162,52 @@ class HistoryStokControllerTest extends TestCase
         //cek apakah mmengembalikan redirect
         $response->assertStatus(302);
         $response->assertSessionHas('erorAlert', ['Gagal Update Stok Akhir', 'field Stok Akhir tidak berupa nomor']);
+
+        $response->assertSessionMissing('alert', ['Berhasil', 'Ubah Stok Akhir Berhasil']);
+        $this->assertDatabaseHas('history_stoks', [
+            'id' => $produkUpdate->stokAktif,
+            'idProduk' => $produk->id,
+            'idPKL' => $prep[1]->id,
+            'stokAwal' => $stokAwal,
+            'stokAkhir' => $stokAkhir,
+            // 'stokAkhir' => '8',
+            // 'TerjualOnline' => 0,
+        ]);
     }
+
+    /**
+     * A basic unit test example.
+     *
+     * @return void
+     */
+    // public function test_add_New_History( )
+    // {
+    //     $hsc = new HistoryStokController();
+    //     $tu = TestUnit::class; 
+    //     $prep = $this->prepared();
+    //     $store = $hsc->store($prep[2]->id,30,$prep[1]->id);
+    //     $tu::assertNotNull($store);
+    //     $tu::assertIsInt($store);
+    //     return $store;
+    // }
+
+    // public function test_Update_Stok_Online()
+    // {
+    //     $hsc = new HistoryStokController();
+    //     $tu = TestUnit::class;
+    //     $idStok = $this->test_add_New_History();
+    //     $cek = $hsc->UpdatestokOnline(50,$idStok);
+    //     $tu::assertTrue($cek);
+    // }
+
+    // public function test_Update_Stok_Akhir()
+    // {
+    //     $hsc = new HistoryStokController();
+    //     $tu = TestUnit::class;
+    //     $idStok = $this->test_add_New_History();
+    //     $cek = $hsc->UpdatestokAkhir(1,$idStok);
+    //     $tu::assertTrue($cek);
+    // }
+
+    
 }

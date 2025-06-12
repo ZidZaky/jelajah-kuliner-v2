@@ -10,6 +10,58 @@ use App\Models\Account;
 
 class PKLControllerTest extends TestCase
 {
+    public function test_update_location_success()
+    {
+        $account = Account::where('status', 'PKL')->first();
+        $this->assertNotNull($account, "Tidak ada Akun dengan status PKL ditemukan. Pastikan seeder sudah berjalan.");
+
+        $pkl = Pkl::where('idAccount', $account->id)->first();
+        $this->assertNotNull($pkl, "Tidak ada data PKL yang terhubung dengan Akun PKL. Pastikan seeder sudah berjalan.");
+
+        $response = $this->actingAs($account)
+            ->withSession(['account' => $account])->post('/update-location', [
+                'idAccount' => $pkl->idAccount,  // Gunakan ID yang acak
+                'latitude' => -6.2,
+                'longitude' => 106.8,
+            ]);
+
+        $response->assertRedirect('dashboard');
+
+        $this->assertDatabaseHas('p_k_l_s', [
+            'idAccount' => $pkl->idAccount,  // Gunakan ID yang acak
+            'latitude' => -6.2,
+            'longitude' => 106.8
+        ]);
+    }
+
+    public function test_update_location_fails_with_invalid_coordinates_on_existing_pkl()
+    {
+        $account = Account::where('status', 'PKL')->first();
+        $this->assertNotNull($account, "Tidak ada Akun dengan status PKL ditemukan. Pastikan seeder sudah berjalan.");
+
+        $pkl = Pkl::where('idAccount', $account->id)->first();
+        $this->assertNotNull($pkl, "Tidak ada data PKL yang terhubung dengan Akun PKL. Pastikan seeder sudah berjalan.");
+
+        $originalLatitude = $pkl->latitude;
+
+        $invalidData = [
+            'latitude' => '',
+            'longitude' => '',
+        ];
+
+        $response = $this->actingAs($account)
+            ->withSession(['account' => $account])
+            ->post('/update-location', $invalidData);
+
+        $response->assertStatus(302); 
+        $response->assertSessionHasErrors(['latitude', 'longitude']);
+
+        $pklAfterRequest = Pkl::find($pkl->id);
+        $this->assertEquals($originalLatitude, $pklAfterRequest->latitude, "Latitude seharusnya tidak berubah setelah update gagal.");
+    }
+
+
+
     //berhasil
     // public function testCreateView()
     // {
