@@ -129,8 +129,6 @@ class HistoryStokControllerTest extends TestCase
 
         //cek apakah mmengembalikan redirect
         $response->assertStatus(302);
-        
-
         $response->assertSessionHas('alert', ['Berhasil', 'Ubah Stok Akhir Berhasil']);
     }
 
