@@ -31,7 +31,7 @@ class ProdukControllerTest extends TestCase
         ]);
 
         $response->assertStatus(302);
-        $response->assertRedirect();
+        $response->assertSessionHas('errors');
     }
 
     public function test_hanya_pkl_yang_bisa_menambah_produk()
