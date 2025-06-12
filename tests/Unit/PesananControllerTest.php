@@ -253,6 +253,8 @@ class PesananControllerTest extends TestCase
         $response->assertRedirect('Detil/' . $pesanan->id);
     }
 
+    
+
     // public function testCreateView()
     // {
     //     // Buat akun baru di database
