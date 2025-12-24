@@ -30,7 +30,11 @@ use app\Models\PKL;
 
 //NON TESTING
 Route::get('/cek',function(){
-    return view('cek');
+    return view('LamaranKerja');
+});
+
+Route::get('/tes_online',function(){
+    return view('EVI.TesOnline');
 });
 Route::get('/', function () {
     return redirect('/dashboard');

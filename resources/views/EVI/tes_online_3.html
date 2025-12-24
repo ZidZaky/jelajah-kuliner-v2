@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test_online 3</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+
+</head>
+
+<body>
+
+    <div>
+        <h1>Input Barang</h1>
+        <form action="">
+            <div class="input-group mb-3">
+                <input type="number" class="form-control" oninput="HitungBarang(this)" placeholder="input nomor" aria-label="Recipient’s username" aria-describedby="basic-addon2">
+                <span class="input-group-text" id="basic-addon2">Jumlah Barang</span>
+            </div>
+            <div>
+                <h3>Hasilnya</h3>
+                <ul>
+                    <li class="kategori_20">0</li>
+                    <li class="kategori_12">0</li>
+                    <li class="kategori_10">0</li>
+                    <li class="kategori_5">0</li>
+                    <li class="kategori_3">0</li>
+                    <li class="kategori_1">0</li>
+                </ul>
+            </div>
+        </form>
+    </div>
+
+    <div>
+        <h1>Hitung Berdasarkan Nama</h1>
+        <form action="">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" oninput="hitungNama(this)" placeholder="Input String Nama" aria-label="Recipient’s username" aria-describedby="basic-addon2">
+                <span class="input-group-text" id="basic-addon2">String nama</span>
+            </div>
+            <div>
+                <h3 class="total_Semua">Hasilnya :</h3>
+                <ul class="detail">
+
+                </ul>
+            </div>
+        </form>
+    </div>
+</body>
+<script>
+    function HitungBarang(elemen) {
+        let number = parseInt(elemen.value);
+        let k1 = null;
+        let k3 = null;
+        let k5 = null;
+        let k10 = null;
+        let k12 = null;
+        let k20 = null;
+        save = number;
+        k20 = modulAngka(save, 20)[0];
+        save = modulAngka(save, 20)[1];
+
+        k12 = modulAngka(save, 12)[0];
+        save = modulAngka(save, 12)[1];
+
+        k10 = modulAngka(save, 10)[0];
+        save = modulAngka(save, 10)[1];
+
+        k5 = modulAngka(save, 5)[0];
+        save = modulAngka(save, 5)[1];
+
+        k3 = modulAngka(save, 3)[0];
+        save = modulAngka(save, 3)[1];
+
+        k1 = modulAngka(save, 1)[0];
+        save = modulAngka(save, 1)[1];
+
+
+
+    }
+
+    function modulAngka(number, angka) {
+
+        let back = 0;
+        let sisa = number;
+        if (number % angka < angka && number % angka > 0) {
+            back = (number - (number % angka)) / angka;
+            sisa = (number % angka);
+        } else if (number % angka == 0) {
+            back = number / angka;
+            sisa = 0;
+        }
+
+        let field = document.querySelector('.kategori_' + angka);
+        if (back > 0) {
+            field.style.display = "flex"
+            field.textContent = `Kategori ${angka} : ${back}`;
+        } else {
+            field.style.display = "none";
+            field.textContent = 0
+
+        }
+        return [back, sisa];
+    }
+
+    function hitungNama(elemen) {
+        clearAll()
+        string = elemen.value
+        let character = 'abcdefghijklmnopqrstuvwxyz';
+
+        let unique = null;
+        string.trim().toLowerCase().split("").forEach(chara => {
+            if (chara != " ") {
+
+                if (unique == null) {
+                    unique = chara;
+                } else {
+                    contains(unique, chara) ? null : unique = unique + chara;
+                }
+            }
+        })
+        let sumAll = 0;
+        unique.split("").forEach(chara => {
+            sumAll += sum(character, chara)
+        })
+        document.querySelector('.total_Semua').textContent = `Hasilnya: ${sumAll}`
+    }
+
+    function sum(string, chara) {
+        newLi(chara, (string.indexOf(chara) + 1));
+        return string.indexOf(chara) + 1;
+    }
+
+    function newLi(chara, sum) {
+        const li = document.createElement("li")
+        li.textContent = `${chara} : ${sum}`;
+        document.querySelector('.detail').appendChild(li)
+    }
+
+    function clearAll() {
+        document.querySelector('.detail').innerHTML = "";
+        document.querySelector('.total_Semua').textContent = "Hasilnya: "
+    }
+
+
+
+    function contains(string, character) {
+        return (string.includes(character))
+    }
+</script>
+
+</html>

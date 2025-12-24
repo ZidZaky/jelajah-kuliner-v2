@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+
+</head>
+
+<body class="d-flex flex-column gap-3">
+    <div>
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            <h1>SOAL 1</h1>
+            <h3 class="w-75 text-center">Tampilkan jadwal keberangkatan dengan nama penumpang berawalan yuli. Dan field yang ditampilkan nama, waktu, tujuan</h3>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Nama</th>
+                    <th scope="col">Waktu</th>
+                    <th scope="col">Tujuan</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            <h1>SOAL 2</h1>
+            <h3 class="w-75 text-center">
+                Tampilkan nama tujuan yang saat ini tidak ada jadwal di tabel keberangkatan, dengan cara cek data di tabel keberangkatan Hasil seperti di bawah ini
+            </h3>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Tujuan</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Mark</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            <h1>SOAL 3</h1>
+            <h3 class="w-75 text-center">
+                Tampilkan jadwal keberangkatan yang sudah selesai, berdasarkan waktu saat ini. dengan field waktu dan nama tujuan Hasil seperti di bawah ini
+            </h3>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Waktu</th>
+                    <th scope="col">Tujuan</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            <h1>SOAL 4</h1>
+            <h3 class="w-75 text-center">
+                Tampilkan data grafik total pendapatan tiap daerah
+            </h3>
+        </div>
+        <div>
+            <canvas id="myChart"></canvas>
+        </div>
+
+    </div>
+    <div>
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            <h1>SOAL 5</h1>
+            <h3 class="w-75 text-center">
+                Tampilkan jumlah pedapatan terbanyak di bulan januari 2023
+            </h3>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Tujuan</th>
+                    <th scope="col">Pendapatan</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 2, 3],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
+</html>

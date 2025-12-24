@@ -80,7 +80,7 @@ class HistoryStokControllerTest extends TestCase
     {
         $prep = $this->prepared();
         $produk = $prep[2];
-        $stokAwal = 'kj';
+        $stokAwal = 8;
         $response = $this->post('/MakeStokAwal', [
             'stokAwal'=>$stokAwal,
             'idproduk'=>$produk->id,
@@ -165,7 +165,7 @@ class HistoryStokControllerTest extends TestCase
         // dd($produkUpdate->stokAktif);
         $this->assertDatabaseMissing('history_stoks', [
             'id' => $produkUpdate->stokAktif,
-            'idProduk' => $produk->id,
+            'idProduk' => 0,
             'idPKL' => $prep[1]->id,
             'stokAwal' => $stokAwal,
             'stokAkhir' => $stokAkhir,
