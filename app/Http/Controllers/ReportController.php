@@ -3,10 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Report;
+use App\Models\Account;
+use App\Models\PKL;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
+    // =====================
+    // INDEX
+    // =====================
     public static function index()
     {
         return view('report-list', [
@@ -14,78 +19,78 @@ class ReportController extends Controller
         ]);
     }
 
+    // =====================
+    // STORE (REPORT USER)
+    // =====================
     public function store(Request $request)
     {
         $valdata = $request->validate([
             'idPengguna' => 'required',
-            'idPelapor' => 'required',
-            'idPesanan' => 'required',
-            'alasan' => 'required' // Dibuat nullable karena di form Anda "optional"
+            'idPelapor'  => 'required',
+            'idPesanan'  => 'required',
+            'alasan'     => 'required'
         ]);
 
         Report::create($valdata);
 
-        return redirect('/tolakPesanan?id=' . $valdata['idPesanan'])
+        return redirect()
+            ->route('pesanan.tolak', ['id' => $valdata['idPesanan']])
             ->with('alert', 'Pengguna berhasil dilaporkan dan pesanan ditolak.');
     }
 
+    // =====================
+    // BAN USER
+    // =====================
     public function banUser($id)
     {
-        // Find the Pesanan by its ID
-        // dd($id);
         $report = Report::find($id);
-        // dd($pesan);
 
-        // Check if Pesanan is found
         if ($report) {
-            // Update the status to "Pesanan Diproses"
-            $account = \App\Models\Account::where('id', $report->idPengguna)->first();
-            $account->status = 'alert';
+            $account = Account::find($report->idPengguna);
 
-            // Save the changes to the database
-            $account->save();
-
-            return redirect("/report");
-        } else {
-            // Handle the case where Pesanan is not found
-            return redirect()->back()->with('error', 'Account not found.');
-        }
-    }
-
-    public function unbanUser($id)
-    {
-        // Find the Pesanan by its ID
-        // dd($id);
-        $report = Report::find($id);
-        // dd($pesan);
-
-        // Check if Pesanan is found
-        if ($report) {
-            // Update the status to "Pesanan Diproses"
-            $account = \App\Models\Account::where('id', $report->idPengguna)->first();
-            $pkl = \App\Models\PKL::where('idAccount', $account->id)->first();
-
-            if ($pkl) {
-                $account->status = 'PKL';
-            } else {
-                $account->status = 'Pelanggan';
+            if ($account) {
+                $account->status = 'alert';
+                $account->save();
             }
 
-            // Save the changes to the database
-            $account->save();
-
-            return redirect("/report");
-        } else {
-            // Handle the case where Pesanan is not found
-            return redirect()->back()->with('error', 'Account not found.');
+            return redirect()->route('report.index');
         }
+
+        return redirect()->back()->with('error', 'Account not found.');
     }
 
+    // =====================
+    // UNBAN USER
+    // =====================
+    public function unbanUser($id)
+    {
+        $report = Report::find($id);
+
+        if ($report) {
+            $account = Account::find($report->idPengguna);
+
+            if ($account) {
+                $pkl = PKL::where('idAccount', $account->id)->first();
+                $account->status = $pkl ? 'PKL' : 'Pelanggan';
+                $account->save();
+            }
+
+            return redirect()->route('report.index');
+        }
+
+        return redirect()->back()->with('error', 'Account not found.');
+    }
+
+    // =====================
+    // DELETE REPORT
+    // =====================
     public function destroy($id)
     {
         $report = Report::findOrFail($id);
         $report->delete();
 
-        return redirect('/report')->with('success', 'Report deleted successfully');
+        return redirect()
+            ->route('report.index')
+            ->with('success', 'Report deleted successfully');
     }
 }

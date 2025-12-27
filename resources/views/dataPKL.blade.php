@@ -28,7 +28,7 @@
 
 @endsection
 @section('unrelative')
-<form action="/MakeStokAwal" method="POST" class="modal fade AddNewStock" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<form action="{{ route('stok.awal') }}" method="POST" class="modal fade AddNewStock" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     @csrf
     <div class="modal-dialog">
         <div class="modal-content">
@@ -51,7 +51,7 @@
     </div>
 </form>
 
-<form action="/updateStokAkhir" method="POST" class="modal fade AddEndStock" id="endStok" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<form action="{{ route('stok.akhir') }}" method="POST" class="modal fade AddEndStock" id="endStok" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     @csrf
     <div class="modal-dialog">
         <div class="modal-content">
@@ -88,7 +88,7 @@
         <div class="d-flex p-3 justify-content-center align-items-center">
             <h1 class="p-clear cl-prim-dark fw-bolder">Selamat Datang, {{$pkl->namaPKL}}</h1>
         </div>
-        <button class="btn btn-info bg-prim-dark border-0 mb-3"><a href="/produk/create" class="text-decoration-none text-white">Buat Produk Baru</a></button>
+        <button class="btn btn-info bg-prim-dark border-0 mb-3"><a href="{{ route('produk.create') }}" class="text-decoration-none text-white">Buat Produk Baru</a></button>
         <div class="w-100 d-flex mb-5 justify-content-center align-items-center flex-1" style="min-height: 100%; max-height:100%;">
             <div class="area produks SecondScroll w-75 gap-4 d-flex flex-column overflow-y-auto h-100 justify-content-start align-items-center"
                 style="width: fit-content; max-width: 100%; max-height: 65vh; min-height: 65vh;">
@@ -100,7 +100,7 @@
                 <div class="produk{{{$item->id}}} align-items-center position-relative d-flex gap-2 flex-row justify-content-end align-items-end" style="height:200px; min-height: 200px; width: 470px;">
 
 
-                    <img class="circle-preview position-absolute z-1 shadow" src="{{ asset('storage/' . $item->fotoProduk) }}" alt="/assets/contoh.jpg" style="height: 60%; width: fit-content; left: 0;">
+                    <img class="circle-preview position-absolute z-1 shadow" src="{{ asset('storage/' . $item->fotoProduk) }} " alt="/assets/contoh.jpg" style="height: 60%; width: fit-content; left: 0;">
                     <div class="position-absolute shadow z-0 pe-0 d-flex flex-row gap-1 justify-content-between align-items-end bg-prim-dark border-left-top border-right-bottom" style="right: 0; width:87%; height:95%; max-height: 95%; min-height: 95%;  ">
                         <div class="h-100 py-2">
                             <button class="bg-transparent border-0" style="left: 0; top: 0;">

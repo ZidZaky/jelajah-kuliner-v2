@@ -1,8 +1,9 @@
 @extends('NEW.EVI.base-page')
 
 @section('css')
-<link rel="stylesheet" href="/css/ulasan.css">
+{{-- <link rel="stylesheet" href="/css/ulasan.css"> --}}
 <link rel="stylesheet" href="{{ app()->environment('local') ? asset('css/base.css') : secure_asset('css/base.css') }}">
+<link rel="stylesheet" href="{{ app()->environment('local') ? asset('css/ulasan.css') : secure_asset('css/ulasan.css') }}">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 
 <style>
@@ -31,7 +32,7 @@
         <!-- <p class="ratingakun" style="text-align: left;">{{ session('account')[''] }} </p> --> --}}
         <hr>
 
-        <form class="form-ulasan" action="/ulasan" method="POST">
+        <form class="form-ulasan" action="{{ route('ulasan.create') }}" method="POST">
             @csrf
 
             <div class="rating-stars mb-3">

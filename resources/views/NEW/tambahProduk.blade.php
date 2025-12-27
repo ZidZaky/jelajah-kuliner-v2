@@ -35,7 +35,7 @@
                 <h4 class="fw-bold">Tambah Produk</h4>
                 <hr>
             </div>
-            <form method="POST" action="/produk" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('produk.create') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">
                     <input type="text" class="form-control rounded-pill border-2" id="namaProduk" name="namaProduk"

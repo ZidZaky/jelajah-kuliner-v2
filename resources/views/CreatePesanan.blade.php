@@ -118,7 +118,7 @@
                             <i class="p-clear fs-5 bi bi-plus-lg"></i>
                         </button>
                     </div>
-                    <img class="circle-preview position-absolute z-1 shadow" src="/assets/contoh.jpg" alt="" style="height: 75%; width: fit-content; left: 0;">
+                    <img class="circle-preview position-absolute z-1 shadow" src="{{auto_asset('assets/contoh.jpg')}} " alt="" style="height: 75%; width: fit-content; left: 0;">
                     <div class="position-absolute shadow z-0 py-2 pe-2 d-flex flex-column gap-1 justify-content-between align-items-end bg-prim-dark border-left-top border-right-bottom" style="right: 0; width:87%; height:95%; max-height: 95%; min-height: 95%;  ">
 
                         <div class="contisi d-flex flex-column first-cl justify-content-end align-items-end w-50">
@@ -158,7 +158,7 @@
             <div class="w-100 d-flex flex-column SecondScroll justify-content-start overflow-y-scroll overflow-x-hidden gap-0 align-items-center" style="height: 35vh; font-size: 10px !important;">
                 @for($i=0;$i<=5;$i++)
                     <div class="produk{{{$i}}} align-items-center position-relative d-flex gap-2 flex-row justify-content-end align-items-end" style="height:125px; min-height: 125px; width: 100%;">
-                    <img class="circle-preview position-absolute z-1 shadow" src="/assets/contoh.jpg" alt="" style="height: 50%; width: fit-content; left: 0;">
+                    <img class="circle-preview position-absolute z-1 shadow" src="{{auto_asset('assets/contoh.jpg')}}" alt="" style="height: 50%; width: fit-content; left: 0;">
                     <div class="position-absolute shadow z-0 py-2 pe-2 d-flex flex-column gap-1 justify-content-between align-items-center bg-prim-dark border-left-top border-right-bottom" style="right: 0; padding-left: 70px; width:90%; height:95%; max-height: 95%; min-height: 95%;">
 
                         <div class="contisi d-flex flex-column first-cl justify-content-start align-items-start w-100 flex-1">

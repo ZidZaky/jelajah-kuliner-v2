@@ -17,217 +17,198 @@ class ProdukController extends Controller
         ]);
     }
 
-    //create
+    // =====================
+    // CREATE
+    // =====================
     public function create()
     {
         return view('addProduct');
     }
 
-
-    //save
+    // =====================
+    // STORE
+    // =====================
     public function store(Request $request)
     {
-
         $valdata = $request->validate([
-            'namaProduk'=>'required',
-            'jenisProduk'=>'required',
-            'desc'=>'required',
-            'harga'=>'required',
-            'stok'=>'required',
-            'idPKL'=>'required'
+            'namaProduk'  => 'required',
+            'jenisProduk' => 'required',
+            'desc'        => 'required',
+            'harga'       => 'required',
+            'stok'        => 'required',
+            'idPKL'       => 'required'
         ]);
-        
-
-
-
-        // dd($valdata);
 
         if ($request->hasFile('fotoProduk')) {
             $file = $request->file('fotoProduk');
             $filename = $request->namaProduk . '.' . $file->getClientOriginalExtension();
-            $filePath = $file->storeAs('product', $filename, 'public');
-            $valdata['fotoProduk'] = $filePath;
+            $valdata['fotoProduk'] = $file->storeAs('product', $filename, 'public');
         } else {
-            $isnull = 'null';
-            $valdata['fotoProduk'] = $isnull;
+            $valdata['fotoProduk'] = null;
         }
 
-        $produk = new Produk();
-        $produk->namaProduk = $valdata['namaProduk'];
-        $produk->desc = $valdata['desc'];
-        $produk->harga = $valdata['harga'];
-        $produk->jenisProduk = $valdata['jenisProduk'];
-        $produk->fotoProduk = $valdata['fotoProduk'];
-        $produk->idPKL = $valdata['idPKL'];
-        $produk->save();
-        $id= $produk->id;
+        $produk = Produk::create([
+            'namaProduk'  => $valdata['namaProduk'],
+            'desc'        => $valdata['desc'],
+            'harga'       => $valdata['harga'],
+            'jenisProduk' => $valdata['jenisProduk'],
+            'fotoProduk'  => $valdata['fotoProduk'],
+            'idPKL'       => $valdata['idPKL'],
+        ]);
 
         $stok = new HistoryStokController();
-        $idStok = $stok->store($id,$valdata['stok'],$valdata['idPKL']);
-        $cek = $this->updateStokAktif($id,$idStok);
-        // dd($cek);
-        if($cek){
-            $pkl = PKL::findOrFail($valdata['idPKL']);
-            // dd($pkl);
-            return redirect('/dataPKL/'.$pkl->idAccount)->with('alert',['Berhasil','Produk '.$produk->namaProduk.' berhasil ditambahkan']);
-            // return redirect('/dataPKL/'+);
-        }
+        $idStok = $stok->store($produk->id, $valdata['stok'], $valdata['idPKL']);
+        $this->updateStokAktif($produk->id, $idStok);
 
+        $pkl = PKL::findOrFail($valdata['idPKL']);
+
+        return redirect()
+            ->route('pkl.detail', $pkl->idAccount)
+            ->with('alert', ['Berhasil', 'Produk ' . $produk->namaProduk . ' berhasil ditambahkan']);
     }
 
-
-    //edit
+    // =====================
+    // EDIT
+    // =====================
     public function edit(Produk $produk)
     {
         return view('editProduk', ['Produk' => $produk]);
     }
 
-    public function updateStokAktif($idProduk,$idStok){
-        $find = Produk::findOrFail($idProduk);
-        // dd($find);
-        $find->stokAktif = $idStok;
-        $cek = $find->save();
-        // dd($find);
-        // dd($cek);
-        return ($cek);
+    // =====================
+    // UPDATE STOK AKTIF
+    // =====================
+    public function updateStokAktif($idProduk, $idStok)
+    {
+        $produk = Produk::findOrFail($idProduk);
+        $produk->stokAktif = $idStok;
+        return $produk->save();
     }
-    public function findStok($idProduk){
-        $find = Produk::findOrFail($idProduk);
-        return $find->stokAktif;
+
+    public function findStok($idProduk)
+    {
+        return Produk::findOrFail($idProduk)->stokAktif;
     }
-    //update
+
+    // =====================
+    // UPDATE
+    // =====================
     public function update(Request $request, Produk $produk)
     {
         $valdata = $request->validate([
             'namaProduk' => 'required',
-            'desc' => 'required',
-            'harga' => 'required',
-            'stok' => 'required',
-            'foto' => 'nullable',
-            'idAccount' => 'required'
+            'desc'       => 'required',
+            'harga'      => 'required',
+            'stok'       => 'required',
+            'foto'       => 'nullable',
+            'idAccount'  => 'required'
         ]);
 
         $produk->update($valdata);
 
-        return redirect('/PKL');
+        return redirect()->route('PKL.index');
     }
 
-    //delete
+    // =====================
+    // DELETE
+    // =====================
     public function destroy(Produk $produk)
     {
-        Produk::destroy($produk->id);
-        return redirect('/PKL');
+        $produk->delete();
+        return redirect()->route('PKL.index');
     }
 
-    public function getDataNameById($idProduk){
-        $hasil = Produk::firstWhere('id', $idProduk);
-        return $hasil;
-
+    // =====================
+    // HELPER
+    // =====================
+    public function getDataNameById($idProduk)
+    {
+        return Produk::firstWhere('id', $idProduk);
     }
-
 
     public function getProduk($id)
     {
-        // Fetch ulasan data for the specific PKL ID
         $produk = DB::table('produks as p')
-        ->join('history_stoks as h', 'p.stokAktif', '=', 'h.id')
-        ->where('p.idPKL', $id)
-        ->select([
-            'p.id as id',
-            'p.desc as deskripsi',
-            'p.namaProduk as nama',
-            'p.harga as harga',
-            'p.fotoProduk as foto',
-            'p.idPKL as idPKL',
-            DB::raw('CASE WHEN h.statusIsi = 0 THEN h.stokAwal - h.TerjualOnline WHEN h.statusIsi = 1 THEN h.stokAkhir END as sisaStok')
-        ])
-        ->get();
-            // dd($produk);
-        // Return ulasan data as JSON
+            ->join('history_stoks as h', 'p.stokAktif', '=', 'h.id')
+            ->where('p.idPKL', $id)
+            ->select([
+                'p.id',
+                'p.desc as deskripsi',
+                'p.namaProduk as nama',
+                'p.harga',
+                'p.fotoProduk as foto',
+                'p.idPKL',
+                DB::raw('CASE 
+                    WHEN h.statusIsi = 0 THEN h.stokAwal - h.TerjualOnline 
+                    WHEN h.statusIsi = 1 THEN h.stokAkhir 
+                END as sisaStok')
+            ])
+            ->get();
+
         return response()->json($produk);
     }
 
-    public function riwayatProduk($id) {
-        // Find the Pesanan by its ID
-        $pkl = PKL::find($id);
+    public function riwayatProduk($id)
+    {
+        $pkl = PKL::findOrFail($id);
+        $riwayat = DB::select("select * from history_stok where idPKL = ?", [$id]);
 
-         // Retrieve the related products for the Pesanan
-         $query = "select * from history_stok where idPKL = ?";
-         $riwayat = DB::select($query, [$id]);
-
-        // Check if Pesanan is found
-
-            // Return the view with the updated Pesanan and related products
-            return view('riwayatProduk', [
-                'riwayat' => $riwayat,
-                'pkl' => $pkl
-            ]);
-
+        return view('riwayatProduk', [
+            'riwayat' => $riwayat,
+            'pkl'     => $pkl
+        ]);
     }
 
-    public function getNamaProdukById($id){
-        $produk = Produk::find($id);
-        return $produk->namaProduk;
+    public function getNamaProdukById($id)
+    {
+        return Produk::findOrFail($id)->namaProduk;
     }
 
-    public function buatHistory(Request $request){
+    // =====================
+    // HISTORY
+    // =====================
+    public function buatHistory(Request $request)
+    {
         $valdata = $request->validate([
-            'idPKL' => 'required',
+            'idPKL'    => 'required',
             'idProduk' => 'required',
             'stokAwal' => 'required'
         ]);
 
-        $berhasil = DB::update('UPDATE `produks` SET `stok` = ? WHERE `id` = ? AND `idpkl` = ?', [
-            $valdata['stokAwal'],  // Assuming you want to update the stok with stokAkhir value
-            $valdata['idProduk'],
-            $valdata['idPKL']
-        ]);
+        DB::update(
+            'UPDATE produks SET stok = ? WHERE id = ? AND idPKL = ?',
+            [$valdata['stokAwal'], $valdata['idProduk'], $valdata['idPKL']]
+        );
 
-        $berhasil2 = DB::insert('INSERT INTO history_stok (id, idProduk, stokAwal, stokAkhir, idPKL, created_at, updated_at) VALUES (NULL, ?, ?, ?, ?, ?, ?)', [
-            $valdata['idProduk'],
-            $valdata['stokAwal'],
-            0,
-            $valdata['idPKL'],
-            now(),
-            now()
-        ]);
+        DB::insert(
+            'INSERT INTO history_stok (idProduk, stokAwal, stokAkhir, idPKL, created_at, updated_at)
+             VALUES (?, ?, ?, ?, ?, ?)',
+            [$valdata['idProduk'], $valdata['stokAwal'], 0, $valdata['idPKL'], now(), now()]
+        );
 
-        if ($berhasil && $berhasil2) {
-            return redirect("/riwayatProduk/{$valdata['idPKL']}");
-        } else {
-            return back()->with('error', 'Failed to save the history.');
-        }
+        return redirect()->route('produk.riwayat', $valdata['idPKL']);
     }
 
-public function updateHistory(Request $request)
+    public function updateHistory(Request $request)
     {
-    $valdata = $request->validate([
-        'idPKL' => 'required',
-        'idProduk' => 'required',
-        'stokAkhir' => 'required'
-    ]);
+        $valdata = $request->validate([
+            'idPKL'     => 'required',
+            'idProduk'  => 'required',
+            'stokAkhir' => 'required'
+        ]);
 
-    $affected = DB::update('UPDATE history_stok SET stokAkhir = ?, updated_at = ? WHERE idPKL = ? AND idProduk = ?', [
-        $valdata['stokAkhir'],
-        now(),
-        $valdata['idPKL'],
-        $valdata['idProduk']
-    ]);
+        DB::update(
+            'UPDATE history_stok SET stokAkhir = ?, updated_at = ? WHERE idPKL = ? AND idProduk = ?',
+            [$valdata['stokAkhir'], now(), $valdata['idPKL'], $valdata['idProduk']]
+        );
 
-    $berhasil = DB::update('UPDATE `produks` SET `stok` = ? WHERE `id` = ? AND `idpkl` = ?', [
-        $valdata['stokAkhir'],  // Assuming you want to update the stok with stokAkhir value
-        $valdata['idProduk'],
-        $valdata['idPKL']
-    ]);
+        DB::update(
+            'UPDATE produks SET stok = ? WHERE id = ? AND idPKL = ?',
+            [$valdata['stokAkhir'], $valdata['idProduk'], $valdata['idPKL']]
+        );
 
-    if ($affected && $berhasil) {
-        return redirect("/riwayatProduk/{$valdata['idPKL']}")->with('success', 'History updated successfully.');
-    } else {
-        return back()->with('error', 'Failed to update the history.');
+        return redirect()
+            ->route('produk.riwayat', $valdata['idPKL'])
+            ->with('success', 'History updated successfully.');
     }
-    }
-
-
-
-
 }

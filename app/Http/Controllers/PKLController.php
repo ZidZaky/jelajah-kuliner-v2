@@ -8,316 +8,250 @@ use App\Models\Ulasan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Session;
 
 class PKLController extends Controller
 {
-
-
-    //
+    // =====================
+    // INDEX
+    // =====================
     public static function index($id)
     {
-        // Retrieve PKL data
         $PKL = PKL::find($id);
 
-        // Check if PKL data exists
         if ($PKL) {
-            // Retrieve associated products
-            $Produks = Produk::where('idPKL', $PKL->id)->get();
-
-            // Retrieve associated ulasan based on PKL ID
-            $ulasan = Ulasan::where('idPKL', $PKL->id)->get();;
-
-
             return view('dataPKL', [
-                'PKL' => $PKL,
-                'Produks' => $Produks,
-                'ulasan' => $ulasan
+                'PKL'     => $PKL,
+                'Produks' => Produk::where('idPKL', $PKL->id)->get(),
+                'ulasan'  => Ulasan::where('idPKL', $PKL->id)->get()
             ]);
-        } else {
-            // Handle case where PKL data does not exist
-            return response()->view('errors.404', [], 404);
         }
+
+        return response()->view('errors.404', [], 404);
     }
 
-
-    //create
+    // =====================
+    // CREATE
+    // =====================
     public function create()
     {
         return view('CreateDataPKL');
     }
 
-
-    //save
+    // =====================
+    // STORE
+    // =====================
     public function store(Request $request)
     {
-        // dd($request);
         $valdata = $request->validate([
-            'namaPKL' => 'required',
-            'desc' => 'required',
-            'picture' => 'nullable',
-            'latitude' => 'required|numeric',
+            'namaPKL'   => 'required',
+            'desc'      => 'required',
+            'picture'   => 'nullable',
+            'latitude'  => 'required|numeric',
             'longitude' => 'required|numeric',
             'idAccount' => 'required'
         ]);
 
         if ($request->hasFile('picture')) {
-            $file = $request->file('picture');
-            $filename = $valdata['namaPKL'] . "." . $file->getClientOriginalExtension();
-            $filePath = $file->storeAs('pkl', $filename, 'public');
-
-            $valdata['picture'] = $filePath;
+            $valdata['picture'] = $request->file('picture')
+                ->storeAs('pkl', $valdata['namaPKL'] . '.' . $request->picture->extension(), 'public');
         } else {
             $valdata['picture'] = null;
         }
-        // dd($valdata);
-        $pkl = new PKL();
-        $pkl->namaPKL = $valdata['namaPKL'];
-        $pkl->desc = $valdata['desc'];
-        $pkl->picture = $valdata['picture'];
-        $pkl->latitude = $valdata['latitude'];
-        $pkl->longitude = $valdata['longitude'];
-        $pkl->idAccount = $valdata['idAccount'];
-        $berhasil = $pkl->save();
-        if ($berhasil) {
-            return redirect('/dashboard');
-        } else {
-            return redirect('/PKL/create')->with('error', 'Gagal menyimpan data PKL.');
+
+        $pkl = PKL::create($valdata);
+
+        if ($pkl) {
+            return redirect()->route('dashboard.index');
         }
+
+        return redirect()
+            ->route('PKL.create')
+            ->with('error', 'Gagal menyimpan data PKL.');
     }
 
-
-    //edit
+    // =====================
+    // EDIT
+    // =====================
     public function edit(PKL $pkl)
     {
-        return view('editPKL', ['pkl' => $pkl]);
+        return view('editPKL', compact('pkl'));
     }
 
-    //update
+    // =====================
+    // UPDATE
+    // =====================
     public function update(Request $request, PKL $pkl)
     {
-        // 1. Validasi hanya data yang dikirim dari form
         $valdata = $request->validate([
-            'idPKL' => 'required',
+            'idPKL'   => 'required',
             'namaPKL' => 'required',
-            'desc' => 'required',
+            'desc'    => 'required',
         ]);
-        // dd($pkl);
 
         try {
-            // 2. CARI data PKL dari database berdasarkan ID yang divalidasi
-            // findOrFail akan error jika ID tidak ditemukan, jadi lebih aman.
             $pkl = PKL::findOrFail($valdata['idPKL']);
+            $pkl->update([
+                'namaPKL' => $valdata['namaPKL'],
+                'desc'    => $valdata['desc'],
+            ]);
 
-            // 3. UPDATE properti model dengan data baru
-            $pkl->namaPKL = $valdata['namaPKL'];
-            $pkl->desc = $valdata['desc'];
-
-            // 4. SIMPAN perubahan ke database
-            $pkl->save();
-
-            // 5. Perbarui data di session dengan data terbaru
             session(['PKL' => $pkl]);
 
-
-            // 6. Redirect kembali dengan pesan sukses
-            return redirect('/profile')->with('alert', ['Terimakasih', 'Data PKL berhasil diperbarui.']);
+            return redirect()
+                ->route('profile.index')
+                ->with('alert', ['Terimakasih', 'Data PKL berhasil diperbarui.']);
         } catch (\Exception $e) {
-            // Jika terjadi error (misal: pkl tidak ditemukan), redirect dengan pesan error
             return back()->with('erorAlert', ['Gagal memperbarui data.', $e->getMessage()]);
         }
     }
 
-    //delete
+    // =====================
+    // DESTROY
+    // =====================
     public function destroy(PKL $pkl)
     {
-        PKL::destroy($pkl->id);
-        return redirect('account-list');
+        $pkl->delete();
+        return redirect()->route('account.index');
     }
 
-    public static function showAll()
-    {
-        $pkl = PKL::all();
-        return
-            ['dataPKL' => $pkl];
-    }
+    // =====================
+    // DETAIL PKL
+    // =====================
     public static function showDetail($idAccount)
     {
-        // dd($idAccount);
-        $pklData = PKL::where('idAccount', $idAccount)->first();
-        // dd(session('PKL'),$pklData, session('account'));
-        // dd($pklData);
-        // $produk = Produk::where('idPKL', $pklData->id)->get();
+        $pklData = PKL::where('idAccount', $idAccount)->firstOrFail();
+
         $produk = DB::table('produks as p')
             ->join('history_stoks as h', 'p.stokAktif', '=', 'h.id')
             ->where('p.idPKL', $pklData->id)
             ->select([
-                'p.id as id',
+                'p.id',
                 'p.desc as deskripsi',
                 'p.namaProduk as nama',
-                'p.harga as harga',
-                'p.idPKL as idPKL',
-                'p.fotoProduk as fotoProduk',
-                DB::raw('CASE WHEN h.statusIsi = 0 THEN h.stokAwal - h.TerjualOnline WHEN h.statusIsi = 1 THEN h.stokAkhir END as sisaStok')
+                'p.harga',
+                'p.idPKL',
+                'p.fotoProduk',
+                DB::raw('CASE WHEN h.statusIsi = 0 THEN h.stokAwal - h.TerjualOnline ELSE h.stokAkhir END as sisaStok')
             ])
             ->get();
-        // dd($produk);
-        $ulasan = Ulasan::where('idPKL', $pklData->id)->get();;
+
         session(['pkl' => $pklData]);
 
         return view('dataPKL', [
-            'pkl' => $pklData,
+            'pkl'    => $pklData,
             'produk' => $produk,
-            'ulasan' => $ulasan
+            'ulasan' => Ulasan::where('idPKL', $pklData->id)->get()
         ]);
     }
 
+    // =====================
+    // COORDINATES
+    // =====================
     public function getCoordinates()
     {
-        $pkls = PKL::all(); // Mengambil semua data PKL
-
-        $coordinates = $pkls->map(function ($pkl) {
-            // $pkl->picture dari database SUDAH 'pkl/namafile.jpg' (contoh: 'pkl/zzz.jpg')
-            $pathGambarDiDalamStoragePublic = $pkl->picture;
-
-            return [
-                'id' => $pkl->id,
-                // Jika Anda punya kolom namaPKL, gunakan itu. Jika tidak, sesuaikan.
-                // Dari phpMyAdmin terlihat ada kolom 'desc', mungkin itu namaPKL?
-                'namaPKL' => $pkl->namaPKL ?? $pkl->desc, // Sesuaikan dengan nama kolom yang benar
-                'latitude' => $pkl->latitude,
-                'longitude' => $pkl->longitude,
-                'picture_from_db' => asset('storage/' . $pathGambarDiDalamStoragePublic), // Ini akan menampilkan 'pkl/zzz.jpg'
-                // 'picture_url' akan menjadi asset('storage/' . 'pkl/zzz.jpg')
-                // yang menghasilkan http://localhost:8000/storage/pkl/zzz.jpg
-                'picture_url' => asset('storage/' . $pathGambarDiDalamStoragePublic),
-                'rating' => $pkl->rating ?? 0, // Asumsi ada kolom rating
-                'description' => $pkl->desc, // Menggunakan kolom 'desc' dari database
-            ];
-        });
-
-        return response()->json($coordinates);
+        return response()->json(
+            PKL::all()->map(fn ($pkl) => [
+                'id'          => $pkl->id,
+                'namaPKL'     => $pkl->namaPKL,
+                'latitude'    => $pkl->latitude,
+                'longitude'   => $pkl->longitude,
+                'picture_url' => asset('storage/' . $pkl->picture),
+                'rating'      => $pkl->rating ?? 0,
+                'description' => $pkl->desc
+            ])
+        );
     }
 
     public function getPictureByID($id)
     {
-        $pkl = PKL::where('id', $id)->first();
-
-        if ($pkl) {
-            return response()->json(['picture' => $pkl->picture]);
-        } else {
-            return response()->json(['error' => 'PKL not found'], 404);
-        }
+        $pkl = PKL::find($id);
+        return $pkl
+            ? response()->json(['picture' => $pkl->picture])
+            : response()->json(['error' => 'PKL not found'], 404);
     }
+
     public function getIdPKL($id)
     {
-        $rs = DB::select("select id from p_k_l_s
-                            where idAccount=" . $id);
-        if ($rs == []) {
-            return 0;
-        }
-        return ($rs[0]->id);
+        $rs = DB::select("select id from p_k_l_s where idAccount = ?", [$id]);
+        return $rs == [] ? 0 : $rs[0]->id;
     }
 
     public function getNamePklById($id)
     {
-        $hasil = PKL::firstWhere('id', $id);
-        return $hasil->namaPKL;
+        return PKL::find($id)?->namaPKL;
     }
 
     public function getDataPKL()
     {
-
-        $results = DB::table('p_k_l_s as p')
-            ->select('p.id as id', 'p.namaPKL as nama', DB::raw("GROUP_CONCAT(b.namaProduk SEPARATOR ',') as menu"))
+        return DB::table('p_k_l_s as p')
             ->join('produks as b', 'p.id', '=', 'b.idPKL')
+            ->select('p.id', 'p.namaPKL', DB::raw("GROUP_CONCAT(b.namaProduk SEPARATOR ',') as menu"))
             ->groupBy('p.id', 'p.namaPKL')
             ->get();
-
-        return $results;
     }
 
     public function getDataPklbyId($id)
     {
-        $hasil = PKL::firstWhere('idAccount', $id);
-        // dd($hasil, 'hasi;',session('account')->id);
-        return $hasil;
+        return PKL::firstWhere('idAccount', $id);
     }
 
+    // =====================
+    // UPDATE LOCATION
+    // =====================
     public function updateLocation(Request $request)
     {
-        // dd($request);
-        // Validate the request data
         $valdata = $request->validate([
-            'latitude' => 'required|numeric',
+            'latitude'  => 'required|numeric',
             'longitude' => 'required|numeric',
         ]);
-        $valdata['idAccount'] = session('account')->id;
-        // dd($valdata);
 
         try {
-            // Update the location in the database
-            $updated = PKL::where('idAccount', $valdata['idAccount'])
-                ->update([
-                    'latitude' => $valdata['latitude'],
-                    'longitude' => $valdata['longitude'],
-                ]);
-            if ($updated) {
-                return redirect('dashboard')->with('success', 'Update Lokasi Berhasil');
-            } else {
-                return redirect('dashboard')->with('error', 'Update Lokasi Gagal');
-            }
-        } catch (\Exception $e) {
-            // Log the error
-            Log::error('Error updating location: ' . $e->getMessage());
+            PKL::where('idAccount', session('account')->id)->update($valdata);
 
-            // Optionally, return the error details to the user
-            return redirect('dashboard')->with('error', 'Update Lokasi Gagal: ' . $e->getMessage());
+            return redirect()
+                ->route('dashboard.index')
+                ->with('success', 'Update Lokasi Berhasil');
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+
+            return redirect()
+                ->route('dashboard.index')
+                ->with('error', 'Update Lokasi Gagal');
         }
     }
 
+    // =====================
+    // UPDATE FOTO PKL
+    // =====================
     public function updatePklPhoto(Request $request)
     {
-        // 1. Validasi request: pastikan file yang diupload adalah gambar
-        // dd($request->all());
         $request->validate([
-            'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5120', // Maks 5MB
+            'foto' => 'required|image|max:5120',
         ]);
 
+        $pkl = PKL::where('idAccount', Auth::id())->first();
 
-        // 2. Dapatkan data PKL berdasarkan user yang sedang login
-        $user = Auth::user();
-        $pkl = PKL::where('idAccount', $user->id)->first();
-
-        // Tambahan: Handle jika user belum punya profil PKL
         if (!$pkl) {
             return response()->json([
                 'success' => false,
-                'message' => 'Profil PKL tidak ditemukan.',
-            ], 404); // 404 Not Found
+                'message' => 'Profil PKL tidak ditemukan.'
+            ], 404);
         }
 
-        // 3. Hapus foto lama jika ada untuk menghemat ruang penyimpanan
-        //    Gunakan kolom 'picture' sesuai model PKL
         if ($pkl->picture && Storage::disk('public')->exists($pkl->picture)) {
             Storage::disk('public')->delete($pkl->picture);
         }
 
-        // 4. Simpan file baru di folder 'pkl' dan dapatkan path-nya
         $filePath = $request->file('foto')->store('pkl', 'public');
-
-        // 5. Update kolom 'picture' di database untuk PKL tersebut
         $pkl->picture = $filePath;
         $pkl->save();
 
-        // 6. Kembalikan response JSON yang menandakan sukses
         return response()->json([
             'success'       => true,
             'message'       => 'Foto PKL berhasil diperbarui.',
-            'new_photo_url' => Storage::url($filePath) // Kirim URL foto baru ke frontend
+            'new_photo_url' => Storage::url($filePath)
         ]);
     }
 }

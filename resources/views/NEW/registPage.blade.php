@@ -181,7 +181,7 @@
             <strong>
                 <p class="mb-0" style="color: #666666;">Sudah punya akun?</p>
             </strong>
-            <strong><a href="/baseLogin" class="text-decoration-none" style="color: #FF0000;"
+            <strong><a href="{{ route('login.index') }}" class="text-decoration-none" style="color: #FF0000;"
                     onmouseover="this.style.color='#991b1b'" onmouseout="this.style.color='#FF0000'">Login
                     Disini!
                 </a></strong>

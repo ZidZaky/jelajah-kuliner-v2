@@ -5,7 +5,9 @@
 @endsection
 
 @section(section: 'css')
-    <link rel="stylesheet" href="/css/ulasan.css">
+    {{-- <link rel="stylesheet" href="/css/ulasan.css"> --}}
+<link rel="stylesheet" href="{{ auto_asset('css/ulasan.css') }}">
+
 @endsection
 
 
@@ -24,7 +26,7 @@
         <!-- <p class="ratingakun" style="text-align: left;">{{ session('account')[''] }} </p> --> --}}
         <hr>
 
-        <form class="form-ulasan" action="/ulasan" method="POST">
+        <form class="form-ulasan" action="{{ route('ulasan.create') }}" method="POST">
             @csrf
 
             <div class="rating-stars mb-3">

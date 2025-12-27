@@ -24,7 +24,7 @@
 
 @section('AddOn')
 
-<form action="/loginAccount" method="POST" id="loginForm">
+<form action="{{ route('login.process') }}" method="POST" id="loginForm">
     @csrf
     <div class="position-fixed fullSetengah d-flex justify-content-center align-items-center" style="height: 100%; right: 0; background-color: white;">
         <div class="d-flex flex-column fullSetengah align-items-center justify-content-center h-100" style="">
@@ -66,7 +66,7 @@
                     <strong>
                         <p class="mb-0" style="color: #666666;">Belum punya akun?</p>
                     </strong>
-                    <strong><a href="/account/create" class="text-decoration-none" style="color: #FF0000;" onmouseover="this.style.color='#991b1b'" onmouseout="this.style.color='#FF0000'">Daftar Disini!</a></strong>
+                    <strong><a href="{{ route('account.create') }}" class="text-decoration-none" style="color: #FF0000;" onmouseover="this.style.color='#991b1b'" onmouseout="this.style.color='#FF0000'">Daftar Disini!</a></strong>
                 </div>
 
             </div>

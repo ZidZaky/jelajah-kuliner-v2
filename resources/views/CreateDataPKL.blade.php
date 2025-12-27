@@ -6,7 +6,8 @@
 @endsection
 
 @section('css')
-    <link rel="stylesheet" href="/css/register.css">
+    {{-- <link rel="stylesheet" href="/css/register.css"> --}}
+    <link rel="stylesheet" href="{{ auto_asset('css/register.css') }}">
 @endsection
 
 @section('main')
@@ -15,7 +16,7 @@
             <div class="card-body">
                 <h5 class="card-title text-center" style="color: #F08A5D"><strong>Lengkapilah Data PKL Anda!</strong>
                 </h5><br>
-                <form id="myForm" method="POST" action="/PKL" enctype="multipart/form-data">
+                <form id="myForm" method="POST" action="{{ route('PKL.index') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">
                         <label for="namaPKL" class="form-label">Nama PKL</label>
@@ -29,7 +30,8 @@
 
                     <div class="mb-3">
                         <label for="picture" class="form-label">Foto PKL</label>
-                        <input type="file" class="form-control" id="picture" name="picture" placeholder="Masukkan Foto PKL">
+                        <input type="file" class="form-control" id="picture" name="picture"
+                            placeholder="Masukkan Foto PKL">
                     </div>
 
                     <input type="text" name="latitude" id="latitude" placeholder="Latitude" hidden>

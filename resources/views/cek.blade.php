@@ -7,7 +7,7 @@
 </head>
 <body>
     
-<form action="/MakeStokAwal" method="post">
+<form action="{{ route('stok.awal') }}" method="post">
     @csrf
 
     <input type="text" name="" id="">
