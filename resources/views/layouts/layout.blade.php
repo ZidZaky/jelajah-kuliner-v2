@@ -30,7 +30,7 @@
     <nav class="navbar w-full d-flex justify-content-center align-items-center" style="height: 80px; max-height:fit-content;">
         <div class="second-bg d-flex justify-content-between flex-row px-2 px-md-5 rounded-3 h-auto" style="padding: 10px 2px; width: 98%;">
             <div class="containerLeftNavbar d-flex flex-row justify-content-sm-between">
-                <a href="/" class="logo h-auto" style="width: 150px;">
+                <a href="{{ route('dashboard.index') }}" class="logo h-auto" style="width: 150px;">
                     <img src="{{ auto_asset('assets/logoJelajahKuliner.svg') }}" alt="Logo"
                         class="w-100">
                 </a>
@@ -49,7 +49,7 @@
                     <ul class="dropdown-menu dropdown-menu-end">
                         @if (!Auth::check())
                         <li><a class="dropdown-item cl-white hover-red-dark" href="{{ route('login.index') }}" style="background-color: #a73636;">Login</a></li>
-                        <li><a class="dropdown-item btn-prm hover-red-dark" href="/account/create">Register</a></li>
+                        <li><a class="dropdown-item btn-prm hover-red-dark" href="{{ route('account.create') }}">Register</a></li>
                         @endif
                         @if (Auth::check())
                         @if(session('account')->status=='PKL')
