@@ -19,4 +19,9 @@ class historyStok extends Model
         'TerjualOnline',
         'statusIsi',
     ];
+
+    protected static function newFactory()
+    {
+        return HistoryStokFactory::new();
+    }
 }
