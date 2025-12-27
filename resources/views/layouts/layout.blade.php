@@ -136,44 +136,87 @@
                 <a href="/account/create"><button class="btn btn-prm hover-red-dark rounded-3">Register</button></a>
                 @endif
                 <!-- udh login -->
-                @if (Auth::check())
-                @if(session('account')->status=='PKL')
-                <form action="/update-location" method="POST">
-                    @csrf
-                    <button type="button" class="btn bg-prim-dark cl-white btn-danger" onclick="getCurrentLocation(this)">Update Lokasi</button>
-                    <input type="text" name="latitude" id="latitude" class="d-none">
-                    <input type="text" name="longitude" id="longitude" class="d-none">
-                </form>
-                @endif
-                <div class="w-auto h-100 d-flex flex-row position-relative gap-2 align-items-center justify-content-center">
-                    <!-- <p class="fs-6 p-0 m-0">Hello, {{session('account')['nama']}}</p>
-                      -->
-                    <p class="fs-6 p-0 m-0">Hello, {{ explode(' ', session('account')['nama'])[0] }}</p>
+               @if (Auth::check())
+    @if(session('account')->status=='PKL')
+    <form action="{{ route('pkl.updateLocation') }}" method="POST">
+        @csrf
+        <button type="button" class="btn bg-prim-dark cl-white btn-danger" onclick="getCurrentLocation(this)">
+            Update Lokasi
+        </button>
+        <input type="text" name="latitude" id="latitude" class="d-none">
+        <input type="text" name="longitude" id="longitude" class="d-none">
+    </form>
+    @endif
 
-                    <button class="btn h-100 rounded-5 p-1 m-0 w-auto border-line-red d-flex flex-row  gap-3 justify-content-center align-items-center"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="{{ asset('storage/' . Auth::user()->foto) }}" alt="" class="circle-preview">
-                        <i class="bi bi-caret-down-fill primary-color px-2 m-0"></i>
-                    </button>
-                    <ul class="dropdown-menu mt-3 position-absolute" style="right: -20px;">
-                        @if (session('account')['status'] == 'PKL')
-                        <li><a class="dropdown-item" href="/dataPKL/{{session('account')['id']}}">Data PKL</a></li>
-                        <li><a class="dropdown-item" href="/Dashboard-Penjualan/{{{session('account')->id}}}VToday">Data Penjualan</a></li>
-                        @endif
-                        @if(session('account')->status=='Admin')
-                        <li><a class="dropdown-item" href="/account">List Account</a></li>
-                        <li><a class="dropdown-item" href="/report">List Reports</a></li>
-                        @endif
-                        <li><a class="dropdown-item" href="/pesanan/show/?id={{session('account')['id']}}&wht={{{'Pesanan Baru'}}}">List Pesanan</a></li>
-                        <li><a class="dropdown-item" href="/profile">My Profile</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item bg-prim-dark cl-white" href="/logout">Logout</a></li>
-                    </ul>
+    <div class="w-auto h-100 d-flex flex-row position-relative gap-2 align-items-center justify-content-center">
+        <!-- <p class="fs-6 p-0 m-0">Hello, {{session('account')['nama']}}</p> -->
+        <p class="fs-6 p-0 m-0">Hello, {{ explode(' ', session('account')['nama'])[0] }}</p>
 
-                </div>
-                @endif
+        <button class="btn h-100 rounded-5 p-1 m-0 w-auto border-line-red d-flex flex-row gap-3 justify-content-center align-items-center"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="{{ asset('storage/' . Auth::user()->foto) }}" alt="" class="circle-preview">
+            <i class="bi bi-caret-down-fill primary-color px-2 m-0"></i>
+        </button>
+
+        <ul class="dropdown-menu mt-3 position-absolute" style="right: -20px;">
+            @if (session('account')['status'] == 'PKL')
+            <li>
+                <a class="dropdown-item"
+                   href="{{ route('PKL.show', session('account')['id']) }}">
+                    Data PKL
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item"
+                   href="{{ route('penjualan.dashboard', session('account')->id) }}">
+                    Data Penjualan
+                </a>
+            </li>
+            @endif
+
+            @if(session('account')->status=='Admin')
+            <li>
+                <a class="dropdown-item"
+                   href="{{ route('account.index') }}">
+                    List Account
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item"
+                   href="{{ route('report.index') }}">
+                    List Reports
+                </a>
+            </li>
+            @endif
+
+            <li>
+                <a class="dropdown-item"
+                   href="{{ route('pesanan.show', session('account')['id']) }}?wht=Pesanan Baru">
+                    List Pesanan
+                </a>
+            </li>
+
+            <li>
+                <a class="dropdown-item"
+                   href="{{ route('profile.index') }}">
+                    My Profile
+                </a>
+            </li>
+
+            <li>
+                <hr class="dropdown-divider">
+            </li>
+
+            <li>
+                <a class="dropdown-item bg-prim-dark cl-white"
+                   href="{{ route('logout') }}">
+                    Logout
+                </a>
+            </li>
+        </ul>
+    </div>
+@endif
+
 
             </div>
         </div>
