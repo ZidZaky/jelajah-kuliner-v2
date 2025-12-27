@@ -158,6 +158,7 @@ Route::middleware(['status:Admin'])->group(function () {
 });
 
 
+
 // =========================
 // ERROR & STATIC
 // =========================
