@@ -52,19 +52,78 @@
                         <li><a class="dropdown-item btn-prm hover-red-dark" href="{{ route('account.create') }}">Register</a></li>
                         @endif
                         @if (Auth::check())
-                        @if(session('account')->status=='PKL')
-                        <li><a class="dropdown-item cl-white hover-red-dark" href="/Dashboard-Penjualan/{{{session('account')->id}}}VToday" style="background-color: #a73636;">Data Penjualan</a></li>
-                        <li><a class="dropdown-item cl-white hover-red-dark" href="/dataPKL/{{session('account')['id']}}" style="background-color: #a73636;">Data PKL</a></li>
-                        <li><a class="dropdown-item cl-white hover-red-dark" href="/pesanan/show/?id={{session('account')['id']}}&wht={{{'Pesanan Baru'}}}" style="background-color: #a73636;">List Pesanan</a></li>
-                        @endif
-                        @if(session('account')->status=='Admin')
-                        <li><a class="dropdown-item cl-white hover-red-dark" href="/account" style="background-color: #a73636;">List Account</a></li>
-                        <li><a class="dropdown-item cl-white hover-red-dark" href="/report" style="background-color: #a73636;">List Reports</a></li>
-                        @endif
-                        <li><a class="dropdown-item cl-white hover-red-dark" href="/profile" style="background-color: #a73636;">My Profile</a></li>
-                        <li><a class="dropdown-item btn-prm hover-red-dark" href="/pesanan/show/?id={{{session('account')->id}}}&wht=Pesanan Baru">List Pesanan</a></li>
-                        <li><a class="dropdown-item btn-prm hover-red-dark" href="/logout">Logout</a></li>
-                        @endif
+
+    @if (session('account')->status == 'PKL')
+        <li>
+            <a class="dropdown-item cl-white hover-red-dark"
+               href="{{ route('penjualan.dashboard', session('account')->id) }}"
+               style="background-color: #a73636;">
+                Data Penjualan
+            </a>
+        </li>
+
+        {{-- ⚠️ route dataPKL tidak ada di web.php --}}
+        <li>
+            <a class="dropdown-item cl-white hover-red-dark"
+               href="{{ route('PKL.show', session('account')->id) }}"
+               style="background-color: #a73636;">
+                Data PKL
+            </a>
+        </li>
+
+        <li>
+            <a class="dropdown-item cl-white hover-red-dark"
+               href="{{ route('pesanan.show', session('account')->id) }}?wht=Pesanan Baru"
+               style="background-color: #a73636;">
+                List Pesanan
+            </a>
+        </li>
+    @endif
+
+
+    @if (session('account')->status == 'Admin')
+        <li>
+            <a class="dropdown-item cl-white hover-red-dark"
+               href="{{ route('account.index') }}"
+               style="background-color: #a73636;">
+                List Account
+            </a>
+        </li>
+
+        <li>
+            <a class="dropdown-item cl-white hover-red-dark"
+               href="{{ route('report.index') }}"
+               style="background-color: #a73636;">
+                List Reports
+            </a>
+        </li>
+    @endif
+
+
+    <li>
+        <a class="dropdown-item cl-white hover-red-dark"
+           href="{{ route('profile.index') }}"
+           style="background-color: #a73636;">
+            My Profile
+        </a>
+    </li>
+
+    <li>
+        <a class="dropdown-item btn-prm hover-red-dark"
+           href="{{ route('pesanan.show', session('account')->id) }}?wht=Pesanan Baru">
+            List Pesanan
+        </a>
+    </li>
+
+    <li>
+        <a class="dropdown-item btn-prm hover-red-dark"
+           href="{{ route('logout') }}">
+            Logout
+        </a>
+    </li>
+
+@endif
+
                         <!-- <li><  a class="dropdown-item" href="#">User Guide</a></li> -->
                     </ul>
                 </div>
