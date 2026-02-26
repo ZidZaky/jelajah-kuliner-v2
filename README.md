@@ -4,6 +4,11 @@
   <strong>A Better UI Version of Jelajah Kuliner - Discover Culinary Excellence</strong>
 </p>
 
+<p align="center">
+  <a href="https://evftrya.com/jelajah-kuliner-v2/public/dashboard">
+    <img src="https://img.shields.io/badge/Demo-Live_Preview-blue?style=for-the-badge&logo=google-chrome&logoColor=white" alt="Live Demo">
+  </a>
+</p>
 ---
 
 ## 📋 Daftar Isi
