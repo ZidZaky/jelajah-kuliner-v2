@@ -1,66 +1,224 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Jelajah Kuliner v2
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <strong>A Better UI Version of Jelajah Kuliner - Discover Culinary Excellence</strong>
 </p>
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 📋 Daftar Isi
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- [Tentang Proyek](#tentang-proyek)
+- [Fitur Utama](#fitur-utama)
+- [Stack Teknologi](#stack-teknologi)
+- [Persyaratan Sistem](#persyaratan-sistem)
+- [Instalasi](#instalasi)
+- [Konfigurasi](#konfigurasi)
+- [Penggunaan](#penggunaan)
+- [Struktur Proyek](#struktur-proyek)
+- [Kontribusi](#kontribusi)
+- [Lisensi](#lisensi)
+- [Kontak](#kontak)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 📌 Tentang Proyek
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+**Jelajah Kuliner v2** adalah aplikasi web yang dirancang dengan antarmuka pengguna yang lebih baik dan modern untuk membantu pengguna menjelajahi, menemukan, dan berbagi pengalaman kuliner di berbagai lokasi. Versi kedua ini merupakan peningkatan signifikan dari versi sebelumnya dengan fokus pada pengalaman pengguna yang superior dan antarmuka yang intuitif.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Proyek ini dikembangkan sebagai platform komprehensif untuk:
+- 🍽️ Menemukan restoran dan tempat makan terbaik
+- ⭐ Memberikan dan membaca ulasan kuliner
+- 📍 Menemukan lokasi restoran dengan peta interaktif
+- 👥 Berbagi rekomendasi dengan komunitas
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+## ✨ Fitur Utama
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+### 1. Antarmuka Pengguna Modern
+- Desain responsif dan user-friendly
+- Navigasi intuitif yang mudah digunakan
+- Tema visual yang menarik dan konsisten
 
-### Premium Partners
+### 2. Katalog Restoran Lengkap
+- Database restoran yang komprehensif
+- Informasi detail termasuk menu, jam operasional, dan kontak
+- Foto berkualitas tinggi dari menu dan suasana restoran
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+### 3. Sistem Ulasan & Rating
+- Pengguna dapat memberikan rating dan ulasan
+- Ulasan terverifikasi untuk memastikan kredibilitas
+- Sistem rating berbasis bintang yang intuitif
 
-## Contributing
+### 4. Integrasi Peta
+- Lokasi restoran pada peta interaktif
+- Pencarian berdasarkan lokasi geografis
+- Rute petunjuk arah langsung
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 5. Fitur Sosial
+- Berbagi rekomendasi favorit
+- Koleksi pribadi "Wishlist" restoran
+- Komunitas pengguna yang aktif
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## 🛠️ Stack Teknologi
 
-## Security Vulnerabilities
+| Kategori | Teknologi |
+|----------|-----------|
+| **Backend** | Laravel (Blade Template Engine) |
+| **Frontend** | Blade, HTML5, CSS3 |
+| **Database** | MySQL/PostgreSQL |
+| **Server** | Apache/Nginx |
+| **Version Control** | Git |
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
-## License
+## 💻 Persyaratan Sistem
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Sebelum memulai, pastikan Anda memiliki:
+- PHP >= 8.0
+- Composer (PHP Package Manager)
+- Node.js >= 14.x (untuk asset compilation)
+- MySQL >= 5.7 atau PostgreSQL >= 10
+- Git untuk version control
+
+---
+
+## 🚀 Instalasi
+
+### 1. Clone Repository
+git clone https://github.com/ZidZaky/jelajah-kuliner-v2.git
+cd jelajah-kuliner-v2
+
+### 2. Install Dependencies
+# Install PHP dependencies
+composer install
+# Install Node dependencies
+npm install
+
+### 3. Setup Environment
+# Copy .env.example ke .env
+cp .env.example .env
+# Generate application key
+php artisan key:generate
+
+### 4. Konfigurasi Database
+Buka file .env dan sesuaikan konfigurasi database:
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=jelajah_kuliner
+DB_USERNAME=root
+DB_PASSWORD=
+
+### 5. Migrasi Database
+# Jalankan migrasi database
+php artisan migrate
+# (Opsional) Seed database dengan data contoh
+php artisan db:seed
+
+### 6. Build Assets
+# Development
+npm run dev
+# Production
+npm run build
+
+### 7. Jalankan Server
+# Menggunakan Laravel built-in server
+php artisan serve
+# Server akan berjalan di http://localhost:8000
+
+---
+
+## ⚙️ Konfigurasi
+
+### File Konfigurasi Utama
+- .env - Konfigurasi environment variables
+- config/app.php - Pengaturan aplikasi
+- config/database.php - Pengaturan database
+- config/filesystems.php - Pengaturan storage file
+
+### Pengaturan Rekomendasi (.env)
+APP_NAME=Jelajah-Kuliner-v2
+APP_ENV=local
+APP_DEBUG=true
+APP_URL=http://localhost:8000
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=jelajah_kuliner
+DB_USERNAME=root
+DB_PASSWORD=
+
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.mailtrap.io
+MAIL_PORT=587
+
+---
+
+## 📖 Penggunaan
+
+### Menjalankan Aplikasi
+1. Start Development Server: php artisan serve
+2. Akses Aplikasi: Buka browser dan navigasi ke http://localhost:8000
+3. Login/Register: Buat akun pengguna baru untuk mengakses fitur lengkap
+
+### Fitur Dasar
+- Pencarian Restoran: Gunakan search bar untuk menemukan restoran
+- Filter & Sort: Filter berdasarkan kategori, rating, atau lokasi
+- Tulis Ulasan: Bagikan pengalaman kuliner Anda
+- Tambah ke Wishlist: Simpan restoran favorit untuk nanti
+
+---
+
+## 📁 Struktur Proyek
+
+jelajah-kuliner-v2/
+├── app/                    # Logika aplikasi (Models, Controllers, Requests, Services)
+├── routes/                 # Route definitions (web.php)
+├── resources/              # Views (Blade templates), css, & js files
+├── database/               # Database migrations & seeders
+├── config/                 # Configuration files
+├── public/                 # Public assets
+├── .env.example            # Environment template
+└── composer.json           # PHP dependencies
+
+---
+
+## 🤝 Kontribusi
+
+Kami sangat menyambut kontribusi dari komunitas! Untuk berkontribusi:
+1. Fork repository ini
+2. Buat branch fitur baru (git checkout -b feature/AmazingFeature)
+3. Commit perubahan Anda (git commit -m 'Add some AmazingFeature')
+4. Push ke branch (git push origin feature/AmazingFeature)
+5. Buka Pull Request
+
+### Panduan Kontribusi
+- Pastikan kode mengikuti style guide project
+- Tulis test untuk fitur baru
+- Update dokumentasi sesuai perubahan
+- Gunakan commit messages yang deskriptif
+
+---
+
+## 📄 Lisensi
+Proyek ini belum memiliki lisensi yang didefinisikan. Untuk informasi lebih lanjut tentang penggunaan dan distribusi kode, silakan hubungi pemilik repository.
+
+---
+
+## 📞 Kontak
+- Developer: Zidan, Evi, Farhan, Dika
+- Repository: ZidZaky/jelajah-kuliner-v2
+- Issues: Report Bug atau Request Fitur
+
+---
+
+## 📝 Catatan Penting
+- Pastikan semua dependencies ter-install dengan benar sebelum menjalankan aplikasi
+- Database harus sudah ter-setup dan migrasi sudah dijalankan
+- Untuk development, gunakan php artisan serve bukannya production server
+- Update .env dengan konfigurasi lokal Anda sebelum running aplikasi
